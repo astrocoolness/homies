@@ -759,4 +759,41 @@ export function releaseHomie(save: Save, id: HomieId): Save {
   return next;
 }
 
+export function restoreHomie(save: Save, id: string, profile: CustomProfile, stage: Stage): Save {
+  if (!/^c[a-z0-9]{4,16}$/.test(id) || isBuiltin(id) || save.homies[id]) return save;
+  const made = Object.keys(save.homies).filter((item) => item.startsWith("c")).length;
+  if (made >= 4) return save;
+  const coerced = coerceStoredProfile(profile);
+  if (!coerced) return save;
+  const next = structuredClone(save);
+  const offset = STAGE_AT.find((row) => row.stage === stage)?.hours ?? 0;
+  const shaped = structuredClone(coerced);
+  shaped.milestones = shaped.milestones.map((mark) => ({ ...mark, minHours: mark.minHours + offset }));
+  const homie = blank("tony");
+  homie.traits = traitsFrom(shaped.descriptors);
+  homie.stats = {
+    hunger: 62,
+    rest: 78,
+    happiness: 74,
+    cleanliness: 90,
+    energy: 76,
+    affection: 64,
+    health: 94,
+    fun: 68,
+  };
+  homie.stage = STAGES.includes(stage) ? stage : "adult";
+  homie.stageOffsetHours = offset;
+  homie.profile = shaped;
+  homie.hatchedAt = next.gameMinute;
+  homie.lastViewed = next.gameMinute;
+  next.homies[id] = homie;
+  const customs = next.order.filter((item) => !isBuiltin(item) && item !== id);
+  next.order = [...HOMIE_IDS, ...customs, id];
+  bindProfiles(next.homies);
+  const title = shaped.hatch;
+  pushLog(next, id, title, "milestone");
+  next.milestones.push({ id: `${id}-back`, homieId: id, at: next.gameMinute, title });
+  return next;
+}
+
 export { KEY as SAVE_KEY };

@@ -248,7 +248,12 @@ export function coerceStoredProfile(raw: unknown): CustomProfile | null {
   const row = raw as Partial<CustomProfile>;
   const name = cleanName(row.name);
   const portrait = typeof row.portrait === "string" ? row.portrait : "";
-  if (!name || !portrait.startsWith("data:image/") || portrait.length > 750_000) return null;
+  const dataPortrait = portrait.startsWith("data:image/") && portrait.length < 750_000;
+  const shelfPortrait =
+    portrait.startsWith("https://") &&
+    portrait.length < 400 &&
+    portrait.includes("/storage/v1/object/public/homie-files/");
+  if (!name || (!dataPortrait && !shelfPortrait)) return null;
   const facts: MintFacts = {
     name,
     descriptors: Array.isArray(row.descriptors) ? row.descriptors.map((item) => clip(item, 24)).filter(Boolean).slice(0, 6) : [],

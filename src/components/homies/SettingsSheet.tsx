@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ImagePlus, X } from "lucide-react";
 import { bioOf, isBuiltin, nameOf } from "@/game/content";
 import { idsOf } from "@/game/logic";
+import { readKeeperId } from "@/game/keeper";
 import { mintHomie } from "@/game/mint";
 import { DESCRIPTORS } from "@/game/sheet";
 import { useHomies } from "@/game/store";
@@ -57,8 +58,16 @@ export function SettingsSheet({
   const save = useHomies((s) => s.save);
   const release = useHomies((s) => s.release);
   const adopt = useHomies((s) => s.adopt);
+  const useShelf = useHomies((s) => s.useShelf);
   const [confirm, setConfirm] = useState<string | null>(null);
+  const [shelf, setShelf] = useState("");
+  const [paste, setPaste] = useState("");
+  const [shelfNote, setShelfNote] = useState<string | null>(null);
   const made = idsOf(save).filter((id) => id.startsWith("c")).length;
+
+  useEffect(() => {
+    setShelf(readKeeperId());
+  }, []);
 
   return (
     <div className="absolute inset-0 z-30 flex flex-col bg-cream px-4 pt-4 pb-4">
@@ -96,7 +105,7 @@ export function SettingsSheet({
             {made >= 4 ? "The house is full" : "Make a Homie"}
           </button>
           <p className="mt-2 text-sm text-ink-soft">
-            Traits, a life, and a photo. They move in and keep living here.
+            Traits, a life, and a photo. They move in, and custom Homies stay on your Supabase shelf.
           </p>
           <ul className="mt-4 space-y-2">
             {idsOf(save).map((id) => {
@@ -124,6 +133,59 @@ export function SettingsSheet({
               );
             })}
           </ul>
+          <div className="mt-4 rounded-2xl bg-paper px-3 py-3">
+            <p className="font-display text-lg text-ink">Shelf</p>
+            <p className="text-sm text-pretty text-ink-soft">
+              Custom Homies, portraits, and saved films are kept for this phone. Paste the code on another phone to open the same shelf.
+            </p>
+            <p className="mt-2 break-all font-mono text-xs text-ink">{shelf}</p>
+            <div className="mt-2 flex gap-2">
+              <button
+                type="button"
+                className="min-h-11 flex-1 rounded-2xl bg-cream text-sm text-ink"
+                onClick={() => {
+                  if (!shelf) return;
+                  void navigator.clipboard?.writeText(shelf).then(
+                    () => setShelfNote("Code copied."),
+                    () => setShelfNote("Couldn't copy. Select the code instead."),
+                  );
+                }}
+              >
+                Copy code
+              </button>
+            </div>
+            <label className="mt-3 block text-sm text-ink-soft" htmlFor="shelf-code">
+              Open a shelf
+            </label>
+            <input
+              id="shelf-code"
+              value={paste}
+              onChange={(event) => setPaste(event.target.value)}
+              placeholder="Paste a shelf code"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              className="mt-1 min-h-12 w-full rounded-2xl bg-cream px-3 text-sm text-ink"
+            />
+            <button
+              type="button"
+              className="mt-2 min-h-11 w-full rounded-2xl bg-tomato font-display text-lg text-paper"
+              onClick={() => {
+                void useShelf(paste).then((result) => {
+                  if (!result.ok) {
+                    setShelfNote(result.error);
+                    return;
+                  }
+                  setShelf(readKeeperId());
+                  setPaste("");
+                  setShelfNote(result.arrived.length ? "Shelf opened." : "This phone is on that shelf.");
+                });
+              }}
+            >
+              Open that shelf
+            </button>
+            {shelfNote ? <p className="mt-2 text-sm text-ink-soft">{shelfNote}</p> : null}
+          </div>
         </div>
       )}
     </div>

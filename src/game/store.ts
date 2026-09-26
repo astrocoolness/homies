@@ -15,6 +15,8 @@ import {
 } from "./logic";
 import { playSound, setMuted, unlockAudio } from "./sfx";
 import { forgetAllReels, forgetHomieReels } from "./reels";
+import { forgetCloudHomie, forgetCloudShelf, publishHomie, syncKeeper } from "./cloud-sync";
+import { setKeeperId } from "./keeper";
 import type { Action, CustomProfile, HomieId, Recap, Save, Stage, View } from "./types";
 
 type State = {
@@ -38,6 +40,7 @@ type State = {
   reset: () => void;
   adopt: (profile: CustomProfile, stage: Stage) => void;
   release: (id: HomieId) => void;
+  useShelf: (code: string) => Promise<{ ok: true; arrived: string[] } | { ok: false; error: string }>;
 };
 
 let toastTimer = 0;
@@ -100,6 +103,20 @@ export const useHomies = create<State>((set, get) => ({
     setMuted(save.muted);
     set({ save, ready: true, recap, view: "care", feedOpen: false, toast: null, speech: null });
     schedulePersist(save, true);
+    void syncKeeper(
+      () => get().save,
+      (recipe) => {
+        const save = recipe(get().save);
+        if (save === get().save) return;
+        set({ save });
+        schedulePersist(save, true);
+      },
+    ).then((arrived) => {
+      if (!arrived?.length) return;
+      const toast = arrived.length === 1 ? `${arrived[0]} came back.` : "Your Homies came back.";
+      set({ toast });
+      flash(set, toast, null);
+    });
   },
   catchUp: () => {
     const st = get();
@@ -209,6 +226,7 @@ export const useHomies = create<State>((set, get) => ({
     set({ save, recap: null, toast: null, speech: null, view: "care", feedOpen: false, joy: 0 });
     schedulePersist(save, true);
     void forgetAllReels();
+    void forgetCloudShelf();
   },
   adopt: (profile, stage) => {
     const current = get().save;
@@ -227,11 +245,35 @@ export const useHomies = create<State>((set, get) => ({
     playSound("hatch", save.muted);
     flash(set, `${profile.name} moved in.`, null);
     schedulePersist(save, true);
+    const id = save.activeId;
+    const homie = save.homies[id];
+    if (homie) void publishHomie(id, homie);
   },
   release: (id) => {
     const save = releaseHomie(get().save, id);
     set({ save, view: "care", feedOpen: false, speech: null, toast: null, recap: null });
     schedulePersist(save, true);
     void forgetHomieReels(id);
+    void forgetCloudHomie(id);
+  },
+  useShelf: async (code) => {
+    if (!setKeeperId(code)) return { ok: false, error: "That shelf code doesn't look right." };
+    const arrived = await syncKeeper(
+      () => get().save,
+      (recipe) => {
+        const save = recipe(get().save);
+        if (save === get().save) return;
+        set({ save });
+        schedulePersist(save, true);
+      },
+      false,
+    );
+    if (arrived === null) return { ok: false, error: "The shelf is asleep. They're still on this phone." };
+    if (arrived.length) {
+      const toast = arrived.length === 1 ? `${arrived[0]} came back.` : "Your Homies came back.";
+      set({ toast });
+      flash(set, toast, null);
+    }
+    return { ok: true, arrived };
   },
 }));

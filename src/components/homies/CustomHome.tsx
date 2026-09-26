@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Film } from "lucide-react";
 import { pullReel, startReel } from "@/game/reel";
 import { dataUrlToBlob, dropReel, listReels, putReel, type SavedReel } from "@/game/reels";
+import { forgetCloudReel, publishReel } from "@/game/cloud-sync";
 import { useHomies } from "@/game/store";
 
 const CAP = 3;
@@ -96,6 +97,7 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
           blob: dataUrlToBlob(pulled.media),
         };
         await putReel(reel);
+        void publishReel(reel);
         if (token.current !== mine) return;
         const rows = await listReels(id);
         setReels(rows);
@@ -115,6 +117,7 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
 
   async function remove(reelId: string) {
     await dropReel(reelId);
+    void forgetCloudReel(reelId);
     const rows = await listReels(id);
     setReels(rows);
     setPicked(rows[0]?.id ?? null);
