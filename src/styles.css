@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-sans: "Nunito", ui-rounded, system-ui, sans-serif;
+
+  --color-ink: #2a2118;
+  --color-ink-soft: #6d5e4e;
+  --color-cream: #f6efe4;
+  --color-cream-2: #eadfcd;
+  --color-paper: #fffaf3;
+  --color-tomato: #e24b3b;
+  --color-sage: #3c7a5a;
+  --color-sage-soft: #d7efe3;
+  --color-desk: #1c1612;
+  --color-line: #e3d5c3;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-desk);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid var(--color-tomato);
+    outline-offset: 2px;
+  }
+}
+
+@keyframes homie-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes egg-wobble {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3.5deg);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.homie-bob {
+  animation: homie-bob 2.6s ease-in-out infinite;
+}
+.homie-bob-slow {
+  animation: homie-bob 4.4s ease-in-out infinite;
+}
+.egg-wobble {
+  animation: egg-wobble 1.8s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+.pop-in {
+  animation: pop-in 220ms ease-out;
+}
+.mood-sick {
+  filter: saturate(0.62);
+}
+.mood-low {
+  filter: saturate(0.82);
+}
+
+.grime {
+  background-image:
+    radial-gradient(circle at 20% 30%, color-mix(in oklab, var(--color-ink) 45%, transparent) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 70% 55%, color-mix(in oklab, var(--color-ink) 35%, transparent) 0 1px, transparent 2px);
+  background-size: 26px 30px, 18px 22px;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homie-bob,
+  .homie-bob-slow,
+  .egg-wobble,
+  .pop-in {
+    animation: none;
+  }
+}
