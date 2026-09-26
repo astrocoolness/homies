@@ -8,3 +8,10 @@ node_modules/
 screenshots/
 artifacts/
 .grok/preview.log
+node_modules
+.vercel
+screenshots
+.grok
+.env
+.env.*
+dist

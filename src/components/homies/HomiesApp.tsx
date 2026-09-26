@@ -10,6 +10,8 @@ import {
   Moon,
   Pill,
   Pizza,
+  Plus,
+  Settings,
   Smile,
   Soup,
   Sparkles,
@@ -24,22 +26,25 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
-  BIOS,
+  bindProfiles,
+  bioOf,
   EGG_SRC,
-  FOODS,
-  HOMES,
-  NAMES,
+  foodsOf,
+  homeOf,
+  nameOf,
   portraitSrc,
-  roomSrc,
+  roomOf,
   STAGE_LABEL,
   traitPhrases,
 } from "@/game/content";
 import type { FoodIcon } from "@/game/content";
-import { describe, lifeDayOf, STAGE_AT, ageHours } from "@/game/logic";
+import { describe, idsOf, lifeDayOf, STAGE_AT, ageHours } from "@/game/logic";
 import { unlockAudio } from "@/game/sfx";
 import { useHomies } from "@/game/store";
 import type { HomieId, StatKey, View } from "@/game/types";
-import { HOMIE_IDS, STAGES } from "@/game/types";
+import { STAGES } from "@/game/types";
+import { SettingsSheet } from "./SettingsSheet";
+import { CustomHome } from "./CustomHome";
 
 const FOOD_ICONS: Record<FoodIcon, LucideIcon> = {
   cake: Cake,
@@ -111,7 +116,7 @@ export function HomiesApp() {
 
   return (
     <main className="flex min-h-dvh justify-center bg-desk md:items-center md:py-6">
-      <section className="flex h-dvh w-full max-w-[440px] flex-col bg-cream px-4 pt-4 pb-4 md:h-[min(900px,calc(100dvh-3rem))] md:rounded-[2rem] md:shadow-2xl">
+      <section className="relative flex h-dvh w-full max-w-[440px] flex-col bg-cream px-4 pt-4 pb-4 md:h-[min(900px,calc(100dvh-3rem))] md:rounded-[2rem] md:shadow-2xl">
         <Device />
       </section>
     </main>
@@ -126,9 +131,12 @@ function Device() {
   const select = useHomies((s) => s.select);
   const recap = useHomies((s) => s.recap);
   const dismissRecap = useHomies((s) => s.dismissRecap);
+  const [settings, setSettings] = useState<null | "home" | "create">(null);
+  bindProfiles(save.homies);
   const id = save.activeId;
   const info = describe(save, id);
   const TimeIcon = info.clock.hour >= 6 && info.clock.hour < 19 ? Sun : Moon;
+  const roster = idsOf(save);
 
   return (
     <>
@@ -140,18 +148,28 @@ function Device() {
             {info.clock.label}
           </p>
         </div>
-        <button
-          type="button"
-          onClick={toggleMute}
-          aria-label={save.muted ? "Unmute" : "Mute"}
-          className="flex size-11 items-center justify-center rounded-full bg-paper text-ink"
-        >
-          {save.muted ? <VolumeX className="size-5" /> : <Volume2 className="size-5" />}
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setSettings("home")}
+            aria-label="Settings"
+            className="flex size-11 items-center justify-center rounded-full bg-paper text-ink"
+          >
+            <Settings className="size-5" />
+          </button>
+          <button
+            type="button"
+            onClick={toggleMute}
+            aria-label={save.muted ? "Unmute" : "Mute"}
+            className="flex size-11 items-center justify-center rounded-full bg-paper text-ink"
+          >
+            {save.muted ? <VolumeX className="size-5" /> : <Volume2 className="size-5" />}
+          </button>
+        </div>
       </header>
 
-      <div className="mt-3 grid grid-cols-3 gap-2">
-        {HOMIE_IDS.map((hid) => {
+      <div className="mt-3 flex gap-2 overflow-x-auto">
+        {roster.map((hid) => {
           const homie = save.homies[hid];
           const hatched = homie.hatchedAt != null;
           const active = hid === id;
@@ -162,7 +180,7 @@ function Device() {
               onClick={() => select(hid)}
               aria-pressed={active}
               className={cx(
-                "flex min-h-16 flex-col items-center gap-1 rounded-2xl px-1 py-1.5",
+                "flex w-20 shrink-0 flex-col items-center gap-1 rounded-2xl px-1 py-1.5",
                 active ? "bg-paper ring-2 ring-tomato" : "bg-cream-2",
               )}
             >
@@ -171,10 +189,18 @@ function Device() {
                 alt=""
                 className="size-12 object-contain"
               />
-              <span className="font-display text-sm leading-none text-ink">{NAMES[hid]}</span>
+              <span className="w-full truncate text-center font-display text-sm leading-none text-ink">{nameOf(hid)}</span>
             </button>
           );
         })}
+        <button
+          type="button"
+          onClick={() => setSettings("create")}
+          className="flex w-20 shrink-0 flex-col items-center justify-center gap-1 rounded-2xl bg-cream-2 px-1 py-1.5 text-ink-soft"
+        >
+          <Plus className="size-5 text-tomato" aria-hidden />
+          <span className="font-display text-sm leading-none">New</span>
+        </button>
       </div>
 
       <div className="relative mt-3 flex min-h-0 flex-1 flex-col">
@@ -228,6 +254,14 @@ function Device() {
           </div>
         )}
       </div>
+      {settings && (
+        <SettingsSheet
+          creating={settings === "create"}
+          onClose={() => setSettings(null)}
+          onCreate={() => setSettings("create")}
+          onList={() => setSettings("home")}
+        />
+      )}
     </>
   );
 }
@@ -247,14 +281,14 @@ function CareView() {
     return (
       <div className="flex flex-col items-center px-2 pt-4 text-center">
         <img src={EGG_SRC} alt="" className="egg-wobble h-52 w-52 object-contain" />
-        <h1 className="mt-2 font-display text-4xl text-ink">{NAMES[id]}</h1>
-        <p className="mt-2 max-w-[18rem] text-pretty text-ink-soft">{BIOS[id]}</p>
+        <h1 className="mt-2 font-display text-4xl text-ink">{nameOf(id)}</h1>
+        <p className="mt-2 max-w-[18rem] text-pretty text-ink-soft">{bioOf(id)}</p>
         <button
           type="button"
           onClick={() => hatch(id)}
           className="mt-5 min-h-14 w-full rounded-2xl bg-tomato font-display text-xl text-paper"
         >
-          Hatch {NAMES[id]}
+          Hatch {nameOf(id)}
         </button>
       </div>
     );
@@ -274,13 +308,13 @@ function CareView() {
         <button
           type="button"
           onClick={() => act("talk")}
-          aria-label={`Talk to ${NAMES[id]}`}
+          aria-label={`Talk to ${nameOf(id)}`}
           className="mt-8"
         >
           <img
             key={`${id}-${homie.stage}-${joy}`}
             src={portraitSrc(id, homie.stage)}
-            alt={`${NAMES[id]}, ${STAGE_LABEL[homie.stage]}`}
+            alt={`${nameOf(id)}, ${STAGE_LABEL[homie.stage]}`}
             className={cx(
               "h-48 w-48 object-contain",
               homie.sleeping ? "homie-bob-slow" : "homie-bob",
@@ -289,7 +323,7 @@ function CareView() {
           />
         </button>
       </div>
-      <h1 className="text-center font-display text-4xl leading-none text-ink">{NAMES[id]}</h1>
+      <h1 className="text-center font-display text-4xl leading-none text-ink">{nameOf(id)}</h1>
       <p className="mt-1 text-center text-sm text-ink-soft">
         {STAGE_LABEL[homie.stage]} · Day {lifeDayOf(homie, save.gameMinute)}
       </p>
@@ -366,7 +400,7 @@ function CareDock() {
       )}
       {feedOpen ? (
         <div className="grid gap-2">
-          {FOODS[id].map((food) => {
+          {foodsOf(id).map((food) => {
             const Icon = FOOD_ICONS[food.icon];
             return (
               <button
@@ -439,7 +473,7 @@ function EpisodeView() {
   if (homie.hatchedAt == null || entries.length === 0) {
     return (
       <div className="px-1 pt-6">
-        <h2 className="font-display text-3xl text-ink">{NAMES[id]}'s day</h2>
+        <h2 className="font-display text-3xl text-ink">{nameOf(id)}'s day</h2>
         <p className="mt-2 text-pretty text-ink-soft">Nothing yet. They keep living when you look away.</p>
       </div>
     );
@@ -454,7 +488,7 @@ function EpisodeView() {
   const days = [...groups.keys()].sort((a, b) => b - a);
   return (
     <div className="px-1 pt-2">
-      <h2 className="font-display text-3xl text-balance text-ink">{NAMES[id]}'s day</h2>
+      <h2 className="font-display text-3xl text-balance text-ink">{nameOf(id)}'s day</h2>
       <div className="mt-3 space-y-4">
         {days.map((day) => (
           <section key={day}>
@@ -484,21 +518,34 @@ function HomeView() {
   const save = useHomies((s) => s.save);
   const id = save.activeId;
   const homie = save.homies[id];
-  const home = HOMES[id];
+  const home = homeOf(id);
+  const room = roomOf(id);
   const dirt = homie.hatchedAt == null ? 0 : Math.max(0, (72 - homie.stats.cleanliness) / 100);
   return (
     <div className="pt-1">
-      <div className="relative overflow-hidden rounded-3xl bg-cream-2">
-        <img src={roomSrc(id)} alt={home.title} className="aspect-[4/3] w-full object-cover" />
-        {dirt > 0.05 && <div className="grime absolute inset-0" style={{ opacity: dirt }} />}
-        {homie.hatchedAt != null && (
-          <img
-            src={portraitSrc(id, homie.stage)}
-            alt=""
-            className="absolute bottom-2 left-2 h-20 w-20 object-contain drop-shadow-md"
-          />
-        )}
-      </div>
+      {homie.profile ? (
+        <CustomHome id={id} dirt={dirt} />
+      ) : (
+        <div className="relative overflow-hidden rounded-3xl bg-cream-2">
+          {room ? (
+            <img src={room} alt={home.title} className="aspect-[4/3] w-full object-cover" />
+          ) : (
+            <div className="flex aspect-[4/3] items-end bg-cream-2 p-3">
+              {homie.hatchedAt != null && (
+                <img src={portraitSrc(id, homie.stage)} alt="" className="h-36 w-36 object-contain" />
+              )}
+            </div>
+          )}
+          {dirt > 0.05 && <div className="grime absolute inset-0" style={{ opacity: dirt }} />}
+          {room && homie.hatchedAt != null && (
+            <img
+              src={portraitSrc(id, homie.stage)}
+              alt=""
+              className="absolute bottom-2 left-2 h-20 w-20 object-contain drop-shadow-md"
+            />
+          )}
+        </div>
+      )}
       <h2 className="mt-3 font-display text-3xl text-ink">{home.title}</h2>
       <p className="mt-1 text-pretty text-ink">{home.line}</p>
       <p className="mt-2 text-pretty text-ink-soft">
@@ -520,7 +567,7 @@ function LifeView() {
   if (homie.hatchedAt == null) {
     return (
       <div className="pt-4">
-        <h2 className="font-display text-3xl text-ink">{NAMES[id]}</h2>
+        <h2 className="font-display text-3xl text-ink">{nameOf(id)}</h2>
         <p className="mt-2 text-pretty text-ink-soft">Still an egg. Hatch them and a life starts keeping score.</p>
       </div>
     );

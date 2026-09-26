@@ -1,17 +1,21 @@
 import { create } from "zustand";
 import {
+  adoptHomie,
   anyHatched,
   applyAction,
   freshSave,
   hatchHomie,
+  idsOf,
   loadSave,
   makeRecap,
   persistSave,
+  releaseHomie,
   simulate,
   targetMinute,
 } from "./logic";
 import { playSound, setMuted, unlockAudio } from "./sfx";
-import type { Action, HomieId, Recap, Save, View } from "./types";
+import { forgetAllReels, forgetHomieReels } from "./reels";
+import type { Action, CustomProfile, HomieId, Recap, Save, Stage, View } from "./types";
 
 type State = {
   ready: boolean;
@@ -32,6 +36,8 @@ type State = {
   setFeed: (open: boolean) => void;
   toggleMute: () => void;
   reset: () => void;
+  adopt: (profile: CustomProfile, stage: Stage) => void;
+  release: (id: HomieId) => void;
 };
 
 let toastTimer = 0;
@@ -202,5 +208,30 @@ export const useHomies = create<State>((set, get) => ({
     const save = freshSave(Date.now());
     set({ save, recap: null, toast: null, speech: null, view: "care", feedOpen: false, joy: 0 });
     schedulePersist(save, true);
+    void forgetAllReels();
+  },
+  adopt: (profile, stage) => {
+    const current = get().save;
+    const made = idsOf(current).filter((id) => id.startsWith("c")).length;
+    if (made >= 4) return;
+    const save = adoptHomie(current, profile, stage);
+    set({
+      save,
+      view: "care",
+      feedOpen: false,
+      recap: null,
+      toast: `${profile.name} moved in.`,
+      speech: null,
+      joy: get().joy + 1,
+    });
+    playSound("hatch", save.muted);
+    flash(set, `${profile.name} moved in.`, null);
+    schedulePersist(save, true);
+  },
+  release: (id) => {
+    const save = releaseHomie(get().save, id);
+    set({ save, view: "care", feedOpen: false, speech: null, toast: null, recap: null });
+    schedulePersist(save, true);
+    void forgetHomieReels(id);
   },
 }));

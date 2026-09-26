@@ -1,28 +1,33 @@
 import {
-  COLLAPSE_LINES,
+  bindProfiles,
+  careSpeech,
+  collapseText,
   cravingOf,
+  customOf,
   feedLine,
-  FOODS,
-  HATCH_LINES,
+  foodsOf,
+  hatchLine,
+  isBuiltin,
   MILESTONES,
-  NAP_LINES,
-  NAMES,
+  nameOf,
+  napText,
   needLine,
-  rollBeat,
-  SCHEDULE,
-  sickLine,
-  SLEEP_LINES,
-  SLIP_LINES,
-  STAGE_LINES,
-  statusLine,
-  talkLine,
   playLine,
   cleanLine,
+  rollBeat,
+  scheduleOf,
+  sickLine,
+  sleepText,
+  slipText,
+  stageLine,
+  statusLine,
+  talkLine,
   urgentLine,
   wakeLine,
   wellLine,
 } from "./content";
-import type { Action, HomieId, HomieState, LogKind, Recap, Save, Sound, Stage, Stats, Traits } from "./types";
+import { coerceStoredProfile } from "./sheet";
+import type { Action, CustomProfile, HomieId, HomieState, LogKind, Recap, Save, Sound, Stage, Stats, Traits } from "./types";
 import { HOMIE_IDS, SAVE_VERSION, STAGES } from "./types";
 
 export const MS_PER_GAME_MINUTE = 1000;
@@ -57,7 +62,7 @@ export function clock(minute: number) {
 
 export function ageHours(h: HomieState, now: number) {
   if (h.hatchedAt == null) return 0;
-  return Math.max(0, (now - h.hatchedAt) / 60);
+  return Math.max(0, (now - h.hatchedAt) / 60 + (h.stageOffsetHours || 0));
 }
 
 export function lifeDayOf(h: HomieState, now: number) {
@@ -73,12 +78,24 @@ export function stageFor(hours: number): Stage {
   return "elder";
 }
 
+export function idsOf(save: Save): HomieId[] {
+  const extra = Array.isArray(save.order) ? save.order : [];
+  const seen = new Set<string>();
+  const ids: HomieId[] = [];
+  for (const id of [...HOMIE_IDS, ...extra]) {
+    if (seen.has(id) || !save.homies[id]) continue;
+    seen.add(id);
+    ids.push(id);
+  }
+  return ids;
+}
+
 export function anyHatched(save: Save) {
-  return HOMIE_IDS.some((id) => save.homies[id].hatchedAt != null);
+  return idsOf(save).some((id) => save.homies[id].hatchedAt != null);
 }
 
 export function isNight(id: HomieId, hour: number) {
-  const { bed, wake } = SCHEDULE[id];
+  const { bed, wake } = scheduleOf(id);
   if (bed > wake) return hour >= bed || hour < wake;
   return hour >= bed && hour < wake;
 }
@@ -86,7 +103,7 @@ export function isNight(id: HomieId, hour: number) {
 export function isWorking(id: HomieId, stage: Stage, hour: number, sleeping: boolean) {
   if (sleeping) return false;
   if (stage === "baby" || stage === "kid") return false;
-  const [a, b] = SCHEDULE[id].work;
+  const [a, b] = scheduleOf(id).work;
   if (a <= b) return hour >= a && hour < b;
   return hour >= a || hour < b;
 }
@@ -126,6 +143,8 @@ function blank(id: HomieId): HomieState {
     beatCooldown: 1,
     lastBeatId: "",
     lastViewed: 0,
+    profile: null,
+    stageOffsetHours: 0,
   };
 }
 
@@ -137,6 +156,7 @@ export function freshSave(now: number): Save {
     gameMinute: START_MINUTE,
     activeId: "tony",
     muted: false,
+    order: [...HOMIE_IDS],
     homies: { tony: blank("tony"), betty: blank("betty"), nori: blank("nori") },
     log: [],
     milestones: [],
@@ -146,9 +166,9 @@ export function freshSave(now: number): Save {
 export function normalizeSave(raw: unknown, now: number): Save {
   if (!raw || typeof raw !== "object") return freshSave(now);
   const r = raw as Partial<Save>;
-  if (r.version !== SAVE_VERSION || !r.homies) return freshSave(now);
+  if ((r.version !== 1 && r.version !== SAVE_VERSION) || !r.homies) return freshSave(now);
   const base = freshSave(now);
-  const homies = {} as Save["homies"];
+  const homies: Save["homies"] = {};
   for (const id of HOMIE_IDS) {
     const incoming = r.homies[id];
     homies[id] = incoming
@@ -158,10 +178,30 @@ export function normalizeSave(raw: unknown, now: number): Save {
           stats: { ...base.homies[id].stats, ...incoming.stats },
           traits: { ...base.homies[id].traits, ...incoming.traits },
           noted: incoming.noted ?? {},
+          profile: null,
+          stageOffsetHours: 0,
         }
       : base.homies[id];
   }
-  const activeOk = !!r.activeId && HOMIE_IDS.includes(r.activeId);
+  const requested = Array.isArray(r.order) ? r.order.filter((id): id is string => typeof id === "string") : [];
+  for (const id of requested) {
+    if (isBuiltin(id) || homies[id]) continue;
+    const incoming = r.homies[id];
+    const profile = coerceStoredProfile(incoming?.profile);
+    if (!incoming || !profile) continue;
+    const seed = blank("tony");
+    homies[id] = {
+      ...seed,
+      ...incoming,
+      stats: { ...seed.stats, ...incoming.stats },
+      traits: { ...seed.traits, ...incoming.traits },
+      noted: incoming.noted ?? {},
+      profile,
+      stageOffsetHours: typeof incoming.stageOffsetHours === "number" ? incoming.stageOffsetHours : 0,
+    };
+  }
+  const order = [...HOMIE_IDS, ...requested.filter((id) => !isBuiltin(id) && homies[id])];
+  const activeOk = !!r.activeId && !!homies[r.activeId];
   return {
     version: SAVE_VERSION,
     originMs: typeof r.originMs === "number" ? r.originMs : base.originMs,
@@ -169,9 +209,10 @@ export function normalizeSave(raw: unknown, now: number): Save {
     gameMinute: typeof r.gameMinute === "number" ? r.gameMinute : base.gameMinute,
     activeId: activeOk ? r.activeId! : "tony",
     muted: !!r.muted,
+    order,
     homies,
-    log: Array.isArray(r.log) ? r.log.slice(-200) : [],
-    milestones: Array.isArray(r.milestones) ? r.milestones : [],
+    log: Array.isArray(r.log) ? r.log.filter((entry) => entry && homies[entry.homieId]).slice(-200) : [],
+    milestones: Array.isArray(r.milestones) ? r.milestones.filter((mark) => mark && homies[mark.homieId]) : [],
   };
 }
 
@@ -225,16 +266,28 @@ function rates(id: HomieId, stage: Stage, sleeping: boolean, working: boolean): 
       fun: -0.35,
     };
   }
-  const base: Stats = {
-    hunger: id === "betty" ? -6.2 : id === "nori" ? -7 : -8.4,
-    rest: id === "nori" ? -2.5 : id === "betty" ? -5.4 : -6.4,
-    happiness: 0,
-    cleanliness: id === "tony" ? -4.6 : id === "betty" ? -3 : -2,
-    energy: id === "nori" ? -5.2 : -5.6,
-    affection: -1.1,
-    health: 0,
-    fun: id === "nori" ? -6.8 : id === "betty" ? -4.2 : -6,
-  };
+  const custom = customOf(id);
+  const base: Stats = custom
+    ? {
+        hunger: custom.pace === "wired" ? -7.2 : custom.pace === "slow" ? -5.8 : -6.6,
+        rest: custom.pace === "wired" ? -2.4 : custom.pace === "slow" ? -6.2 : -5.2,
+        happiness: 0,
+        cleanliness: custom.pace === "slow" ? -4.2 : -3.2,
+        energy: custom.pace === "wired" ? -5 : -5.4,
+        affection: -1.1,
+        health: 0,
+        fun: custom.pace === "wired" ? -6.4 : custom.pace === "slow" ? -4.4 : -5.4,
+      }
+    : {
+        hunger: id === "betty" ? -6.2 : id === "nori" ? -7 : -8.4,
+        rest: id === "nori" ? -2.5 : id === "betty" ? -5.4 : -6.4,
+        happiness: 0,
+        cleanliness: id === "tony" ? -4.6 : id === "betty" ? -3 : -2,
+        energy: id === "nori" ? -5.2 : -5.6,
+        affection: -1.1,
+        health: 0,
+        fun: id === "nori" ? -6.8 : id === "betty" ? -4.2 : -6,
+      };
   if (stage === "baby") {
     base.hunger -= 2;
     base.rest -= 1.4;
@@ -276,6 +329,16 @@ function checkMilestones(save: Save, id: HomieId) {
   const h = save.homies[id];
   if (h.hatchedAt == null) return;
   const hours = ageHours(h, save.gameMinute);
+  if (h.profile) {
+    for (const m of h.profile.milestones) {
+      const mid = `${id}:${m.id}`;
+      if (save.milestones.some((x) => x.id === mid)) continue;
+      if (hours < m.minHours) continue;
+      save.milestones.push({ id: mid, homieId: id, at: save.gameMinute, title: m.title });
+      pushLog(save, id, m.title, "milestone");
+    }
+    return;
+  }
   for (const m of MILESTONES) {
     if (m.homieId !== id) continue;
     if (save.milestones.some((x) => x.id === m.id)) continue;
@@ -328,9 +391,8 @@ function putToSleep(save: Save, id: HomieId, how: "schedule" | "collapse" | "nig
   h.sleeping = true;
   if (how === "nap") h.wakeAt = save.gameMinute + 120;
   else if (how === "collapse" && !isNight(id, c.hour)) h.wakeAt = save.gameMinute + 150;
-  else h.wakeAt = nextWakeMinute(save.gameMinute, SCHEDULE[id].wake);
-  const text =
-    how === "collapse" ? COLLAPSE_LINES[id] : how === "nap" ? NAP_LINES[id] : SLEEP_LINES[id];
+  else h.wakeAt = nextWakeMinute(save.gameMinute, scheduleOf(id).wake);
+  const text = how === "collapse" ? collapseText(id) : how === "nap" ? napText(id) : sleepText(id);
   pushLog(save, id, text, "life");
   if (how === "night" || how === "schedule") h.traits.grit = clamp(h.traits.grit + 1);
 }
@@ -351,13 +413,13 @@ function onTheHour(save: Save, id: HomieId) {
   const c = clock(save.gameMinute);
   const ctx = {
     id,
-    name: NAMES[id],
+    name: nameOf(id),
     stage: h.stage,
     hour: c.hour,
     minuteLabel: c.label,
     stats: h.stats,
     traits: h.traits,
-    others: HOMIE_IDS.filter((o) => o !== id && save.homies[o].hatchedAt != null),
+    others: idsOf(save).filter((o) => o !== id && save.homies[o].hatchedAt != null),
     lifeDay: lifeDayOf(h, save.gameMinute),
   };
   const beat = rollBeat(ctx, h.lastBeatId);
@@ -369,7 +431,7 @@ function onTheHour(save: Save, id: HomieId) {
 function tick(save: Save) {
   save.gameMinute += 1;
   const c = clock(save.gameMinute);
-  for (const id of HOMIE_IDS) {
+  for (const id of idsOf(save)) {
     const h = save.homies[id];
     if (h.hatchedAt == null) continue;
     const stage = stageFor(ageHours(h, save.gameMinute));
@@ -378,7 +440,7 @@ function tick(save: Save) {
       const nextI = STAGES.indexOf(stage);
       for (let i = prevI + 1; i <= nextI; i += 1) {
         const stepped = STAGES[i];
-        const line = STAGE_LINES[id][stepped];
+        const line = stageLine(id, stepped);
         if (!line) continue;
         pushLog(save, id, line, "milestone");
         save.milestones.push({
@@ -396,7 +458,7 @@ function tick(save: Save) {
     }
     decayMinute(h, id, working);
     if (h.sleeping && h.wakeAt != null && save.gameMinute >= h.wakeAt) wakeNatural(save, id);
-    if (!h.sleeping && c.tod === SCHEDULE[id].bed * 60) putToSleep(save, id, "schedule");
+    if (!h.sleeping && c.tod === scheduleOf(id).bed * 60) putToSleep(save, id, "schedule");
     if (!h.sleeping && h.stats.rest < 8) putToSleep(save, id, "collapse");
     if (c.min === 0) onTheHour(save, id);
     noteNeeds(save, id);
@@ -405,7 +467,7 @@ function tick(save: Save) {
 }
 
 function weather(save: Save, days: number) {
-  for (const id of HOMIE_IDS) {
+  for (const id of idsOf(save)) {
     const h = save.homies[id];
     if (h.hatchedAt == null) continue;
     h.stats.hunger = Math.min(h.stats.hunger, 34);
@@ -418,11 +480,12 @@ function weather(save: Save, days: number) {
     h.traits.bond = clamp(h.traits.bond - Math.min(24, 4 * days));
     h.sleeping = false;
     h.wakeAt = null;
-    pushLog(save, id, SLIP_LINES[id], "life");
+    pushLog(save, id, slipText(id), "life");
   }
 }
 
 export function simulate(save: Save, targetMinute: number): Save {
+  bindProfiles(save.homies);
   if (targetMinute <= save.gameMinute) return save;
   const next = structuredClone(save);
   const span = targetMinute - next.gameMinute;
@@ -455,10 +518,11 @@ function scale(n: number, k: number) {
 }
 
 export function applyAction(save: Save, id: HomieId, action: Action, foodId?: string): ActionResult {
+  bindProfiles(save.homies);
   const next = structuredClone(save);
   const h = next.homies[id];
-  if (h.hatchedAt == null) return { save: next, toast: "Still an egg.", speech: null, sound: "no" };
-  const name = NAMES[id];
+  if (!h || h.hatchedAt == null) return { save: next, toast: "Still an egg.", speech: null, sound: "no" };
+  const name = nameOf(id);
   const asleep = h.sleeping;
   const k = asleep ? 0.55 : 1;
 
@@ -471,18 +535,7 @@ export function applyAction(save: Save, id: HomieId, action: Action, foodId?: st
       h.stats.happiness = clamp(h.stats.happiness - 6);
       h.traits.grit = clamp(h.traits.grit - 2);
     }
-    const speech =
-      id === "tony"
-        ? early
-          ? "You woke Tony. He blinked like you owed him something."
-          : "You woke Tony. He is rumpled and fine."
-        : id === "betty"
-          ? early
-            ? "You woke Betty. She will mention this later."
-            : "Betty is up. The kettle has been notified."
-          : early
-            ? "You brought Nori online early. They filed a gentle complaint."
-            : "Nori is back. They say the pause was productive.";
+    const speech = careSpeech(id, early ? "wake-early" : "wake-ok");
     pushLog(next, id, speech, "care");
     return { save: next, toast: speech, speech: null, sound: "wake" };
   }
@@ -490,10 +543,11 @@ export function applyAction(save: Save, id: HomieId, action: Action, foodId?: st
   if (action === "sleep") {
     if (h.sleeping) return { save: next, toast: `${name} is already resting.`, speech: null, sound: "no" };
     const c = clock(next.gameMinute);
-    const windDown = SCHEDULE[id].bed >= 18 && c.hour >= SCHEDULE[id].bed - 2 && c.hour < SCHEDULE[id].bed;
+    const bed = scheduleOf(id).bed;
+    const windDown = bed >= 18 && c.hour >= bed - 2 && c.hour < bed;
     const long = isNight(id, c.hour) || windDown || h.stats.rest < 40;
     putToSleep(next, id, long ? "night" : "nap");
-    const text = next.log[next.log.length - 1]?.text ?? SLEEP_LINES[id];
+    const text = next.log[next.log.length - 1]?.text ?? sleepText(id);
     return { save: next, toast: text, speech: null, sound: "sleep" };
   }
 
@@ -504,14 +558,13 @@ export function applyAction(save: Save, id: HomieId, action: Action, foodId?: st
     h.stats.health = clamp(h.stats.health + 34);
     h.stats.happiness = clamp(h.stats.happiness - 3);
     if (h.stats.health > 64) h.sick = false;
-    const text =
-      id === "betty" ? "Betty took the medicine and refused to make a face. She made one." : id === "nori" ? "Nori ran a patch. The warmth backed off." : "Tony took the medicine. It tasted like a dare.";
+    const text = careSpeech(id, "medicine");
     pushLog(next, id, text, "care");
     return { save: next, toast: text, speech: null, sound: "med" };
   }
 
   if (action === "feed") {
-    const list = FOODS[id];
+    const list = foodsOf(id);
     const food = list.find((f) => f.id === foodId) ?? list[0];
     const kind = food.kind;
     if (kind === "meal") {
@@ -583,7 +636,8 @@ export function applyAction(save: Save, id: HomieId, action: Action, foodId?: st
 }
 
 export function hatchHomie(save: Save, id: HomieId, nowMs: number): Save {
-  if (save.homies[id].hatchedAt != null) return save;
+  bindProfiles(save.homies);
+  if (!save.homies[id] || save.homies[id].hatchedAt != null) return save;
   const next = structuredClone(save);
   if (!anyHatched(save)) {
     next.gameMinute = START_MINUTE;
@@ -595,7 +649,7 @@ export function hatchHomie(save: Save, id: HomieId, nowMs: number): Save {
   h.stage = "baby";
   h.sleeping = false;
   h.wakeAt = null;
-  const title = HATCH_LINES[id];
+  const title = hatchLine(id);
   pushLog(next, id, title, "milestone");
   next.milestones.push({ id: `${id}-hatch`, homieId: id, at: next.gameMinute, title });
   next.activeId = id;
@@ -603,6 +657,7 @@ export function hatchHomie(save: Save, id: HomieId, nowMs: number): Save {
 }
 
 export function describe(save: Save, id: HomieId) {
+  bindProfiles(save.homies);
   const h = save.homies[id];
   const c = clock(save.gameMinute);
   const night = isNight(id, c.hour);
@@ -619,15 +674,16 @@ export function describe(save: Save, id: HomieId) {
 }
 
 export function makeRecap(save: Save, id: HomieId, minGap: number): Recap | null {
+  bindProfiles(save.homies);
   const h = save.homies[id];
-  if (h.hatchedAt == null) return null;
+  if (!h || h.hatchedAt == null) return null;
   const gap = save.gameMinute - h.lastViewed;
   if (gap < minGap) return null;
   const logs = save.log.filter((l) => l.homieId === id && l.at > h.lastViewed && l.kind !== "care");
   if (logs.length === 0 && gap < 180) return null;
   const bits = logs.slice(-4).map((l) => l.text);
   const food = cravingOf(id, Math.floor(save.gameMinute / DAY));
-  if (h.stats.hunger < 60) bits.push(`${NAMES[id]} wants ${food.name.toLowerCase()}.`);
+  if (h.stats.hunger < 60) bits.push(`${nameOf(id)} wants ${food.name.toLowerCase()}.`);
   const urgent = urgentLine(id, h);
   if (urgent) bits.unshift(urgent);
   const seen = new Set<string>();
@@ -638,10 +694,69 @@ export function makeRecap(save: Save, id: HomieId, minGap: number): Recap | null
     lines.push(bit);
     if (lines.length === 4) break;
   }
-  if (lines.length === 0) lines.push(`${NAMES[id]} had a quiet stretch. They're still here.`);
+  if (lines.length === 0) lines.push(`${nameOf(id)} had a quiet stretch. They're still here.`);
   const hour = clock(save.gameMinute).hour;
   const title = hour >= 5 && hour < 11 ? "Good morning" : hour >= 18 || hour < 5 ? "Welcome back" : "While you were out";
   return { homieId: id, title, lines };
+}
+
+function traitsFrom(descriptors: string[]): Traits {
+  const has = (word: string) => descriptors.some((item) => item.toLowerCase() === word);
+  return {
+    diet: has("impulsive") ? 38 : 56,
+    playful: has("social") || has("impulsive") || has("bold") ? 70 : has("shy") || has("grumpy") ? 34 : 52,
+    bond: has("kind") || has("gentle") ? 62 : has("grumpy") ? 34 : 46,
+    grit: has("stubborn") ? 74 : has("lazy") ? 30 : 50,
+  };
+}
+
+export function adoptHomie(save: Save, profile: CustomProfile, stage: Stage): Save {
+  const next = structuredClone(save);
+  const offset = STAGE_AT.find((row) => row.stage === stage)?.hours ?? 0;
+  const id = `c${Math.random().toString(36).slice(2, 8)}`;
+  const shaped = structuredClone(profile);
+  shaped.milestones = shaped.milestones.map((mark) => ({ ...mark, minHours: mark.minHours + offset }));
+  const homie = blank("tony");
+  homie.traits = traitsFrom(shaped.descriptors);
+  homie.stats = {
+    hunger: 62,
+    rest: 78,
+    happiness: 74,
+    cleanliness: 90,
+    energy: 76,
+    affection: 64,
+    health: 94,
+    fun: 68,
+  };
+  homie.stage = stage;
+  homie.stageOffsetHours = offset;
+  homie.profile = shaped;
+  homie.hatchedAt = next.gameMinute;
+  homie.lastViewed = next.gameMinute;
+  homie.sleeping = false;
+  homie.wakeAt = null;
+  homie.sick = false;
+  homie.noted = {};
+  next.homies[id] = homie;
+  next.order = [...HOMIE_IDS, ...next.order.filter((item) => !isBuiltin(item)), id];
+  bindProfiles(next.homies);
+  const title = shaped.hatch;
+  pushLog(next, id, title, "milestone");
+  next.milestones.push({ id: `${id}-hatch`, homieId: id, at: next.gameMinute, title });
+  next.activeId = id;
+  return next;
+}
+
+export function releaseHomie(save: Save, id: HomieId): Save {
+  if (isBuiltin(id) || !save.homies[id]) return save;
+  const next = structuredClone(save);
+  delete next.homies[id];
+  next.order = next.order.filter((item) => item !== id);
+  next.log = next.log.filter((entry) => entry.homieId !== id);
+  next.milestones = next.milestones.filter((mark) => mark.homieId !== id);
+  if (next.activeId === id) next.activeId = "tony";
+  bindProfiles(next.homies);
+  return next;
 }
 
 export { KEY as SAVE_KEY };

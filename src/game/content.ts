@@ -1,22 +1,44 @@
-import type { BeatCtx, FoodKind, HomieId, HomieState, Stage, Traits } from "./types";
+import type {
+  BeatCtx,
+  BuiltinId,
+  CustomProfile,
+  Food,
+  FoodKind,
+  HomieId,
+  HomieState,
+  NeedKey,
+  Stage,
+  Traits,
+} from "./types";
+import { HOMIE_IDS } from "./types";
 
-export type FoodIcon = "cake" | "utensils" | "pizza" | "soup" | "star" | "battery" | "zap";
+export type { Food, FoodKind };
+export type FoodIcon = Food["icon"];
 
-export type Food = {
-  id: string;
-  name: string;
-  blurb: string;
-  kind: FoodKind;
-  icon: FoodIcon;
-};
+const customs = new Map<string, CustomProfile>();
 
-export const NAMES: Record<HomieId, string> = {
+export function bindProfiles(homies: Record<string, HomieState>) {
+  customs.clear();
+  for (const [id, homie] of Object.entries(homies)) {
+    if (homie?.profile) customs.set(id, homie.profile);
+  }
+}
+
+export function customOf(id: string): CustomProfile | undefined {
+  return customs.get(id);
+}
+
+export function isBuiltin(id: string): id is BuiltinId {
+  return (HOMIE_IDS as readonly string[]).includes(id);
+}
+
+export const NAMES: Record<BuiltinId, string> = {
   tony: "Tony",
   betty: "Betty",
   nori: "Nori",
 };
 
-export const BIOS: Record<HomieId, string> = {
+export const BIOS: Record<BuiltinId, string> = {
   tony: "Lazy, social, impulsive. Will want pancakes.",
   betty: "Kind and stubborn. The garden answers to her.",
   nori: "Curious, strange, barely sleeps.",
@@ -30,13 +52,13 @@ export const STAGE_LABEL: Record<Stage, string> = {
   elder: "Elder",
 };
 
-export const SCHEDULE: Record<HomieId, { bed: number; wake: number; work: [number, number] }> = {
+export const SCHEDULE: Record<BuiltinId, { bed: number; wake: number; work: [number, number] }> = {
   tony: { bed: 23, wake: 8, work: [9, 17] },
   betty: { bed: 21, wake: 6, work: [7, 11] },
   nori: { bed: 3, wake: 5, work: [20, 23] },
 };
 
-export const FOODS: Record<HomieId, Food[]> = {
+export const FOODS: Record<BuiltinId, Food[]> = {
   tony: [
     { id: "pancakes", name: "Pancakes", blurb: "The right answer.", kind: "fav", icon: "cake" },
     { id: "diner", name: "Diner plate", blurb: "Eggs, toast, too much coffee.", kind: "meal", icon: "utensils" },
@@ -54,7 +76,7 @@ export const FOODS: Record<HomieId, Food[]> = {
   ],
 };
 
-export const HOMES: Record<HomieId, { title: string; line: string; messy: string; tidy: string }> = {
+export const HOMES: Record<BuiltinId, { title: string; line: string; messy: string; tidy: string }> = {
   tony: {
     title: "Messy apartment",
     line: "Above a garage. The hat has its own hook.",
@@ -75,13 +97,13 @@ export const HOMES: Record<HomieId, { title: string; line: string; messy: string
   },
 };
 
-export const HATCH_LINES: Record<HomieId, string> = {
+export const HATCH_LINES: Record<BuiltinId, string> = {
   tony: "Tony hatched, already looking for breakfast.",
   betty: "Betty hatched and reached for the windowsill, where a plant should be.",
   nori: "Nori booted, beeped once, and tried to hold the morning.",
 };
 
-export const STAGE_LINES: Record<HomieId, Record<Stage, string>> = {
+export const STAGE_LINES: Record<BuiltinId, Record<Stage, string>> = {
   tony: {
     baby: "",
     kid: "Tony isn't a baby anymore. The hat is too big, which is the point.",
@@ -105,69 +127,165 @@ export const STAGE_LINES: Record<HomieId, Record<Stage, string>> = {
   },
 };
 
-export const SLEEP_LINES: Record<HomieId, string> = {
+export const SLEEP_LINES: Record<BuiltinId, string> = {
   tony: "Tony went to bed. The hat stayed on the hook, barely.",
   betty: "Betty went to bed at a sensible hour, on purpose.",
   nori: "Nori docked, and called the dark a kind of thinking.",
 };
 
-export const NAP_LINES: Record<HomieId, string> = {
+export const NAP_LINES: Record<BuiltinId, string> = {
   tony: "Tony is taking a nap. He described it as a shift change.",
   betty: "Betty is napping, and would like that kept quiet.",
   nori: "Nori is docked for a little while. Not sleep. A pause.",
 };
 
-export const COLLAPSE_LINES: Record<HomieId, string> = {
+export const COLLAPSE_LINES: Record<BuiltinId, string> = {
   tony: "Tony fell asleep where he was. The floor allowed it.",
   betty: "Betty sat down for one minute and the minute won.",
   nori: "Nori dimmed without announcing it. Rare.",
 };
 
-export const SLIP_LINES: Record<HomieId, string> = {
+export const SLIP_LINES: Record<BuiltinId, string> = {
   tony: "Days slipped past. Tony kept the hat on anyway.",
   betty: "Days slipped past. Betty watered what she could.",
   nori: "Days slipped past. Nori counted them, then lost the number.",
 };
 
-const SICK_LINES: Record<HomieId, string> = {
+const SICK_LINES: Record<BuiltinId, string> = {
   tony: "Tony doesn't look well. He says it's the weather. It isn't.",
   betty: "Betty is poorly and is offended by the suggestion.",
   nori: "Nori is running warm, and has opened a ticket about it.",
 };
 
-const WELL_LINES: Record<HomieId, string> = {
+const WELL_LINES: Record<BuiltinId, string> = {
   tony: "Tony looks like himself again.",
   betty: "Betty is better, and already rewriting the story.",
   nori: "Nori cooled down. The ticket is closed.",
 };
 
+export function nameOf(id: HomieId) {
+  return customOf(id)?.name ?? (isBuiltin(id) ? NAMES[id] : "Homie");
+}
+
+export function bioOf(id: HomieId) {
+  return customOf(id)?.bio ?? (isBuiltin(id) ? BIOS[id] : "");
+}
+
+export function scheduleOf(id: HomieId) {
+  return customOf(id)?.schedule ?? (isBuiltin(id) ? SCHEDULE[id] : SCHEDULE.tony);
+}
+
+export function foodsOf(id: HomieId): Food[] {
+  const foods = customOf(id)?.foods;
+  if (foods && foods.length > 0) return foods;
+  return isBuiltin(id) ? FOODS[id] : FOODS.tony;
+}
+
+export function homeOf(id: HomieId) {
+  const custom = customOf(id);
+  if (custom) {
+    return { title: custom.homeTitle, line: custom.homeLine, messy: custom.messy, tidy: custom.tidy };
+  }
+  return isBuiltin(id) ? HOMES[id] : HOMES.tony;
+}
+
+export function portraitOf(id: HomieId, stage: Stage) {
+  const portrait = customOf(id)?.portrait;
+  if (portrait) return portrait;
+  if (isBuiltin(id)) return `/homies/${id}-${stage}.png`;
+  return EGG_SRC;
+}
+
+export function roomOf(id: HomieId): string | null {
+  if (customOf(id)) return null;
+  if (isBuiltin(id)) return `/homies/room-${id}.jpg`;
+  return null;
+}
+
+export function stageLine(id: HomieId, stage: Stage) {
+  const custom = customOf(id);
+  if (custom) return custom.stages[stage] ?? "";
+  return isBuiltin(id) ? STAGE_LINES[id][stage] : "";
+}
+
+export function hatchLine(id: HomieId) {
+  return customOf(id)?.hatch ?? (isBuiltin(id) ? HATCH_LINES[id] : "They hatched.");
+}
+
+export function sleepText(id: HomieId) {
+  return customOf(id)?.sleep ?? (isBuiltin(id) ? SLEEP_LINES[id] : `${nameOf(id)} went to bed.`);
+}
+
+export function napText(id: HomieId) {
+  return customOf(id)?.nap ?? (isBuiltin(id) ? NAP_LINES[id] : `${nameOf(id)} is napping.`);
+}
+
+export function collapseText(id: HomieId) {
+  return customOf(id)?.collapse ?? (isBuiltin(id) ? COLLAPSE_LINES[id] : `${nameOf(id)} fell asleep where they were.`);
+}
+
+export function slipText(id: HomieId) {
+  return customOf(id)?.slip ?? (isBuiltin(id) ? SLIP_LINES[id] : `Days slipped past. ${nameOf(id)} kept going.`);
+}
+
+export function careSpeech(id: HomieId, kind: "wake-early" | "wake-ok" | "medicine") {
+  const custom = customOf(id);
+  if (custom) {
+    if (kind === "wake-early") return custom.wakeEarly;
+    if (kind === "wake-ok") return custom.wakeOk;
+    return custom.medicine;
+  }
+  if (kind === "medicine") {
+    if (id === "betty") return "Betty took the medicine and refused to make a face. She made one.";
+    if (id === "nori") return "Nori ran a patch. The warmth backed off.";
+    return "Tony took the medicine. It tasted like a dare.";
+  }
+  if (id === "tony") {
+    return kind === "wake-early"
+      ? "You woke Tony. He blinked like you owed him something."
+      : "You woke Tony. He is rumpled and fine.";
+  }
+  if (id === "betty") {
+    return kind === "wake-early"
+      ? "You woke Betty. She will mention this later."
+      : "Betty is up. The kettle has been notified.";
+  }
+  return kind === "wake-early"
+    ? "You brought Nori online early. They filed a gentle complaint."
+    : "Nori is back. They say the pause was productive.";
+}
+
 export function sickLine(id: HomieId) {
-  return SICK_LINES[id];
+  return customOf(id)?.sick ?? (isBuiltin(id) ? SICK_LINES[id] : `${nameOf(id)} doesn't look well.`);
 }
 export function wellLine(id: HomieId) {
-  return WELL_LINES[id];
+  return customOf(id)?.well ?? (isBuiltin(id) ? WELL_LINES[id] : `${nameOf(id)} looks like themself again.`);
 }
 
 export function wakeLine(id: HomieId, label: string) {
+  const custom = customOf(id);
+  if (custom) return custom.wakeOk.replaceAll("{time}", label);
   if (id === "tony") return `Tony woke up at ${label}. He negotiated with the floor.`;
   if (id === "betty") return `Betty woke up at ${label}, already thinking about the garden.`;
   return `Nori came back online at ${label} and counted it as sleep.`;
 }
 
 export function portraitSrc(id: HomieId, stage: Stage) {
-  return `/homies/${id}-${stage}.png`;
+  return portraitOf(id, stage);
 }
 export function roomSrc(id: HomieId) {
-  return `/homies/room-${id}.jpg`;
+  return roomOf(id) ?? "";
 }
 export const EGG_SRC = "/homies/egg.png";
 
 export function cravingOf(id: HomieId, dayIndex: number): Food {
-  const foods = FOODS[id];
+  const foods = foodsOf(id);
   return foods[((dayIndex % foods.length) + foods.length) % foods.length];
 }
 
 export function workBlurb(id: HomieId, stage: Stage) {
+  const custom = customOf(id);
+  if (custom) return stage === "baby" || stage === "kid" ? `${custom.name} is home, practicing the day.` : custom.work;
   if (id === "tony") {
     return stage === "teen" ? "Tony is hanging around the garage." : "Tony is on a fare.";
   }
@@ -175,7 +293,7 @@ export function workBlurb(id: HomieId, stage: Stage) {
   return "Nori is naming streets that aren't there yet.";
 }
 
-const QUIPS: Record<HomieId, string[]> = {
+const QUIPS: Record<BuiltinId, string[]> = {
   tony: [
     "Tony is thinking about the hat.",
     "Tony says he's fine. His stomach disagrees, quietly.",
@@ -211,12 +329,27 @@ export function statusLine(
   night: boolean,
   wantName: string,
 ): string {
-  const name = NAMES[id];
+  const custom = customOf(id);
+  const name = nameOf(id);
   if (h.hatchedAt == null) return "Still an egg.";
   if (h.sleeping) {
     const nap = !night;
-    if (id === "nori") return nap ? "Nori is docked for a little while." : "Nori is docked.";
+    if (!custom && id === "nori") return nap ? "Nori is docked for a little while." : "Nori is docked.";
     return nap ? `${name} is napping.` : `${name} is asleep.`;
+  }
+  if (custom) {
+    if (h.sick || h.stats.health < 40) return custom.sick;
+    if (h.stats.hunger < 26) return custom.needs.hunger;
+    if (h.stats.rest < 24) return custom.needs.rest;
+    if (h.stats.cleanliness < 24) return custom.needs.cleanliness;
+    if (h.stats.fun < 24) return custom.needs.fun;
+    if (h.stats.energy < 22) return custom.needs.energy;
+    if (h.stats.affection < 28) return custom.needs.affection;
+    if (working) return custom.work;
+    if (hour >= 7 && hour < 11 && h.stats.hunger < 62) return `${name} wants ${wantName.toLowerCase()}.`;
+    const quips = custom.quips.length > 0 ? custom.quips : [`${name} is here.`];
+    void minuteLabel;
+    return quips[hour % quips.length];
   }
   if (h.sick || h.stats.health < 40) {
     if (id === "betty") return "Betty insists she is fine. She is not.";
@@ -252,8 +385,9 @@ export function statusLine(
     if (id === "betty") return "Betty feels like the day came out right.";
     return "Nori feels, experimentally, great.";
   }
+  const builtin = isBuiltin(id) ? id : "tony";
   void minuteLabel;
-  return QUIPS[id][hour % QUIPS[id].length];
+  return QUIPS[builtin][hour % QUIPS[builtin].length];
 }
 
 export function traitPhrases(t: Traits): string[] {
@@ -265,7 +399,7 @@ export function traitPhrases(t: Traits): string[] {
   return [diet, play, bond, grit];
 }
 
-const NEED_LINES: Record<HomieId, Record<string, string>> = {
+const NEED_LINES: Record<BuiltinId, Record<string, string>> = {
   tony: {
     hunger: "Tony is hungry.",
     rest: "Tony can barely keep his eyes open.",
@@ -293,12 +427,15 @@ const NEED_LINES: Record<HomieId, Record<string, string>> = {
 };
 
 export function needLine(id: HomieId, key: string) {
-  return NEED_LINES[id][key] ?? `${NAMES[id]} needs you.`;
+  const custom = customOf(id);
+  if (custom && key in custom.needs) return custom.needs[key as NeedKey];
+  if (isBuiltin(id) && NEED_LINES[id][key]) return NEED_LINES[id][key];
+  return `${nameOf(id)} needs you.`;
 }
 
 export type MilestoneDef = {
   id: string;
-  homieId: HomieId;
+  homieId: BuiltinId;
   title: string;
   minHours: number;
   test?: (h: HomieState) => boolean;
@@ -393,7 +530,7 @@ export const MILESTONES: MilestoneDef[] = [
 
 type Beat = {
   id: string;
-  who: HomieId;
+  who: BuiltinId;
   weight?: number;
   stages?: Stage[];
   hours?: [number, number];
@@ -460,6 +597,7 @@ function inHours(hour: number, range: [number, number]) {
 }
 
 function poolFor(ctx: BeatCtx, lastId: string, loose: boolean) {
+  if (!isBuiltin(ctx.id)) return [];
   let pool = BEATS.filter((b) => b.who === ctx.id);
   pool = pool.filter((b) => !b.stages || b.stages.includes(ctx.stage));
   if (!loose) pool = pool.filter((b) => !b.hours || inHours(ctx.hour, b.hours));
@@ -468,16 +606,28 @@ function poolFor(ctx: BeatCtx, lastId: string, loose: boolean) {
   return pool;
 }
 
-const QUIET: Record<HomieId, string> = {
+const QUIET: Record<BuiltinId, string> = {
   tony: "Tony had a quiet hour. He spent it near the hat.",
   betty: "Betty had a quiet hour. The garden did most of the work.",
   nori: "Nori had a quiet hour and wrote it down as data.",
 };
 
 export function rollBeat(ctx: BeatCtx, lastId: string): { id: string; text: string } {
+  const custom = customOf(ctx.id);
+  if (custom) {
+    const beats = custom.beats.filter((text) => text.trim().length > 0);
+    if (beats.length === 0) return { id: "quiet", text: `${custom.name} had a quiet hour.` };
+    const pool = beats.length > 1 ? beats.filter((_, index) => `c${index}` !== lastId) : beats;
+    const pick = pool[Math.floor(Math.random() * pool.length)] ?? beats[0];
+    const index = beats.indexOf(pick);
+    return { id: `c${index}`, text: pick };
+  }
   let pool = poolFor(ctx, lastId, false);
   if (pool.length === 0) pool = poolFor(ctx, lastId, true);
-  if (pool.length === 0) return { id: "quiet", text: QUIET[ctx.id] };
+  if (pool.length === 0) {
+    const quiet = isBuiltin(ctx.id) ? QUIET[ctx.id] : `${nameOf(ctx.id)} had a quiet hour.`;
+    return { id: "quiet", text: quiet };
+  }
   const total = pool.reduce((sum, b) => sum + (b.weight ?? 1), 0);
   let r = Math.random() * total;
   for (const b of pool) {
@@ -489,6 +639,12 @@ export function rollBeat(ctx: BeatCtx, lastId: string): { id: string; text: stri
 }
 
 export function feedLine(id: HomieId, food: Food, stage: Stage, asleep: boolean) {
+  const custom = customOf(id);
+  if (custom) {
+    const line = custom.feed.replaceAll("{food}", food.name.toLowerCase());
+    if (asleep) return `You left ${food.name.toLowerCase()} by the bed. ${custom.name} will find it.`;
+    return line;
+  }
   if (asleep) {
     if (id === "nori") return `You left ${food.name.toLowerCase()} by the dock.`;
     return `You left ${food.name.toLowerCase()} by the bed.`;
@@ -510,6 +666,8 @@ export function feedLine(id: HomieId, food: Food, stage: Stage, asleep: boolean)
 }
 
 export function playLine(id: HomieId, stage: Stage) {
+  const custom = customOf(id);
+  if (custom) return custom.play;
   if (stage === "baby") {
     if (id === "tony") return "You played with Tony. He offered you the taxi key.";
     if (id === "betty") return "You played with Betty. She stacked two spoons and looked proud.";
@@ -521,6 +679,8 @@ export function playLine(id: HomieId, stage: Stage) {
 }
 
 export function cleanLine(id: HomieId, stage: Stage) {
+  const custom = customOf(id);
+  if (custom) return custom.clean;
   if (stage === "baby") {
     if (id === "tony") return "You wiped breakfast off Tony. He considered it a sport.";
     if (id === "betty") return "You cleaned Betty's hands. She immediately found dirt.";
@@ -531,7 +691,7 @@ export function cleanLine(id: HomieId, stage: Stage) {
   return "Nori got a polish. The star in their chest looked clearer.";
 }
 
-const TALK: Record<HomieId, { test?: (h: HomieState) => boolean; text: string }[]> = {
+const TALK: Record<BuiltinId, { test?: (h: HomieState) => boolean; text: string }[]> = {
   tony: [
     { test: (h) => h.stats.hunger < 40, text: "I'm hungry." },
     { test: (h) => h.stats.energy < 35 || h.traits.grit < 40, text: "I don't wanna go to work." },
@@ -560,20 +720,29 @@ const TALK: Record<HomieId, { test?: (h: HomieState) => boolean; text: string }[
 };
 
 export function talkLine(id: HomieId, h: HomieState, asleep: boolean) {
+  const custom = customOf(id);
+  if (custom) {
+    if (asleep) return custom.talkAsleep;
+    const hungry = h.stats.hunger < 40 ? custom.needs.hunger : null;
+    const options = hungry ? [hungry, ...custom.talk] : custom.talk;
+    const pool = options.filter((line) => line.trim().length > 0);
+    return pool[Math.floor(Math.random() * pool.length)] ?? `Hey. It's ${custom.name}.`;
+  }
   if (asleep) {
     if (id === "tony") return "You whisper. Tony snores like a small engine.";
     if (id === "betty") return "You say goodnight. Betty answers without waking.";
     return "You tap the pod. Nori hums, still docked.";
   }
-  const options = TALK[id].filter((t) => !t.test || t.test(h));
-  const pick = options[Math.floor(Math.random() * options.length)] ?? TALK[id][0];
+  const who = isBuiltin(id) ? id : "tony";
+  const options = TALK[who].filter((t) => !t.test || t.test(h));
+  const pick = options[Math.floor(Math.random() * options.length)] ?? TALK[who][0];
   return pick.text;
 }
 
 export function urgentLine(id: HomieId, h: HomieState): string | null {
   if (h.sick || h.stats.health < 40) return statusLine(id, h, 12, "", false, false, "soup");
-  if (h.stats.hunger < 30) return NEED_LINES[id].hunger;
-  if (h.stats.rest < 26 && !h.sleeping) return NEED_LINES[id].rest;
-  if (h.stats.affection < 30) return NEED_LINES[id].affection;
+  if (h.stats.hunger < 30) return needLine(id, "hunger");
+  if (h.stats.rest < 26 && !h.sleeping) return needLine(id, "rest");
+  if (h.stats.affection < 30) return needLine(id, "affection");
   return null;
 }

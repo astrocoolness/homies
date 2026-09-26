@@ -1,5 +1,6 @@
 export const HOMIE_IDS = ["tony", "betty", "nori"] as const;
-export type HomieId = (typeof HOMIE_IDS)[number];
+export type BuiltinId = (typeof HOMIE_IDS)[number];
+export type HomieId = string;
 
 export const STAGES = ["baby", "kid", "teen", "adult", "elder"] as const;
 export type Stage = (typeof STAGES)[number];
@@ -26,18 +27,72 @@ export type Traits = {
 
 export type Noted = Partial<Record<StatKey | "sick", boolean>>;
 
+export type FoodKind = "fav" | "meal" | "junk";
+
+export type FoodIcon = "cake" | "utensils" | "pizza" | "soup" | "star" | "battery" | "zap";
+
+export type Food = {
+  id: string;
+  name: string;
+  blurb: string;
+  kind: FoodKind;
+  icon: FoodIcon;
+};
+
+export type Pace = "slow" | "steady" | "wired";
+
+export type NeedKey = "hunger" | "rest" | "cleanliness" | "fun" | "energy" | "affection";
+
+export type CustomProfile = {
+  name: string;
+  descriptors: string[];
+  homeTitle: string;
+  homeLine: string;
+  messy: string;
+  tidy: string;
+  job: string;
+  bio: string;
+  pace: Pace;
+  foods: Food[];
+  schedule: { bed: number; wake: number; work: [number, number] };
+  portrait: string;
+  hatch: string;
+  sleep: string;
+  nap: string;
+  collapse: string;
+  slip: string;
+  sick: string;
+  well: string;
+  wakeEarly: string;
+  wakeOk: string;
+  work: string;
+  medicine: string;
+  quips: string[];
+  beats: string[];
+  talk: string[];
+  talkAsleep: string;
+  play: string;
+  clean: string;
+  feed: string;
+  needs: Record<NeedKey, string>;
+  stages: Record<Stage, string>;
+  milestones: { id: string; title: string; minHours: number }[];
+};
+
 export type HomieState = {
   hatchedAt: number | null;
   sleeping: boolean;
   wakeAt: number | null;
   sick: boolean;
   stage: Stage;
+  stageOffsetHours: number;
   stats: Stats;
   traits: Traits;
   noted: Noted;
   beatCooldown: number;
   lastBeatId: string;
   lastViewed: number;
+  profile: CustomProfile | null;
 };
 
 export type LogKind = "life" | "care" | "milestone";
@@ -57,7 +112,7 @@ export type MilestoneRecord = {
   title: string;
 };
 
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;
 
 export type Save = {
   version: number;
@@ -66,7 +121,8 @@ export type Save = {
   gameMinute: number;
   activeId: HomieId;
   muted: boolean;
-  homies: Record<HomieId, HomieState>;
+  order: HomieId[];
+  homies: Record<string, HomieState>;
   log: LogEntry[];
   milestones: MilestoneRecord[];
 };
@@ -74,8 +130,6 @@ export type Save = {
 export type View = "care" | "episode" | "home" | "life";
 
 export type Action = "feed" | "play" | "clean" | "talk" | "sleep" | "wake" | "medicine";
-
-export type FoodKind = "fav" | "meal" | "junk";
 
 export type Sound =
   | "feed"
