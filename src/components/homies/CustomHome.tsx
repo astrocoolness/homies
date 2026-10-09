@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Film } from "lucide-react";
+import { portraitSrc, roomOf } from "@/game/content";
 import { pullReel, startReel } from "@/game/reel";
 import { dataUrlToBlob, dropReel, listReels, putReel, type SavedReel } from "@/game/reels";
 import { forgetCloudReel, publishReel } from "@/game/cloud-sync";
@@ -9,6 +10,19 @@ const CAP = 3;
 
 function cx(...parts: Array<string | false | undefined>) {
   return parts.filter(Boolean).join(" ");
+}
+
+async function filmPortrait(src: string) {
+  if (src.startsWith("data:image/") || src.startsWith("https://")) return src;
+  const res = await fetch(src);
+  if (!res.ok) throw new Error("portrait");
+  const blob = await res.blob();
+  return await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result ?? ""));
+    reader.onerror = () => reject(new Error("portrait"));
+    reader.readAsDataURL(blob);
+  });
 }
 
 export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
@@ -51,6 +65,8 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
 
   if (!profile || !homie || homie.hatchedAt == null) return null;
   const sheet = profile;
+  const still = portraitSrc(id, homie.stage);
+  const room = roomOf(id);
 
   const featured = reels.find((reel) => reel.id === picked) ?? reels[0];
   const featuredUrl = featured ? urls[featured.id] : null;
@@ -64,7 +80,7 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
     try {
       const started = await startReel({
         data: {
-          portrait: sheet.portrait,
+          portrait: await filmPortrait(still),
           name: sheet.name,
           setting: `${sheet.homeTitle}. ${sheet.homeLine} Days: ${sheet.job}`,
         },
@@ -77,7 +93,7 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
         return;
       }
       if (token.current === mine) setPhase("film");
-      for (let i = 0; i < 24; i += 1) {
+      for (let i = 0; i < 40; i += 1) {
         await new Promise((resolve) => window.setTimeout(resolve, 4000));
         const pulled = await pullReel({ data: { requestId: started.requestId } });
         if (!pulled.ok) {
@@ -149,9 +165,14 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
           ) : (
             <img key={featured.id} src={featuredUrl} alt={featured.caption} className="aspect-[4/3] w-full object-cover" />
           )
+        ) : room ? (
+          <>
+            <img src={room} alt="" className="aspect-[4/3] w-full object-cover" />
+            <img src={still} alt="" className="absolute bottom-2 left-2 h-20 w-20 object-contain drop-shadow-md" />
+          </>
         ) : (
           <div className="flex aspect-[4/3] items-end p-3">
-            <img src={sheet.portrait} alt="" className="h-36 w-36 object-contain" />
+            <img src={still} alt="" className="h-36 w-36 object-contain" />
           </div>
         )}
         {dirt > 0.05 && <div className="grime pointer-events-none absolute inset-0" style={{ opacity: dirt }} />}
@@ -186,7 +207,7 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
           className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-tomato font-display text-lg text-paper disabled:opacity-50"
         >
           <Film className="size-4" aria-hidden />
-          {phase === "room" ? "Putting them in the room..." : phase === "film" ? "Filming..." : full ? "Three moments saved" : "Film them at home"}
+          {phase === "room" ? "Putting them in the room..." : phase === "film" ? "Filming 10 seconds..." : full ? "Three moments saved" : "Film a 10-second moment"}
         </button>
         {featured && (
           <div className="flex justify-between">
@@ -200,7 +221,7 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
         )}
         {error && <p className="text-pretty text-sm text-tomato">{error}</p>}
         {!featured && !error && phase === "idle" && (
-          <p className="text-sm text-ink-soft">One short loop, in their room. It stays on this phone.</p>
+          <p className="text-sm text-ink-soft">A 10-second loop, in their room. It stays on this phone.</p>
         )}
       </div>
     </div>

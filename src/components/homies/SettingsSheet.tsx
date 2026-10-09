@@ -105,7 +105,7 @@ export function SettingsSheet({
             {made >= 4 ? "The house is full" : "Make a Homie"}
           </button>
           <p className="mt-2 text-sm text-ink-soft">
-            Traits, a life, and a photo. They move in, and custom Homies stay on your Supabase shelf.
+            The house starts with two Homies, picked from a few hundred. A photo makes a custom one — up to four — and those stay on your shelf.
           </p>
           <ul className="mt-4 space-y-2">
             {idsOf(save).map((id) => {
@@ -114,7 +114,7 @@ export function SettingsSheet({
                 <li key={id} className="rounded-2xl bg-paper px-3 py-3">
                   <p className="font-display text-lg text-ink">{nameOf(id)}</p>
                   <p className="text-sm text-pretty text-ink-soft">{bioOf(id)}</p>
-                  {!isBuiltin(id) && (
+                  {!isBuiltin(id) && idsOf(save).length > 1 && (
                     <button
                       type="button"
                       onClick={() => {

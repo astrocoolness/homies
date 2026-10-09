@@ -26,8 +26,9 @@ import {
   wakeLine,
   wellLine,
 } from "./content";
+import { isCatalogId, originalStylePortrait, rollStarters } from "./cast";
 import { coerceStoredProfile } from "./sheet";
-import type { Action, CustomProfile, HomieId, HomieState, LogKind, Recap, Save, Sound, Stage, Stats, Traits } from "./types";
+import type { Action, BuiltinId, CustomProfile, HomieId, HomieState, LogKind, Recap, Save, Sound, Stage, Stats, Traits } from "./types";
 import { HOMIE_IDS, SAVE_VERSION, STAGES } from "./types";
 
 export const MS_PER_GAME_MINUTE = 1000;
@@ -149,15 +150,24 @@ function blank(id: HomieId): HomieState {
 }
 
 export function freshSave(now: number): Save {
+  const order: HomieId[] = [];
+  const homies: Save["homies"] = {};
+  for (const starter of rollStarters()) {
+    const homie = blank(starter.id);
+    homie.profile = starter.profile;
+    homie.traits = traitsFrom(starter.profile.descriptors);
+    homies[starter.id] = homie;
+    order.push(starter.id);
+  }
   return {
     version: SAVE_VERSION,
     originMs: now - START_MINUTE * MS_PER_GAME_MINUTE,
     lastWallMs: now,
     gameMinute: START_MINUTE,
-    activeId: "tony",
+    activeId: order[0] ?? "tony",
     muted: false,
-    order: [...HOMIE_IDS],
-    homies: { tony: blank("tony"), betty: blank("betty"), nori: blank("nori") },
+    order,
+    homies,
     log: [],
     milestones: [],
   };
@@ -166,29 +176,32 @@ export function freshSave(now: number): Save {
 export function normalizeSave(raw: unknown, now: number): Save {
   if (!raw || typeof raw !== "object") return freshSave(now);
   const r = raw as Partial<Save>;
-  if ((r.version !== 1 && r.version !== SAVE_VERSION) || !r.homies) return freshSave(now);
-  const base = freshSave(now);
+  if ((r.version !== 1 && r.version !== SAVE_VERSION && r.version !== 3) || !r.homies) return freshSave(now);
   const homies: Save["homies"] = {};
   for (const id of HOMIE_IDS) {
     const incoming = r.homies[id];
-    homies[id] = incoming
-      ? {
-          ...base.homies[id],
-          ...incoming,
-          stats: { ...base.homies[id].stats, ...incoming.stats },
-          traits: { ...base.homies[id].traits, ...incoming.traits },
-          noted: incoming.noted ?? {},
-          profile: null,
-          stageOffsetHours: 0,
-        }
-      : base.homies[id];
+    if (!incoming) continue;
+    const seed = blank(id);
+    homies[id] = {
+      ...seed,
+      ...incoming,
+      stats: { ...seed.stats, ...incoming.stats },
+      traits: { ...seed.traits, ...incoming.traits },
+      noted: incoming.noted ?? {},
+      profile: null,
+      stageOffsetHours: 0,
+    };
   }
   const requested = Array.isArray(r.order) ? r.order.filter((id): id is string => typeof id === "string") : [];
   for (const id of requested) {
     if (isBuiltin(id) || homies[id]) continue;
+    if (!id.startsWith("c") && !id.startsWith("g")) continue;
     const incoming = r.homies[id];
     const profile = coerceStoredProfile(incoming?.profile);
     if (!incoming || !profile) continue;
+    if (id.startsWith("g") && profile.portrait.startsWith("data:image/svg")) {
+      profile.portrait = originalStylePortrait(id);
+    }
     const seed = blank("tony");
     homies[id] = {
       ...seed,
@@ -200,14 +213,24 @@ export function normalizeSave(raw: unknown, now: number): Save {
       stageOffsetHours: typeof incoming.stageOffsetHours === "number" ? incoming.stageOffsetHours : 0,
     };
   }
-  const order = [...HOMIE_IDS, ...requested.filter((id) => !isBuiltin(id) && homies[id])];
+  if (Object.keys(homies).length === 0) return freshSave(now);
+  const hatched = Object.values(homies).some((homie) => homie.hatchedAt != null);
+  if (!hatched) {
+    const ids = Object.keys(homies);
+    const pair = ids.length === 2 && ids.every((id) => isCatalogId(id));
+    if (!pair) return freshSave(now);
+  }
+  const order = [
+    ...HOMIE_IDS.filter((id) => homies[id]),
+    ...requested.filter((id) => !isBuiltin(id) && homies[id]),
+  ];
   const activeOk = !!r.activeId && !!homies[r.activeId];
   return {
     version: SAVE_VERSION,
-    originMs: typeof r.originMs === "number" ? r.originMs : base.originMs,
+    originMs: typeof r.originMs === "number" ? r.originMs : now - START_MINUTE * MS_PER_GAME_MINUTE,
     lastWallMs: now,
-    gameMinute: typeof r.gameMinute === "number" ? r.gameMinute : base.gameMinute,
-    activeId: activeOk ? r.activeId! : "tony",
+    gameMinute: typeof r.gameMinute === "number" ? r.gameMinute : START_MINUTE,
+    activeId: activeOk ? r.activeId! : order[0],
     muted: !!r.muted,
     order,
     homies,
@@ -738,7 +761,7 @@ export function adoptHomie(save: Save, profile: CustomProfile, stage: Stage): Sa
   homie.sick = false;
   homie.noted = {};
   next.homies[id] = homie;
-  next.order = [...HOMIE_IDS, ...next.order.filter((item) => !isBuiltin(item)), id];
+  next.order = [...HOMIE_IDS.filter((item) => next.homies[item]), ...next.order.filter((item) => !isBuiltin(item) && item !== id), id];
   bindProfiles(next.homies);
   const title = shaped.hatch;
   pushLog(next, id, title, "milestone");
@@ -749,12 +772,13 @@ export function adoptHomie(save: Save, profile: CustomProfile, stage: Stage): Sa
 
 export function releaseHomie(save: Save, id: HomieId): Save {
   if (isBuiltin(id) || !save.homies[id]) return save;
+  if (Object.keys(save.homies).length < 2) return save;
   const next = structuredClone(save);
   delete next.homies[id];
   next.order = next.order.filter((item) => item !== id);
   next.log = next.log.filter((entry) => entry.homieId !== id);
   next.milestones = next.milestones.filter((mark) => mark.homieId !== id);
-  if (next.activeId === id) next.activeId = "tony";
+  if (next.activeId === id) next.activeId = next.order.find((item) => next.homies[item]) ?? Object.keys(next.homies)[0];
   bindProfiles(next.homies);
   return next;
 }
@@ -788,7 +812,7 @@ export function restoreHomie(save: Save, id: string, profile: CustomProfile, sta
   homie.lastViewed = next.gameMinute;
   next.homies[id] = homie;
   const customs = next.order.filter((item) => !isBuiltin(item) && item !== id);
-  next.order = [...HOMIE_IDS, ...customs, id];
+  next.order = [...HOMIE_IDS.filter((item) => next.homies[item]), ...customs, id];
   bindProfiles(next.homies);
   const title = shaped.hatch;
   pushLog(next, id, title, "milestone");

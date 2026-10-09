@@ -45,6 +45,7 @@ import type { HomieId, StatKey, View } from "@/game/types";
 import { STAGES } from "@/game/types";
 import { SettingsSheet } from "./SettingsSheet";
 import { CustomHome } from "./CustomHome";
+import { ChatSheet } from "./ChatSheet";
 
 const FOOD_ICONS: Record<FoodIcon, LucideIcon> = {
   cake: Cake,
@@ -81,6 +82,7 @@ function cx(...parts: Array<string | false | undefined>) {
 export function HomiesApp() {
   const boot = useHomies((s) => s.boot);
   const catchUp = useHomies((s) => s.catchUp);
+  const ready = useHomies((s) => s.ready);
 
   useEffect(() => {
     boot();
@@ -114,6 +116,16 @@ export function HomiesApp() {
     };
   }, [catchUp]);
 
+  if (!ready) {
+    return (
+      <main className="flex min-h-dvh justify-center bg-desk md:items-center md:py-6">
+        <section className="relative flex h-dvh w-full max-w-[440px] flex-col bg-cream px-4 pt-4 md:h-[min(900px,calc(100dvh-3rem))] md:rounded-[2rem] md:shadow-2xl">
+          <p className="font-display text-2xl leading-none text-ink">HOMIES</p>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="flex min-h-dvh justify-center bg-desk md:items-center md:py-6">
       <section className="relative flex h-dvh w-full max-w-[440px] flex-col bg-cream px-4 pt-4 pb-4 md:h-[min(900px,calc(100dvh-3rem))] md:rounded-[2rem] md:shadow-2xl">
@@ -132,6 +144,7 @@ function Device() {
   const recap = useHomies((s) => s.recap);
   const dismissRecap = useHomies((s) => s.dismissRecap);
   const [settings, setSettings] = useState<null | "home" | "create">(null);
+  const [chat, setChat] = useState(false);
   bindProfiles(save.homies);
   const id = save.activeId;
   const info = describe(save, id);
@@ -146,6 +159,8 @@ function Device() {
           <p className="mt-1 flex items-center gap-1.5 text-sm text-ink-soft tabular-nums">
             <TimeIcon className="size-4 text-tomato" aria-hidden />
             {info.clock.label}
+            <span aria-hidden>·</span>
+            {roster.length} Homies
           </p>
         </div>
         <div className="flex gap-2">
@@ -206,7 +221,7 @@ function Device() {
       <div className="relative mt-3 flex min-h-0 flex-1 flex-col">
         <div className="min-h-0 flex-1 overflow-y-auto pb-2">
           {view === "care" && <CareView />}
-          {view === "care" && save.homies[id].hatchedAt != null && <CareDock />}
+          {view === "care" && save.homies[id].hatchedAt != null && <CareDock onChat={() => setChat(true)} />}
           {view === "episode" && <EpisodeView />}
           {view === "home" && <HomeView />}
           {view === "life" && <LifeView />}
@@ -254,6 +269,7 @@ function Device() {
           </div>
         )}
       </div>
+      {chat && save.homies[id]?.hatchedAt != null && <ChatSheet key={id} id={id} onClose={() => setChat(false)} />}
       {settings && (
         <SettingsSheet
           creating={settings === "create"}
@@ -370,7 +386,7 @@ function Meter({ label, icon: Icon, value }: { label: string; icon: LucideIcon; 
   );
 }
 
-function CareDock() {
+function CareDock({ onChat }: { onChat: () => void }) {
   const save = useHomies((s) => s.save);
   const feedOpen = useHomies((s) => s.feedOpen);
   const setFeed = useHomies((s) => s.setFeed);
@@ -426,7 +442,7 @@ function CareDock() {
           <Act className="col-span-2" icon={Utensils} label="Feed" onClick={() => setFeed(true)} />
           <Act className="col-span-2" icon={Gamepad2} label="Play" onClick={() => act("play")} />
           <Act className="col-span-2" icon={Sparkles} label="Clean" onClick={() => act("clean")} />
-          <Act className="col-span-3" icon={MessageCircle} label="Talk" onClick={() => act("talk")} />
+          <Act className="col-span-3" icon={MessageCircle} label="Chat" onClick={onChat} />
           <Act
             className="col-span-3"
             icon={Moon}

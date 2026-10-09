@@ -253,7 +253,8 @@ export function coerceStoredProfile(raw: unknown): CustomProfile | null {
     portrait.startsWith("https://") &&
     portrait.length < 400 &&
     portrait.includes("/storage/v1/object/public/homie-files/");
-  if (!name || (!dataPortrait && !shelfPortrait)) return null;
+  const stylePortrait = /^\/homies\/(tony|betty|nori)-\{stage\}\.png$/.test(portrait);
+  if (!name || (!dataPortrait && !shelfPortrait && !stylePortrait)) return null;
   const facts: MintFacts = {
     name,
     descriptors: Array.isArray(row.descriptors) ? row.descriptors.map((item) => clip(item, 24)).filter(Boolean).slice(0, 6) : [],

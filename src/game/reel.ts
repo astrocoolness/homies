@@ -56,12 +56,12 @@ async function toGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } |
           "-i",
           input,
           "-t",
-          "6",
+          "10",
           "-vf",
-          "fps=8,scale=320:-1:flags=lanczos,format=rgb24,split[s0][s1];[s0]palettegen=max_colors=48[p];[s1][p]paletteuse=dither=bayer",
+          "fps=6,scale=240:-1:flags=lanczos,format=rgb24,split[s0][s1];[s0]palettegen=max_colors=40[p];[s1][p]paletteuse=dither=bayer",
           output,
         ],
-        { timeout: 25_000 },
+        { timeout: 40_000 },
         (err) => (err ? reject(err) : resolve()),
       );
     });
@@ -130,9 +130,9 @@ export const startReel = createServerFn({ method: "POST" })
         signal: AbortSignal.timeout(30_000),
         body: JSON.stringify({
           model: "grok-imagine-video-1.5",
-          duration: 6,
+          duration: 10,
           image: { url: still },
-          prompt: `${data.name || "The homie"} lives a few quiet seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
+          prompt: `${data.name || "The homie"} lives for ten seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
         }),
       });
       if (!res.ok) return { ok: false, error: "The camera didn't start. Try once more." };
@@ -166,7 +166,7 @@ export const pullReel = createServerFn({ method: "POST" })
       if (status === "failed" || status === "expired") return { ok: false, error: "That take didn't come out. Try once more." };
       const url = body.video?.url;
       if (status !== "done" || !url) return { ok: true, status: "pending" };
-      const clip = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+      const clip = await fetch(url, { signal: AbortSignal.timeout(45_000) });
       if (!clip.ok) return { ok: false, error: "The loop didn't download. Try once more." };
       const bytes = Buffer.from(await clip.arrayBuffer());
       if (bytes.length < 1000 || bytes.length > 8_000_000) return { ok: false, error: "That take was too heavy." };

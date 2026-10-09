@@ -191,12 +191,16 @@ export function homeOf(id: HomieId) {
 
 export function portraitOf(id: HomieId, stage: Stage) {
   const portrait = customOf(id)?.portrait;
+  if (portrait?.includes("{stage}")) return portrait.replaceAll("{stage}", stage);
   if (portrait) return portrait;
   if (isBuiltin(id)) return `/homies/${id}-${stage}.png`;
   return EGG_SRC;
 }
 
 export function roomOf(id: HomieId): string | null {
+  const portrait = customOf(id)?.portrait ?? "";
+  const style = portrait.match(/^\/homies\/(tony|betty|nori)-/)?.[1];
+  if (style) return `/homies/room-${style}.jpg`;
   if (customOf(id)) return null;
   if (isBuiltin(id)) return `/homies/room-${id}.jpg`;
   return null;
