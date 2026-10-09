@@ -6,9 +6,9 @@ import { playSound } from "@/game/sfx";
 import { useHomies } from "@/game/store";
 
 type Msg = { who: "you" | "them"; text: string };
-type Thread = { messages: Msg[]; answers: number; done: boolean };
+type Thread = { messages: Msg[]; answers: number; sleepPings: number; done: boolean };
 
-const EMPTY: Thread = { messages: [], answers: 0, done: false };
+const EMPTY: Thread = { messages: [], answers: 0, sleepPings: 0, done: false };
 const memory = new Map<string, Thread>();
 
 function voiceOf(id: string, job: string, home: string) {
@@ -47,13 +47,21 @@ export function ChatSheet({ id, onClose }: { id: string; onClose: () => void }) 
     if (!question || sending || thread.done) return;
     setDraft("");
     if (homie.sleeping) {
+      const sleepPings = thread.sleepPings + 1;
+      const done = sleepPings >= 1;
       remember({
         ...thread,
-        messages: [...thread.messages, { who: "you", text: question }, { who: "them", text: `${name} is asleep. The question can wait.` }],
+        sleepPings,
+        done,
+        messages: [
+          ...thread.messages,
+          { who: "you", text: question },
+          { who: "them", text: done ? `${name} is asleep. That's the only answer until they wake.` : `${name} is asleep. The question can wait.` },
+        ],
       });
       return;
     }
-    const turn = thread.answers;
+    const prior = thread.messages.filter((msg) => msg.who === "you").map((msg) => msg.text).slice(0, 2);
     const pending: Thread = {
       ...thread,
       messages: [...thread.messages, { who: "you", text: question }],
@@ -67,14 +75,14 @@ export function ChatSheet({ id, onClose }: { id: string; onClose: () => void }) 
           name,
           voice: voiceOf(id, profile?.job ?? "", profile?.homeTitle ?? ""),
           question,
-          turn,
+          prior,
         },
       });
       const messages: Msg[] = [...pending.messages, { who: "them", text: reply.text }];
-      const answers = turn + 1;
+      const answers = prior.length + 1;
       const done = answers >= 3;
       if (done) messages.push({ who: "them", text: boredLine(id) });
-      remember({ messages, answers, done });
+      remember({ messages, answers, sleepPings: thread.sleepPings, done });
       playSound("talk", muted);
     } catch {
       const messages: Msg[] = [
