@@ -1,5 +1,6 @@
 import { DESCRIPTORS, templateSheet } from "./sheet";
 import { blendInfluences } from "./influences";
+import { createInfluenceGenome } from "./influence-genome";
 import type { CustomProfile, Food, FoodIcon, Stage } from "./types";
 
 export const CAST_COUNT = 240;
@@ -217,6 +218,7 @@ function buildOne(id: string, name: string, rng: Rng): { id: string; profile: Cu
   sheet.bio = `${traits.join(", ")}. ${cap(job)}. Drawn toward ${leadInfluence.essence.toLowerCase()} but complicated by ${tensionInfluence.shadows[0]}.`;
   sheet.influenceIds = influences.map((influence) => influence.id);
   sheet.influenceSummary = influences.map((influence) => influence.name).join(" + ");
+  sheet.influenceGenome = createInfluenceGenome(influences);
   sheet.hatch = `${name} is here. ${cap(habit)} Their private compass: ${leadInfluence.strengths[0]}.`;
   sheet.stages = {
     ...sheet.stages,
