@@ -46,6 +46,9 @@ export type NeedKey = "hunger" | "rest" | "cleanliness" | "fun" | "energy" | "af
 export type CustomProfile = {
   name: string;
   descriptors: string[];
+  /** Source references used to generate this original character. */
+  influenceIds?: string[];
+  influenceSummary?: string;
   homeTitle: string;
   homeLine: string;
   messy: string;
