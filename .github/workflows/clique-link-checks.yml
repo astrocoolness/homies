@@ -10,6 +10,7 @@ on:
     paths:
       - 'src/lib/clique-link.ts'
       - 'src/routes/clique/link.tsx'
+      - 'scripts/clique-link.test.mjs'
       - '.github/workflows/clique-link-checks.yml'
       - 'package.json'
       - 'package-lock.json'
@@ -37,8 +38,8 @@ jobs:
       - name: TypeScript
         run: npm run typecheck
       - name: Lint changed files
-        run: npx eslint src/lib/clique-link.ts src/routes/clique/link.tsx
-      - name: Tests
-        run: npm test
+        run: npx eslint src/lib/clique-link.ts src/routes/clique/link.tsx scripts/clique-link.test.mjs
+      - name: Focused account-linking tests
+        run: node --test scripts/clique-link.test.mjs
       - name: Production build
         run: npm run build
