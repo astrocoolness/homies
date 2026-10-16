@@ -12,7 +12,7 @@ on:
       - 'src/routes/clique/link.tsx'
       - '.github/workflows/clique-link-checks.yml'
       - 'package.json'
-      - 'pnpm-lock.yaml'
+      - 'package-lock.json'
 
 permissions:
   contents: read
@@ -27,15 +27,12 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.34.6
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm typecheck
-      - run: pnpm lint
-      - run: pnpm test
-      - run: pnpm build
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
