@@ -1,0 +1,41 @@
+name: Clique account-linking checks
+
+on:
+  push:
+    branches:
+      - feature/clique-linking
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/lib/clique-link.ts'
+      - 'src/routes/clique/link.tsx'
+      - '.github/workflows/clique-link-checks.yml'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clique-linking-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm build
