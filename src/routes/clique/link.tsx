@@ -19,8 +19,7 @@ function safeReturnTo(value: string, appKey: string): string | null {
     const host = url.hostname.toLowerCase();
     const allowedHost =
       host === "rva.guru" ||
-      host === "www.rva.guru" ||
-      (host.endsWith(".vercel.app") && host.startsWith("rva-guru-full-stack-"));
+      host === "www.rva.guru";
     if (url.protocol !== "https:" || !allowedHost || url.pathname !== "/clique/apps" || url.searchParams.get("linked") !== appKey) {
       return null;
     }
