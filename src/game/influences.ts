@@ -831,6 +831,102 @@ export const INFLUENCE_ATLAS: Influence[] = [
     storyEngines: ["the joke becomes the only honest testimony", "the fool is asked to govern and discovers the cost"],
     evolutionTriggers: ["speaks sincerely without a punchline", "protects someone with truth rather than ridicule"],
     tags: ["wise-fool", "satire", "truth", "comedy"]
+  },
+  {
+    id: "ibn-al-haytham", name: "Ibn al-Haytham (Alhazen)", era: "medieval", domain: "science", sourceType: "historical-person",
+    essence: "Treats perception as a problem to investigate, combining mathematical models with experiments designed to test them.",
+    strengths: ["careful observation", "experimental design", "intellectual independence"],
+    shadows: ["skepticism can delay action", "may trust a test more than a person's lived experience"],
+    contradiction: "Searches for reliable truth while knowing that confident perception can mislead.",
+    visualMotifs: ["light through apertures", "mirrors", "darkened rooms", "geometric ray diagrams"],
+    voicePatterns: ["separates observation from inference", "proposes a test before declaring a conclusion"],
+    storyEngines: ["an optical illusion conceals a danger", "a trusted map fails a controlled test", "a theory survives a rival's independent experiment"],
+    evolutionTriggers: ["accepts evidence against a favored theory", "admits a flawed experiment", "teaches another character how to verify a claim"],
+    tags: ["optics", "experimentation", "evidence", "scientific-method", "perception"]
+  },
+  {
+    id: "wangari-maathai", name: "Wangari Maathai", era: "contemporary", domain: "leadership", sourceType: "historical-person",
+    essence: "Turns ecological care into collective action, connecting healthy land with community dignity and long-term civic power.",
+    strengths: ["grassroots organizing", "patient stewardship", "courage under pressure"],
+    shadows: ["may carry a movement's burden alone", "urgent causes can crowd out rest"],
+    contradiction: "Plants patiently for a future she may never see while confronting powerful opponents in the present.",
+    visualMotifs: ["seedlings", "red earth", "hands passing saplings", "community nurseries"],
+    voicePatterns: ["connects large systems to local actions", "turns abstract concerns into practical shared work"],
+    storyEngines: ["a neglected public space becomes a community's future", "a small nursery challenges a powerful developer", "neighbors disagree about who owns the future of a damaged landscape"],
+    evolutionTriggers: ["delegates leadership to younger organizers", "shares responsibility for maintenance", "learns to protect rest as part of sustained service"],
+    tags: ["ecology", "community", "stewardship", "civic-courage", "regeneration"]
+  },
+  {
+    id: "amrita-sher-gil", name: "Amrita Sher-Gil", era: "early-modern", domain: "visual-art", sourceType: "historical-person",
+    essence: "Uses cross-cultural artistic synthesis, strong color, and attentive portrayals of everyday people to explore identity and belonging.",
+    strengths: ["bold color relationships", "empathetic observation", "cross-cultural synthesis"],
+    shadows: ["restlessness between worlds", "a powerful inner vision can become isolating"],
+    contradiction: "Searches for belonging through art without fitting neatly into one inherited identity.",
+    visualMotifs: ["earthy reds and ochres", "compressed interiors", "simplified forms", "quiet everyday figures"],
+    voicePatterns: ["describes people through posture and color", "lets an image hold conflicting emotions without explaining them away"],
+    storyEngines: ["an outsider discovers that observation is not the same as belonging", "a portrait exposes the gap between public role and private life", "two artistic traditions reshape each other without becoming interchangeable"],
+    evolutionTriggers: ["allows ambiguity to remain in a portrait", "recognizes the person behind an aesthetic subject", "creates a work that belongs to neither expected category"],
+    tags: ["modernist", "painting", "color", "identity", "cross-cultural", "portraiture"]
+  },
+  {
+    id: "umm-kulthum", name: "Umm Kulthum", era: "mid-century", domain: "music", sourceType: "historical-person",
+    essence: "Builds emotional scale through patient phrasing, melodic variation, repetition, and a live conversation with listeners.",
+    strengths: ["emotional pacing", "vocal endurance", "responsive performance"],
+    shadows: ["perfectionism can become a burden", "audience expectations can harden into a role"],
+    contradiction: "Commands a vast public stage while making a repeated phrase feel intimate and newly discovered.",
+    visualMotifs: ["a single microphone", "formal concert dress", "warm radio glow", "an audience leaning into a refrain"],
+    voicePatterns: ["returns to a phrase with altered emphasis", "builds intensity gradually", "responds to the room without abandoning structure"],
+    storyEngines: ["a familiar refrain changes after a revelation", "an audience's response redirects a performance", "a communal song carries different meanings across generations"],
+    evolutionTriggers: ["makes room for another performer", "accepts an imperfect moment that carries genuine feeling", "learns when repetition deepens truth and when it avoids change"],
+    tags: ["Egyptian-music", "Arabic-music", "vocal-performance", "repetition", "improvisation", "audience-connection"]
+  },
+  {
+    id: "zheng-yi-sao", name: "Zheng Yi Sao (Ching Shih)", era: "19th-century", domain: "leadership", sourceType: "historical-person",
+    essence: "Builds leverage across a fractured maritime coalition through rules, intelligence, strategic timing, and negotiation.",
+    strengths: ["coalition-building", "operational discipline", "negotiation under pressure"],
+    shadows: ["order can depend on coercion", "survival logic can normalize harm"],
+    contradiction: "Builds power outside imperial authority, then considers negotiation rather than endless combat as a route to survival.",
+    visualMotifs: ["red-sailed junks", "coded flags", "ledger books", "coastal fog"],
+    voicePatterns: ["states rules plainly", "asks what each faction gains or risks", "treats reputation as a resource with a cost"],
+    storyEngines: ["rival crews must share a scarce route", "a strict code prevents one crisis but creates another", "a feared leader must choose between defiance and a negotiated exit"],
+    evolutionTriggers: ["replaces arbitrary punishment with accountable rules", "recognizes when a coalition costs too much to maintain", "secures an exit without pretending the conflict caused no harm"],
+    tags: ["maritime", "strategy", "coalition", "negotiation", "rules", "power"]
+  },
+  {
+    id: "wang-zhenyi", name: "Wang Zhenyi", era: "enlightenment", domain: "science", sourceType: "historical-person",
+    essence: "Connects astronomy, mathematics, poetry, and clear teaching, using physical models to make celestial motion understandable.",
+    strengths: ["self-directed learning", "mathematical clarity", "interdisciplinary thinking"],
+    shadows: ["limited access can force solitary work", "short time and scarce opportunity can make every project feel urgent"],
+    contradiction: "Studies immense celestial patterns while confronting social restrictions on who is permitted to study them.",
+    visualMotifs: ["a lamp and suspended spheres modeling an eclipse", "ink diagrams", "star charts", "poetry beside calculations"],
+    voicePatterns: ["explains large systems through small physical models", "connects observation to everyday experience"],
+    storyEngines: ["a misunderstood natural event becomes clear through demonstration", "a lost notebook threatens knowledge that was never fully archived", "a beginner's question reveals that a respected explanation is needlessly obscure"],
+    evolutionTriggers: ["shares methods so others can continue the work", "questions who is excluded from the classroom", "preserves evidence while making it accessible to newcomers"],
+    tags: ["astronomy", "mathematics", "education", "poetry", "eclipses", "access-to-knowledge"]
+  },
+  {
+    id: "wayang-kulit", name: "Wayang Kulit Shadow-Puppet Theatre", era: "movement", domain: "film-performance", sourceType: "tradition",
+    essence: "A live puppeteer animates silhouettes behind a lit screen, combining inherited epics, music, improvisation, humor, and social commentary.",
+    strengths: ["layered storytelling", "expressive silhouettes", "ensemble timing"],
+    shadows: ["a familiar repertoire can become rigid", "comic spectacle can overwhelm moral complexity"],
+    contradiction: "Preserves inherited narratives while allowing performers to make them speak to present-day tensions.",
+    visualMotifs: ["perforated leather silhouettes", "lamplight behind a screen", "articulated limbs", "gamelan instruments"],
+    voicePatterns: ["distinct voices for different roles", "comic interruptions within serious events", "recurring motifs that change meaning"],
+    storyEngines: ["a shadow reveals what a visible hero refuses to see", "a comic character speaks truth to authority", "an old epic is reinterpreted for a new communal problem"],
+    evolutionTriggers: ["restores depth after a performance becomes mere spectacle", "lets younger performers reinterpret familiar roles", "balances improvisation with care for the inherited story"],
+    tags: ["puppetry", "shadow-play", "Indonesia", "Java", "music", "oral-tradition", "animation"]
+  },
+  {
+    id: "marshallese-stick-chart-navigation", name: "Marshallese Stick-Chart Navigation", era: "movement", domain: "science", sourceType: "tradition",
+    essence: "Encodes relationships among swells, currents, wind, and islands in abstract models that teach navigational understanding rather than ordinary map-reading.",
+    strengths: ["environmental pattern recognition", "embodied expertise", "teaching through models"],
+    shadows: ["knowledge can be lost when apprenticeships break", "outsiders may mistake a teaching model for a literal map"],
+    contradiction: "Uses a physical chart to teach knowledge that ultimately must be understood through experience away from the chart.",
+    visualMotifs: ["interwoven palm strips", "curved swell lines", "small shell markers", "open ocean"],
+    voicePatterns: ["describes relationships and forces rather than isolated coordinates", "tests learners through practical scenarios"],
+    storyEngines: ["a navigator reads a changing sea without the chart", "an apprentice notices a pattern an expert overlooked", "a community rebuilds a broken chain of knowledge"],
+    evolutionTriggers: ["adapts inherited knowledge to a changed environment", "trains a successor instead of guarding expertise", "explains the limits of a model before someone relies on it"],
+    tags: ["navigation", "Micronesia", "Marshall-Islands", "ocean-knowledge", "pattern-recognition", "embodied-learning"]
   }
 ];
 
