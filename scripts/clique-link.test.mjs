@@ -18,7 +18,7 @@ test("link completion requires the app's verified auth middleware", () => {
 test("link UI validates challenge and restricts return navigation", () => {
   assert.match(route, /validChallenge/);
   assert.match(route, /host === "rva\.guru"/);
-  assert.match(route, /host === "www\\.rva\\.guru"/);
+  assert.match(route, /host === "www\.rva\.guru"/);
   assert.match(route, /url\.pathname !== "\/clique\/apps"/);
   assert.match(route, /Confirm link/);
   assert.match(route, /user\.isDevFallback/);
