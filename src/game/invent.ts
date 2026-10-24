@@ -18,7 +18,23 @@ function extractJson(text: string): unknown {
   }
 }
 
-async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts: MintFacts; sheet: CustomProfile } | null> {
+function randomFacts(neighbors: string[]): MintFacts {
+  const namePool = ["Miko", "Juno", "Pip", "Lark", "Nox", "Vee", "Sol", "Rin", "Kip", "Zed"];
+  const name = namePool[Math.floor(Math.random() * namePool.length)];
+  const shuffled = [...DESCRIPTORS].sort(() => Math.random() - 0.5);
+  return {
+    name,
+    descriptors: shuffled.slice(0, 3),
+    home: "a small apartment above a quiet shop",
+    days: "fixes old radios and drinks too much tea",
+    habit: "names every plant they meet",
+    stage: "adult",
+    neighbors: neighbors.map(cleanName).filter(Boolean).slice(0, 4),
+  };
+}
+
+async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts: MintFacts; sheet: CustomProfile }> {
+  const fallbackFacts = randomFacts(neighbors);
   try {
     const res = await fetch("https://api.x.ai/v1/chat/completions", {
       method: "POST",
@@ -26,110 +42,96 @@ async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
-      signal: AbortSignal.timeout(25_000),
+      signal: AbortSignal.timeout(22_000),
       body: JSON.stringify({
         model: "grok-4.5",
-        temperature: 1.1,
-        max_tokens: 1800,
+        temperature: 0.9,
+        max_tokens: 1400,
         messages: [
           {
             role: "system",
             content:
-              "You invent original, specific, slightly weird but wholesome Tamagotchi characters in the style of rich SillyTavern character cards. Voice: warm, concrete, funny. No emoji. Reply with JSON only.",
+              "You invent original, specific, slightly weird but wholesome Tamagotchi characters. Voice: warm, concrete, funny. No emoji. Reply with JSON only.",
           },
           {
             role: "user",
-            content: `Invent a completely new Homie. Other Homies that may cameo: ${neighbors.join(", ") || "none"}.
-
-Return JSON with:
-name (1-2 words, unique),
-descriptors (exactly 3-4 from this list: ${DESCRIPTORS.join(", ")}),
-home (short place),
-days (how they spend the day),
-habit (one private quirk),
-stage (one of: baby, kid, teen, adult, elder),
-bio, homeTitle, homeLine, messy, tidy, job, pace ("slow"|"steady"|"wired"),
-schedule {bed, wake, work:[start,end]},
-foods: 3 objects {name, blurb, kind:"fav"|"meal"|"junk", icon:...},
-hatch, sleep, nap, collapse, slip, sick, well, wakeEarly, wakeOk, work, medicine,
-quips:6, beats:8, talk:5, talkAsleep, play, clean, feed (must contain {food}),
-needs:{hunger,rest,cleanliness,fun,energy,affection},
-stages:{baby:"",kid,teen,adult,elder},
-milestones:3 {title, minHours}.
-
-Also include a short "card" object for SillyTavern flavor: {description, personality, scenario, first_mes}.
-Make them feel like a real little person with a specific life.`,
+            content: `Invent a new Homie. Cameos: ${neighbors.join(", ") || "none"}.
+Return JSON: name, descriptors (3-4 from: ${DESCRIPTORS.join(", ")}), home, days, habit, stage (baby|kid|teen|adult|elder), bio, homeTitle, homeLine, job, pace, schedule, foods, quips, beats, talk, needs, stages, milestones.
+Keep it short and specific.`,
           },
         ],
       }),
     });
-    if (!res.ok) return null;
+    if (!res.ok) throw new Error("llm");
     const body = (await res.json()) as { choices?: { message?: { content?: string } }[] };
     const text = body.choices?.[0]?.message?.content ?? "";
     const raw = extractJson(text) as Record<string, unknown> | null;
-    if (!raw) return null;
-    const name = cleanName(raw.name);
-    if (name.length < 2) return null;
+    if (!raw) throw new Error("parse");
+    const name = cleanName(raw.name) || fallbackFacts.name;
     const descriptors = Array.isArray(raw.descriptors)
       ? raw.descriptors.filter((d): d is string => DESCRIPTORS.includes(d as any)).slice(0, 5)
-      : [];
-    if (descriptors.length < 2) return null;
+      : fallbackFacts.descriptors;
     const stage = STAGES.includes(raw.stage as Stage) ? (raw.stage as Stage) : "adult";
     const facts: MintFacts = {
       name,
-      descriptors,
-      home: clip(raw.home, 80) || "a little place",
-      days: clip(raw.days, 80) || "their days",
-      habit: clip(raw.habit, 80) || "a private habit",
+      descriptors: descriptors.length >= 2 ? descriptors : fallbackFacts.descriptors,
+      home: clip(raw.home, 80) || fallbackFacts.home,
+      days: clip(raw.days, 80) || fallbackFacts.days,
+      habit: clip(raw.habit, 80) || fallbackFacts.habit,
       stage,
-      neighbors: neighbors.map(cleanName).filter(Boolean).slice(0, 4),
+      neighbors: fallbackFacts.neighbors,
     };
     const sheet = sheetFromModel(raw, facts);
     sheet.name = name;
-    sheet.descriptors = descriptors;
+    sheet.descriptors = facts.descriptors;
     return { facts, sheet };
   } catch {
-    return null;
+    const sheet = templateSheet(fallbackFacts);
+    return { facts: fallbackFacts, sheet };
   }
 }
 
 function portraitPrompt(facts: MintFacts) {
   const age =
     facts.stage === "baby" ? "toddler" : facts.stage === "kid" ? "kid" : facts.stage === "teen" ? "teen" : facts.stage === "elder" ? "older" : "adult";
-  return `One cute ${age} vinyl toy character, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Personality hints: ${facts.descriptors.join(", ")}. Outfit and vibe from: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
+  return `One cute ${age} vinyl toy character, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Personality: ${facts.descriptors.join(", ")}. Vibe: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
 async function drawPortrait(apiKey: string, facts: MintFacts): Promise<string | null> {
-  const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
+  const models = ["grok-imagine-image", "grok-imagine-image-2.0"];
   for (const model of models) {
-    const res = await fetch("https://api.x.ai/v1/images/generations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      signal: AbortSignal.timeout(60_000),
-      body: JSON.stringify({
-        model,
-        prompt: portraitPrompt(facts),
-        n: 1,
-      }),
-    });
-    if (!res.ok) continue;
-    const body = (await res.json()) as {
-      data?: { b64_json?: string; url?: string }[];
-      url?: string;
-      b64_json?: string;
-    };
-    const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
-    if (b64) return `data:image/png;base64,${b64}`;
-    const url = body.data?.[0]?.url ?? body.url;
-    if (!url) continue;
-    const img = await fetch(url, { signal: AbortSignal.timeout(20_000) });
-    if (!img.ok) return null;
-    const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
-    const bytes = new Uint8Array(await img.arrayBuffer());
-    return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
+    try {
+      const res = await fetch("https://api.x.ai/v1/images/generations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        signal: AbortSignal.timeout(50_000),
+        body: JSON.stringify({
+          model,
+          prompt: portraitPrompt(facts),
+          n: 1,
+        }),
+      });
+      if (!res.ok) continue;
+      const body = (await res.json()) as {
+        data?: { b64_json?: string; url?: string }[];
+        url?: string;
+        b64_json?: string;
+      };
+      const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
+      if (b64) return `data:image/png;base64,${b64}`;
+      const url = body.data?.[0]?.url ?? body.url;
+      if (!url) continue;
+      const img = await fetch(url, { signal: AbortSignal.timeout(18_000) });
+      if (!img.ok) continue;
+      const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
+      const bytes = new Uint8Array(await img.arrayBuffer());
+      return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
+    } catch {
+      continue;
+    }
   }
   return null;
 }
@@ -145,9 +147,8 @@ export const inventHomie = createServerFn({ method: "POST" })
     if (!apiKey) return { ok: false, error: "Making new Homies isn't available right now." };
     try {
       const invented = await inventSheet(apiKey, data.neighbors);
-      if (!invented) return { ok: false, error: "Couldn't invent one. Try again." };
       const portrait = await drawPortrait(apiKey, invented.facts);
-      if (!portrait) return { ok: false, error: "The portrait didn't come through. Try again." };
+      if (!portrait) return { ok: false, error: "Couldn't draw the portrait. Try once more." };
       invented.sheet.portrait = portrait;
       return { ok: true, profile: invented.sheet, stage: invented.facts.stage };
     } catch (err) {
