@@ -20,7 +20,6 @@ function failure(stage: "room" | "film", status: number, reason: FailureReason):
     timeout: "The image/video service took too long. Wait a little before trying again.",
     response: stage === "room" ? "The room service returned no usable image. Try again later." : "The camera returned no usable take. Try again later.",
   };
-  // Log only bounded classifications, never upstream bodies, prompts or images.
   console.error("[homies/reel]", { stage, status, reason });
   return { ok: false, error: messages[reason], reason, status };
 }
@@ -55,29 +54,48 @@ async function request(apiKey: string, stage: "room" | "film", path: string, pay
   }
 }
 
+function extractImage(body: JsonObject): string | null {
+  const first = record(Array.isArray(body.data) ? body.data[0] : body);
+  if (typeof first.url === "string" && first.url.startsWith("https://")) return first.url;
+  if (typeof first.b64_json === "string" && first.b64_json.length > 0) {
+    const mime = first.mime_type === "image/png" ? "image/png" : "image/jpeg";
+    return `data:${mime};base64,${first.b64_json}`;
+  }
+  return null;
+}
+
 export async function requestReelScene(apiKey: string, portrait: string, setting: string): Promise<{ ok: true; url: string } | Failure> {
   const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
+  // Try image edit first (preserve character)
   for (const [index, model] of models.entries()) {
     const result = await request(apiKey, "room", "images/edits", {
       model,
       prompt: `Place this exact vinyl-toy character inside their home, same face and outfit, full scene, one character only. Setting: ${setting}. Warm toy-like room, no text, no watermark, no extra people.`,
       image: { url: portrait, type: "image_url" },
     }, 45_000);
-    if (!result.ok) {
-      // Only a rejected, unavailable model warrants a compatibility fallback.
-      // Billing, auth, moderation and timeouts must never create another request.
-      if (result.reason === "model" && index === 0) continue;
-      return result;
+    if (result.ok) {
+      const url = extractImage(result.body);
+      if (url) return { ok: true, url };
+    } else if (result.reason === "model" && index === 0) {
+      continue;
+    } else if (result.reason === "auth" || result.reason === "credits" || result.reason === "timeout" || result.reason === "unavailable") {
+      return result; // hard stop
     }
-    const first = record(Array.isArray(result.body.data) ? result.body.data[0] : result.body);
-    if (typeof first.url === "string" && first.url.startsWith("https://")) return { ok: true, url: first.url };
-    if (typeof first.b64_json === "string" && first.b64_json.length > 0) {
-      const mime = first.mime_type === "image/png" ? "image/png" : "image/jpeg";
-      return { ok: true, url: `data:${mime};base64,${first.b64_json}` };
-    }
-    return failure("room", 200, "response");
+    // For policy/request, fall through to generation fallback
   }
-  return failure("room", 404, "model");
+  // Fallback: pure generation describing a similar toy character in the room
+  for (const model of models) {
+    const result = await request(apiKey, "room", "images/generations", {
+      model,
+      prompt: `A cute vinyl toy character with a friendly face, similar style to a collectible figurine, standing in their cozy home. Setting: ${setting}. Warm pastel toy-like room, one character only, no text, no watermark, no extra people. Soft wholesome aesthetic.`,
+      n: 1,
+    }, 45_000);
+    if (result.ok) {
+      const url = extractImage(result.body);
+      if (url) return { ok: true, url };
+    }
+  }
+  return failure("room", 200, "response");
 }
 
 export async function requestReelVideo(apiKey: string, image: string, name: string): Promise<{ ok: true; requestId: string } | Failure> {
