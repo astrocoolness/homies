@@ -25,7 +25,7 @@ function soften(text: string): string {
   return `${safe} Soft wholesome gentle family-friendly pastel toy aesthetic. No violence no edge no suggestive no spicy content. Warm cozy safe room.`;
 }
 
-async function sceneUrl(apiKey: string, portrait: string, setting: string, soft = false): Promise<string | null> {
+async function sceneUrl(apiKey: string, portrait: string, setting: string, soft = false): Promise<{ url: string | null; err?: string }> {
   const promptSetting = soft ? soften(setting) : setting;
   const res = await fetch("https://api.x.ai/v1/images/edits", {
     method: "POST",
@@ -39,18 +39,19 @@ async function sceneUrl(apiKey: string, portrait: string, setting: string, soft 
   });
   if (!res.ok) {
     const errText = await res.text().catch(() => "");
-    console.error("sceneUrl failed", res.status, errText.slice(0, 500));
-    return null;
+    const short = errText.slice(0, 180);
+    console.error("sceneUrl failed", res.status, short);
+    return { url: null, err: `${res.status}: ${short}` };
   }
   const body = (await res.json()) as { data?: { url?: string; b64_json?: string }[]; url?: string; b64_json?: string };
   const url = body.data?.[0]?.url ?? body.url;
-  if (url) return url;
+  if (url) return { url };
   const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
   if (!b64) {
     console.error("sceneUrl no image in response");
-    return null;
+    return { url: null, err: "no image in response" };
   }
-  return `data:image/png;base64,${b64}`;
+  return { url: `data:image/png;base64,${b64}` };
 }
 
 async function toGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } | null> {
@@ -137,10 +138,11 @@ export const startReel = createServerFn({ method: "POST" })
       }
     }
     try {
-      let still = await sceneUrl(apiKey, portrait, data.setting, false);
-      if (!still) still = await sceneUrl(apiKey, portrait, data.setting, true);
-      if (!still) return { ok: false, error: "The room didn't come through. Try once more." };
+      let result = await sceneUrl(apiKey, portrait, data.setting, false);
+      if (!result.url) result = await sceneUrl(apiKey, portrait, data.setting, true);
+      if (!result.url) return { ok: false, error: `The room didn't come through. ${result.err || "Try once more."}` };
 
+      const still = result.url;
       const basePrompt = `${data.name || "The homie"} lives for ten seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`;
       const softPrompt = `${soften(basePrompt)} Soft gentle wholesome motion only.`;
 
