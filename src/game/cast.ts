@@ -1,4 +1,6 @@
 import { DESCRIPTORS, templateSheet } from "./sheet";
+import { blendInfluences } from "./influences";
+import { createInfluenceGenome } from "./influence-genome";
 import type { CustomProfile, Food, FoodIcon, Stage } from "./types";
 
 export const CAST_COUNT = 240;
@@ -196,6 +198,9 @@ function buildOne(id: string, name: string, rng: Rng): { id: string; profile: Cu
   const home = pick(HOMES, rng);
   const job = pick(JOBS, rng);
   const habit = pick(HABITS, rng);
+  const influences = blendInfluences(rng, 3);
+  const leadInfluence = influences[0]!;
+  const tensionInfluence = influences[2] ?? influences[1] ?? leadInfluence;
   const stage: Stage = "baby";
   const sheet = templateSheet({
     name,
@@ -210,8 +215,18 @@ function buildOne(id: string, name: string, rng: Rng): { id: string; profile: Cu
   sheet.homeTitle = home.title;
   sheet.homeLine = home.line;
   sheet.job = job;
-  sheet.bio = `${traits.join(", ")}. ${cap(job)}.`;
-  sheet.hatch = `${name} is here. ${cap(habit)}.`;
+  sheet.bio = `${traits.join(", ")}. ${cap(job)}. Drawn toward ${leadInfluence.essence.toLowerCase()} but complicated by ${tensionInfluence.shadows[0]}.`;
+  sheet.influenceIds = influences.map((influence) => influence.id);
+  sheet.influenceSummary = influences.map((influence) => influence.name).join(" + ");
+  sheet.influenceGenome = createInfluenceGenome(influences);
+  sheet.hatch = `${name} is here. ${cap(habit)} Their private compass: ${leadInfluence.strengths[0]}.`;
+  sheet.stages = {
+    ...sheet.stages,
+    kid: `${name} starts acting on ${leadInfluence.strengths[0]}, sometimes too much.`,
+    teen: `${name} wrestles with ${leadInfluence.contradiction.toLowerCase()}`,
+    adult: `${name} learns to balance ${leadInfluence.strengths[0]} with ${tensionInfluence.shadows[0]}.`,
+    elder: `${name} turns a lifetime of ${leadInfluence.essence.toLowerCase()} into advice nobody asked for, but somebody needs.`,
+  };
   sheet.work = `${name} is out. ${cap(job)}.`;
   sheet.talk = [
     `You can stay. I was in the middle of ${habit}.`,
@@ -219,6 +234,8 @@ function buildOne(id: string, name: string, rng: Rng): { id: string; profile: Cu
     habit,
     `Don't ask me to explain ${home.title.toLowerCase()}. It explains itself.`,
     "I saved you the good part of the day.",
+    `${leadInfluence.voicePatterns[0]}. That is how I think, apparently.`,
+    `I keep coming back to this: ${leadInfluence.essence.toLowerCase()}`,
   ];
   sheet.quips = [
     `${name} is doing it again: ${habit}.`,
@@ -227,6 +244,9 @@ function buildOne(id: string, name: string, rng: Rng): { id: string; profile: Cu
     `${name} has nowhere urgent to be, and is going anyway.`,
     `${name} kept a thought for later.`,
     `${name} checks ${home.title.toLowerCase()} like it might have news.`,
+    `${name} is caught between ${leadInfluence.strengths[0]} and ${tensionInfluence.shadows[0]}.`,
+    `${name} finds a clue in ${pick(leadInfluence.visualMotifs, rng)}.`,
+    `${name} has a plan inspired by ${pick(tensionInfluence.storyEngines, rng)}.`,
   ];
   const bed = traits.includes("Lazy") || traits.includes("Dreamy") ? 23 : traits.includes("Curious") ? 1 : 22;
   const wake = traits.includes("Lazy") ? 10 : traits.includes("Gentle") ? 6 : 8;
