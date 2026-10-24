@@ -37,12 +37,19 @@ async function sceneUrl(apiKey: string, portrait: string, setting: string, soft 
       image: { url: portrait, type: "image_url" },
     }),
   });
-  if (!res.ok) return null;
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    console.error("sceneUrl failed", res.status, errText.slice(0, 500));
+    return null;
+  }
   const body = (await res.json()) as { data?: { url?: string; b64_json?: string }[]; url?: string; b64_json?: string };
   const url = body.data?.[0]?.url ?? body.url;
   if (url) return url;
   const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
-  if (!b64) return null;
+  if (!b64) {
+    console.error("sceneUrl no image in response");
+    return null;
+  }
   return `data:image/png;base64,${b64}`;
 }
 
