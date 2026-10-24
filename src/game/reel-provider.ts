@@ -96,13 +96,12 @@ export async function requestReelScene(apiKey: string, portrait: string, setting
 }
 
 export async function requestReelVideo(apiKey: string, image: string, name: string): Promise<{ ok: true; requestId: string } | Failure> {
-  // Prefer lighter/faster model first for speed
-  const models = ["grok-imagine-video", "grok-imagine-video-1.5"];
+  const models = ["grok-imagine-video-1.5", "grok-imagine-video"];
   for (const [index, model] of models.entries()) {
     const result = await request(apiKey, "film", "videos/generations", {
-      model, duration: 6, image: { url: image },
-      prompt: `${name || "The homie"} moves gently for a few seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
-    }, 25_000);
+      model, duration: 10, image: { url: image },
+      prompt: `${name || "The homie"} lives for ten seconds in this room. Small natural motion: a glance, a shift, their habit. Camera holds steady. High quality, smooth, no new people, no text.`,
+    }, 30_000);
     if (!result.ok) {
       if (result.reason === "model" && index === 0) continue;
       return result;
