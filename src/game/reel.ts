@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { requestReelScene, requestReelVideo } from "./reel-provider";
 
 const MAX_IMAGE = 900_000;
+const MAX_KEEP = 3_500_000;
 
 export type StartReelResult = { ok: true; requestId: string } | { ok: false; error: string };
 
@@ -35,7 +36,7 @@ async function toGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } |
           "-t",
           "10",
           "-vf",
-          "fps=6,scale=240:-1:flags=lanczos,format=rgb24,split[s0][s1];[s0]palettegen=max_colors=40[p];[s1][p]paletteuse=dither=bayer",
+          "fps=4,scale=180:-1:flags=lanczos,format=rgb24,split[s0][s1];[s0]palettegen=max_colors=24[p];[s1][p]paletteuse=dither=bayer",
           output,
         ],
         { timeout: 40_000 },
@@ -43,7 +44,7 @@ async function toGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } |
       );
     });
     const bytes = await fs.readFile(output);
-    if (bytes.length < 40 || bytes.length > 1_800_000) return null;
+    if (bytes.length < 40 || bytes.length > 2_500_000) return null;
     return { mime: "image/gif", bytes };
   } catch {
     return null;
@@ -133,12 +134,11 @@ export const pullReel = createServerFn({ method: "POST" })
       const clip = await fetch(url, { signal: AbortSignal.timeout(45_000) });
       if (!clip.ok) return { ok: false, error: "The loop didn't download. Try once more." };
       const bytes = Buffer.from(await clip.arrayBuffer());
-      if (bytes.length < 1000 || bytes.length > 8_000_000) return { ok: false, error: "That take was too heavy." };
+      if (bytes.length < 1000 || bytes.length > 12_000_000) return { ok: false, error: "That take was too heavy." };
       const gif = await toGif(bytes);
-      const mime = gif?.mime ?? "video/mp4";
-      const payload = gif?.bytes ?? bytes;
-      if (payload.length > 2_200_000) return { ok: false, error: "That take was too heavy to keep." };
-      return { ok: true, status: "done", mime, media: `data:${mime};base64,${payload.toString("base64")}` };
+      if (!gif) return { ok: false, error: "Couldn't compress the take small enough. Try again." };
+      if (gif.bytes.length > MAX_KEEP) return { ok: false, error: "That take was too heavy to keep." };
+      return { ok: true, status: "done", mime: gif.mime, media: `data:${gif.mime};base64,${gif.bytes.toString("base64")}` };
     } catch (err) {
       console.error("pullReel", err instanceof Error ? err.message : "failed");
       return { ok: false, error: "That didn't work. Try once more." };
