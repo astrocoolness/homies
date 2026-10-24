@@ -66,30 +66,27 @@ function extractImage(body: JsonObject): string | null {
 
 export async function requestReelScene(apiKey: string, portrait: string, setting: string): Promise<{ ok: true; url: string } | Failure> {
   const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
-  // Try image edit first (preserve character)
   for (const [index, model] of models.entries()) {
     const result = await request(apiKey, "room", "images/edits", {
       model,
       prompt: `Place this exact vinyl-toy character inside their home, same face and outfit, full scene, one character only. Setting: ${setting}. Warm toy-like room, no text, no watermark, no extra people.`,
       image: { url: portrait, type: "image_url" },
-    }, 45_000);
+    }, 40_000);
     if (result.ok) {
       const url = extractImage(result.body);
       if (url) return { ok: true, url };
     } else if (result.reason === "model" && index === 0) {
       continue;
     } else if (result.reason === "auth" || result.reason === "credits" || result.reason === "timeout" || result.reason === "unavailable") {
-      return result; // hard stop
+      return result;
     }
-    // For policy/request, fall through to generation fallback
   }
-  // Fallback: pure generation describing a similar toy character in the room
   for (const model of models) {
     const result = await request(apiKey, "room", "images/generations", {
       model,
       prompt: `A cute vinyl toy character with a friendly face, similar style to a collectible figurine, standing in their cozy home. Setting: ${setting}. Warm pastel toy-like room, one character only, no text, no watermark, no extra people. Soft wholesome aesthetic.`,
       n: 1,
-    }, 45_000);
+    }, 40_000);
     if (result.ok) {
       const url = extractImage(result.body);
       if (url) return { ok: true, url };
@@ -99,12 +96,13 @@ export async function requestReelScene(apiKey: string, portrait: string, setting
 }
 
 export async function requestReelVideo(apiKey: string, image: string, name: string): Promise<{ ok: true; requestId: string } | Failure> {
-  const models = ["grok-imagine-video-1.5", "grok-imagine-video"];
+  // Prefer lighter/faster model first for speed
+  const models = ["grok-imagine-video", "grok-imagine-video-1.5"];
   for (const [index, model] of models.entries()) {
     const result = await request(apiKey, "film", "videos/generations", {
-      model, duration: 10, image: { url: image },
-      prompt: `${name || "The homie"} lives for ten seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
-    }, 30_000);
+      model, duration: 6, image: { url: image },
+      prompt: `${name || "The homie"} moves gently for a few seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
+    }, 25_000);
     if (!result.ok) {
       if (result.reason === "model" && index === 0) continue;
       return result;
