@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { requestReelScene, requestReelVideo } from "./reel-provider";
 
 const MAX_IMAGE = 900_000;
 
@@ -12,46 +13,6 @@ export type PullReelResult =
 function clip(value: unknown, max: number) {
   if (typeof value !== "string") return "";
   return value.replace(/\s+/g, " ").trim().slice(0, max);
-}
-
-function authHeaders(apiKey: string) {
-  return { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` };
-}
-
-function soften(text: string): string {
-  const safe = text
-    .replace(/\b(spicy|edge|violent|blood|gore|sex|nude|nsfw|dark|gritty|edgy)\b/gi, "gentle")
-    .trim();
-  return `${safe} Soft wholesome gentle family-friendly pastel toy aesthetic. No violence no edge no suggestive no spicy content. Warm cozy safe room.`;
-}
-
-async function sceneUrl(apiKey: string, portrait: string, setting: string, soft = false): Promise<{ url: string | null; err?: string }> {
-  const promptSetting = soft ? soften(setting) : setting;
-  const res = await fetch("https://api.x.ai/v1/images/edits", {
-    method: "POST",
-    headers: authHeaders(apiKey),
-    signal: AbortSignal.timeout(45_000),
-    body: JSON.stringify({
-      model: "grok-imagine-image-2.0",
-      prompt: `Place this exact vinyl-toy character inside their home, same face and outfit, full scene, one character only. Setting: ${promptSetting}. Warm toy-like room, no text, no watermark, no extra people.`,
-      image: { url: portrait, type: "image_url" },
-    }),
-  });
-  if (!res.ok) {
-    const errText = await res.text().catch(() => "");
-    const short = errText.slice(0, 180);
-    console.error("sceneUrl failed", res.status, short);
-    return { url: null, err: `${res.status}: ${short}` };
-  }
-  const body = (await res.json()) as { data?: { url?: string; b64_json?: string }[]; url?: string; b64_json?: string };
-  const url = body.data?.[0]?.url ?? body.url;
-  if (url) return { url };
-  const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
-  if (!b64) {
-    console.error("sceneUrl no image in response");
-    return { url: null, err: "no image in response" };
-  }
-  return { url: `data:image/png;base64,${b64}` };
 }
 
 async function toGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } | null> {
@@ -138,43 +99,11 @@ export const startReel = createServerFn({ method: "POST" })
       }
     }
     try {
-      let result = await sceneUrl(apiKey, portrait, data.setting, false);
-      if (!result.url) result = await sceneUrl(apiKey, portrait, data.setting, true);
-      if (!result.url) return { ok: false, error: `The room didn't come through. ${result.err || "Try once more."}` };
-
-      const still = result.url;
-      const basePrompt = `${data.name || "The homie"} lives for ten seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`;
-      const softPrompt = `${soften(basePrompt)} Soft gentle wholesome motion only.`;
-
-      let res = await fetch("https://api.x.ai/v1/videos/generations", {
-        method: "POST",
-        headers: authHeaders(apiKey),
-        signal: AbortSignal.timeout(30_000),
-        body: JSON.stringify({
-          model: "grok-imagine-video-1.5",
-          duration: 10,
-          image: { url: still },
-          prompt: basePrompt,
-        }),
-      });
-      if (!res.ok) {
-        res = await fetch("https://api.x.ai/v1/videos/generations", {
-          method: "POST",
-          headers: authHeaders(apiKey),
-          signal: AbortSignal.timeout(30_000),
-          body: JSON.stringify({
-            model: "grok-imagine-video-1.5",
-            duration: 10,
-            image: { url: still },
-            prompt: softPrompt,
-          }),
-        });
-      }
-      if (!res.ok) return { ok: false, error: "The camera didn't start. Try once more." };
-      const body = (await res.json()) as { request_id?: string; id?: string };
-      const requestId = body.request_id ?? body.id ?? "";
-      if (!/^[A-Za-z0-9-]{8,80}$/.test(requestId)) return { ok: false, error: "The camera didn't start. Try once more." };
-      return { ok: true, requestId };
+      const scene = await requestReelScene(apiKey, portrait, data.setting);
+      if (!scene.ok) return { ok: false, error: scene.error };
+      const video = await requestReelVideo(apiKey, scene.url, data.name);
+      if (!video.ok) return { ok: false, error: video.error };
+      return { ok: true, requestId: video.requestId };
     } catch (err) {
       console.error("startReel", err instanceof Error ? err.message : "failed");
       return { ok: false, error: "That didn't work. Try once more." };
