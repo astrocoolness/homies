@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { ImagePlus, X } from "lucide-react";
+import { ImagePlus, Sparkles, X } from "lucide-react";
 import { bioOf, isBuiltin, nameOf } from "@/game/content";
+import { inventHomie } from "@/game/invent";
 import { idsOf } from "@/game/logic";
 import { readKeeperId } from "@/game/keeper";
 import { mintHomie } from "@/game/mint";
@@ -105,7 +106,7 @@ export function SettingsSheet({
             {made >= 4 ? "The house is full" : "Make a Homie"}
           </button>
           <p className="mt-2 text-sm text-ink-soft">
-            The house starts with two Homies, picked from a few hundred. A photo makes a custom one — up to four — and those stay on your shelf.
+            The house starts with two Homies, picked from a few hundred. A photo makes a custom one — up to four — and those stay on your shelf. Or hit Surprise me for a random one.
           </p>
           <ul className="mt-4 space-y-2">
             {idsOf(save).map((id) => {
@@ -237,6 +238,26 @@ function Maker({
     }
   }
 
+  async function surprise() {
+    if (full || busy) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const result = await inventHomie({ data: { neighbors } });
+      if (!result.ok) {
+        setError(result.error);
+        setBusy(false);
+        return;
+      }
+      const portrait = await fitPhotoData(result.profile.portrait);
+      onDone({ ...result.profile, portrait }, result.stage);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "That didn't work. Try once more.";
+      setError(message.slice(0, 180));
+      setBusy(false);
+    }
+  }
+
   async function make() {
     if (full || busy) return;
     if (!photo) {
@@ -268,7 +289,19 @@ function Maker({
       <button type="button" onClick={onBack} className="min-h-11 font-display text-ink-soft">
         Back
       </button>
-      <label className="mt-1 block font-display text-sm text-ink" htmlFor="homie-name">
+
+      <button
+        type="button"
+        onClick={() => void surprise()}
+        disabled={busy || full}
+        className="mt-2 flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-paper font-display text-lg text-ink disabled:opacity-50"
+      >
+        <Sparkles className="size-4 text-tomato" />
+        {busy ? "Inventing..." : "Surprise me"}
+      </button>
+      <p className="mt-1 text-center text-sm text-ink-soft">A random character, SillyTavern style.</p>
+
+      <label className="mt-4 block font-display text-sm text-ink" htmlFor="homie-name">
         Name
       </label>
       <input
