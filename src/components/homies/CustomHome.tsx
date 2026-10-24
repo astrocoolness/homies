@@ -25,6 +25,13 @@ async function filmPortrait(src: string) {
   });
 }
 
+async function mediaToBlob(media: string, mime: string): Promise<Blob> {
+  if (media.startsWith("data:")) return dataUrlToBlob(media);
+  const res = await fetch(media);
+  if (!res.ok) throw new Error("fetch");
+  return await res.blob();
+}
+
 export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
   const homie = useHomies((s) => s.save.homies[id]);
   const profile = homie?.profile;
@@ -93,8 +100,8 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
         return;
       }
       if (token.current === mine) setPhase("film");
-      for (let i = 0; i < 40; i += 1) {
-        await new Promise((resolve) => window.setTimeout(resolve, 4000));
+      for (let i = 0; i < 30; i += 1) {
+        await new Promise((resolve) => window.setTimeout(resolve, 3000));
         const pulled = await pullReel({ data: { requestId: started.requestId } });
         if (!pulled.ok) {
           if (token.current === mine) {
@@ -104,13 +111,14 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
           return;
         }
         if (pulled.status === "pending") continue;
+        const blob = await mediaToBlob(pulled.media, pulled.mime);
         const reel: SavedReel = {
           id: `r${Date.now().toString(36)}`,
           homieId: id,
           caption: sheet.homeTitle,
           at: Date.now(),
           mime: pulled.mime,
-          blob: dataUrlToBlob(pulled.media),
+          blob,
         };
         await putReel(reel);
         void publishReel(reel);
@@ -207,7 +215,7 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
           className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-tomato font-display text-lg text-paper disabled:opacity-50"
         >
           <Film className="size-4" aria-hidden />
-          {phase === "room" ? "Putting them in the room..." : phase === "film" ? "Filming 10 seconds..." : full ? "Three moments saved" : "Film a 10-second moment"}
+          {phase === "room" ? "Putting them in the room..." : phase === "film" ? "Filming..." : full ? "Three moments saved" : "Film a 10-second moment"}
         </button>
         {featured && (
           <div className="flex justify-between">
@@ -221,7 +229,7 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
         )}
         {error && <p className="text-pretty text-sm text-tomato">{error}</p>}
         {!featured && !error && phase === "idle" && (
-          <p className="text-sm text-ink-soft">A 10-second loop, in their room. It stays on this phone.</p>
+          <p className="text-sm text-ink-soft">A short loop in their room. It stays on this phone.</p>
         )}
       </div>
     </div>
