@@ -15,7 +15,7 @@ function clip(value: unknown, max: number) {
   return value.replace(/\s+/g, " ").trim().slice(0, max);
 }
 
-async function toTinyGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } | null> {
+async function toQualityGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } | null> {
   const fs = await import("node:fs/promises");
   const os = await import("node:os");
   const path = await import("node:path");
@@ -33,17 +33,17 @@ async function toTinyGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer
           "-i",
           input,
           "-t",
-          "6",
+          "10",
           "-vf",
-          "fps=3,scale=120:-1:flags=lanczos,format=rgb24,split[s0][s1];[s0]palettegen=max_colors=12:stats_mode=single[p];[s1][p]paletteuse=dither=none",
+          "fps=8,scale=280:-1:flags=lanczos,format=rgb24,split[s0][s1];[s0]palettegen=max_colors=64[p];[s1][p]paletteuse=dither=bayer",
           output,
         ],
-        { timeout: 30_000 },
+        { timeout: 45_000 },
         (err) => (err ? reject(err) : resolve()),
       );
     });
     const bytes = await fs.readFile(output);
-    if (bytes.length < 40 || bytes.length > 900_000) return null;
+    if (bytes.length < 40 || bytes.length > 2_400_000) return null;
     return { mime: "image/gif", bytes };
   } catch {
     return null;
@@ -67,7 +67,7 @@ async function uploadToShelf(bytes: Buffer, mime: string, path: string): Promise
         "x-upsert": "true",
       },
       body: new Uint8Array(bytes),
-      signal: AbortSignal.timeout(15_000),
+      signal: AbortSignal.timeout(20_000),
     });
     if (!res.ok) return null;
     return `${url}/storage/v1/object/public/homie-files/${path}`;
@@ -156,17 +156,15 @@ export const pullReel = createServerFn({ method: "POST" })
       const clip = await fetch(url, { signal: AbortSignal.timeout(45_000) });
       if (!clip.ok) return { ok: false, error: "The loop didn't download. Try once more." };
       const bytes = Buffer.from(await clip.arrayBuffer());
-      if (bytes.length < 1000 || bytes.length > 20_000_000) return { ok: false, error: "That take was too heavy." };
-      const gif = await toTinyGif(bytes);
+      if (bytes.length < 1000 || bytes.length > 25_000_000) return { ok: false, error: "That take was too heavy." };
+      const gif = await toQualityGif(bytes);
       if (!gif) return { ok: false, error: "Couldn't compress the take. Try again." };
-      // Prefer public URL so the response stays small and reliable
       const shelfPath = `reels/${data.requestId}.gif`;
       const publicUrl = await uploadToShelf(gif.bytes, gif.mime, shelfPath);
       if (publicUrl) {
         return { ok: true, status: "done", mime: gif.mime, media: publicUrl };
       }
-      // Fallback to data URL only if small enough
-      if (gif.bytes.length > 1_200_000) return { ok: false, error: "That take was too heavy to keep." };
+      if (gif.bytes.length > 1_800_000) return { ok: false, error: "That take was too heavy to keep." };
       return { ok: true, status: "done", mime: gif.mime, media: `data:${gif.mime};base64,${gif.bytes.toString("base64")}` };
     } catch (err) {
       console.error("pullReel", err instanceof Error ? err.message : "failed");
