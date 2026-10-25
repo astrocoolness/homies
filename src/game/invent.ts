@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import type { CustomProfile, Stage } from "./types";
 import { STAGES } from "./types";
 import { DESCRIPTORS, cleanName, clip, sheetFromModel, templateSheet, type MintFacts } from "./sheet";
+import { chatUrl, chatModel, imageGenUrl, imageModel } from "./provider";
 
 export type InventResult =
   | { ok: true; profile: CustomProfile; stage: Stage }
@@ -36,7 +37,7 @@ function randomFacts(neighbors: string[]): MintFacts {
 async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts: MintFacts; sheet: CustomProfile }> {
   const fallbackFacts = randomFacts(neighbors);
   try {
-    const res = await fetch("https://api.x.ai/v1/chat/completions", {
+    const res = await fetch(chatUrl(apiKey), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +45,7 @@ async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts
       },
       signal: AbortSignal.timeout(22_000),
       body: JSON.stringify({
-        model: "grok-4.5",
+        model: chatModel(apiKey),
         temperature: 0.9,
         max_tokens: 1400,
         messages: [
@@ -98,42 +99,39 @@ function portraitPrompt(facts: MintFacts) {
 }
 
 async function drawPortrait(apiKey: string, facts: MintFacts): Promise<string | null> {
-  const models = ["grok-imagine-image", "grok-imagine-image-2.0"];
-  for (const model of models) {
-    try {
-      const res = await fetch("https://api.x.ai/v1/images/generations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        signal: AbortSignal.timeout(50_000),
-        body: JSON.stringify({
-          model,
-          prompt: portraitPrompt(facts),
-          n: 1,
-        }),
-      });
-      if (!res.ok) continue;
-      const body = (await res.json()) as {
-        data?: { b64_json?: string; url?: string }[];
-        url?: string;
-        b64_json?: string;
-      };
-      const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
-      if (b64) return `data:image/png;base64,${b64}`;
-      const url = body.data?.[0]?.url ?? body.url;
-      if (!url) continue;
-      const img = await fetch(url, { signal: AbortSignal.timeout(18_000) });
-      if (!img.ok) continue;
-      const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
-      const bytes = new Uint8Array(await img.arrayBuffer());
-      return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
-    } catch {
-      continue;
-    }
+  const model = imageModel(apiKey);
+  try {
+    const res = await fetch(imageGenUrl(apiKey), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      signal: AbortSignal.timeout(50_000),
+      body: JSON.stringify({
+        model,
+        prompt: portraitPrompt(facts),
+        n: 1,
+      }),
+    });
+    if (!res.ok) return null;
+    const body = (await res.json()) as {
+      data?: { b64_json?: string; url?: string }[];
+      url?: string;
+      b64_json?: string;
+    };
+    const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
+    if (b64) return `data:image/png;base64,${b64}`;
+    const url = body.data?.[0]?.url ?? body.url;
+    if (!url) return null;
+    const img = await fetch(url, { signal: AbortSignal.timeout(18_000) });
+    if (!img.ok) return null;
+    const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
+    const bytes = new Uint8Array(await img.arrayBuffer());
+    return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
+  } catch {
+    return null;
   }
-  return null;
 }
 
 export const inventHomie = createServerFn({ method: "POST" })
