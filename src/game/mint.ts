@@ -2,7 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import type { CustomProfile, Stage } from "./types";
 import { STAGES } from "./types";
 import { DESCRIPTORS, cleanName, clip, sheetFromModel, templateSheet, type MintFacts } from "./sheet";
-import { chatUrl, chatModel, imageGenUrl, imageEditUrl, imageModel, isOpenRouter } from "./provider";
 
 export type MintResult =
   | { ok: true; profile: CustomProfile }
@@ -45,7 +44,7 @@ function extractJson(text: string): unknown {
 async function writeSheet(apiKey: string, facts: MintFacts): Promise<CustomProfile> {
   const fallback = templateSheet(facts);
   try {
-    const res = await fetch(chatUrl(apiKey), {
+    const res = await fetch("https://api.x.ai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +52,7 @@ async function writeSheet(apiKey: string, facts: MintFacts): Promise<CustomProfi
       },
       signal: AbortSignal.timeout(20_000),
       body: JSON.stringify({
-        model: chatModel(apiKey),
+        model: "grok-4.5",
         temperature: 0.7,
         max_tokens: 1200,
         messages: [
@@ -111,80 +110,43 @@ function imagePrompt(facts: MintFacts) {
   return `Turn the person in this photo into one cute ${age}, full body, standing, centered. Keep their face, hair, and notable features recognizable. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Outfit hints at this life: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
-function genPrompt(facts: MintFacts) {
-  const age =
-    facts.stage === "baby" ? "toddler" : facts.stage === "kid" ? "kid" : facts.stage === "teen" ? "teen" : facts.stage === "elder" ? "older" : "adult";
-  return `One cute ${age} vinyl toy character inspired by a real person, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic. Personality: ${facts.descriptors.join(", ")}. Days: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
-}
-
-async function extractImage(res: Response): Promise<string | null> {
-  if (!res.ok) {
-    const err = await res.text().catch(() => "");
-    console.error("image api", res.status, err.slice(0, 300));
-    return null;
-  }
-  const data = (await res.json()) as {
-    data?: { b64_json?: string; url?: string }[];
-    url?: string;
-    b64_json?: string;
-  };
-  const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
-  if (b64) return `data:image/png;base64,${b64}`;
-  const imgUrl = data.data?.[0]?.url ?? data.url;
-  if (!imgUrl) return null;
-  const img = await fetch(imgUrl, { signal: AbortSignal.timeout(18_000) });
-  if (!img.ok) return null;
-  const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
-  const bytes = new Uint8Array(await img.arrayBuffer());
-  return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
-}
-
-async function tryEdit(apiKey: string, model: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
-  const url = isOpenRouter(apiKey) ? imageGenUrl(apiKey) : imageEditUrl(apiKey);
-  const body: Record<string, unknown> = {
-    model,
-    prompt: isOpenRouter(apiKey) ? genPrompt(facts) : imagePrompt(facts),
-  };
-  if (isOpenRouter(apiKey)) {
-    body.input_references = [imageDataUrl];
-  } else {
-    body.image = { url: imageDataUrl, type: "image_url" };
-  }
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    signal: AbortSignal.timeout(55_000),
-    body: JSON.stringify(body),
-  });
-  return extractImage(res);
-}
-
-async function tryGen(apiKey: string, model: string, facts: MintFacts): Promise<string | null> {
-  const res = await fetch(imageGenUrl(apiKey), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    signal: AbortSignal.timeout(45_000),
-    body: JSON.stringify({
-      model,
-      prompt: genPrompt(facts),
-      n: 1,
-    }),
-  });
-  return extractImage(res);
-}
-
 async function drawPortrait(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
-  const model = imageModel(apiKey);
-  const edited = await tryEdit(apiKey, model, facts, imageDataUrl).catch(() => null);
-  if (edited) return edited;
-  const generated = await tryGen(apiKey, model, facts).catch(() => null);
-  return generated;
+  const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
+  for (const model of models) {
+    const res = await fetch("https://api.x.ai/v1/images/edits", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      signal: AbortSignal.timeout(70_000),
+      body: JSON.stringify({
+        model,
+        prompt: imagePrompt(facts),
+        image: { url: imageDataUrl, type: "image_url" },
+      }),
+    });
+    if (!res.ok) {
+      if (res.status === 400 || res.status === 404) continue;
+      return null;
+    }
+    const body = (await res.json()) as {
+      data?: { b64_json?: string; url?: string }[];
+      url?: string;
+      b64_json?: string;
+    };
+    const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
+    if (b64) return `data:image/png;base64,${b64}`;
+    const url = body.data?.[0]?.url ?? body.url;
+    if (!url) continue;
+    const img = await fetch(url, { signal: AbortSignal.timeout(20_000) });
+    if (!img.ok) return null;
+    const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
+    const bytes = new Uint8Array(await img.arrayBuffer());
+    const encoded = Buffer.from(bytes).toString("base64");
+    return `data:${type};base64,${encoded}`;
+  }
+  return null;
 }
 
 export const mintHomie = createServerFn({ method: "POST" })
@@ -229,7 +191,7 @@ export const mintHomie = createServerFn({ method: "POST" })
         writeSheet(apiKey, facts),
         drawPortrait(apiKey, facts, data.imageDataUrl),
       ]);
-      if (!portrait) return { ok: false, error: "The portrait didn't come through. Try the photo again or use Surprise me." };
+      if (!portrait) return { ok: false, error: "The portrait didn't come through. Try the photo again." };
       sheet.portrait = portrait;
       sheet.name = facts.name;
       return { ok: true, profile: sheet };
