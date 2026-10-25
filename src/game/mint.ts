@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import type { CustomProfile, Stage } from "./types";
 import { STAGES } from "./types";
 import { DESCRIPTORS, cleanName, clip, sheetFromModel, templateSheet, type MintFacts } from "./sheet";
+import { chatUrl, chatModel, imageGenUrl, imageEditUrl, imageModel, isOpenRouter } from "./provider";
 
 export type MintResult =
   | { ok: true; profile: CustomProfile }
@@ -44,7 +45,7 @@ function extractJson(text: string): unknown {
 async function writeSheet(apiKey: string, facts: MintFacts): Promise<CustomProfile> {
   const fallback = templateSheet(facts);
   try {
-    const res = await fetch("https://api.x.ai/v1/chat/completions", {
+    const res = await fetch(chatUrl(apiKey), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ async function writeSheet(apiKey: string, facts: MintFacts): Promise<CustomProfi
       },
       signal: AbortSignal.timeout(20_000),
       body: JSON.stringify({
-        model: "grok-4.5",
+        model: chatModel(apiKey),
         temperature: 0.7,
         max_tokens: 1200,
         messages: [
@@ -117,30 +118,34 @@ function genPrompt(facts: MintFacts) {
 }
 
 async function tryEdit(apiKey: string, model: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
-  const res = await fetch("https://api.x.ai/v1/images/edits", {
+  const url = isOpenRouter(apiKey) ? imageGenUrl(apiKey) : imageEditUrl(apiKey);
+  const body: Record<string, unknown> = {
+    model,
+    prompt: isOpenRouter(apiKey) ? genPrompt(facts) : imagePrompt(facts),
+  };
+  if (!isOpenRouter(apiKey)) {
+    body.image = { url: imageDataUrl, type: "image_url" };
+  }
+  const res = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${apiKey}`,
     },
     signal: AbortSignal.timeout(55_000),
-    body: JSON.stringify({
-      model,
-      prompt: imagePrompt(facts),
-      image: { url: imageDataUrl, type: "image_url" },
-    }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) return null;
-  const body = (await res.json()) as {
+  const data = (await res.json()) as {
     data?: { b64_json?: string; url?: string }[];
     url?: string;
     b64_json?: string;
   };
-  const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
+  const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
   if (b64) return `data:image/png;base64,${b64}`;
-  const url = body.data?.[0]?.url ?? body.url;
-  if (!url) return null;
-  const img = await fetch(url, { signal: AbortSignal.timeout(18_000) });
+  const imgUrl = data.data?.[0]?.url ?? data.url;
+  if (!imgUrl) return null;
+  const img = await fetch(imgUrl, { signal: AbortSignal.timeout(18_000) });
   if (!img.ok) return null;
   const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
   const bytes = new Uint8Array(await img.arrayBuffer());
@@ -148,7 +153,7 @@ async function tryEdit(apiKey: string, model: string, facts: MintFacts, imageDat
 }
 
 async function tryGen(apiKey: string, model: string, facts: MintFacts): Promise<string | null> {
-  const res = await fetch("https://api.x.ai/v1/images/generations", {
+  const res = await fetch(imageGenUrl(apiKey), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -162,16 +167,16 @@ async function tryGen(apiKey: string, model: string, facts: MintFacts): Promise<
     }),
   });
   if (!res.ok) return null;
-  const body = (await res.json()) as {
+  const data = (await res.json()) as {
     data?: { b64_json?: string; url?: string }[];
     url?: string;
     b64_json?: string;
   };
-  const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
+  const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
   if (b64) return `data:image/png;base64,${b64}`;
-  const url = body.data?.[0]?.url ?? body.url;
-  if (!url) return null;
-  const img = await fetch(url, { signal: AbortSignal.timeout(18_000) });
+  const imgUrl = data.data?.[0]?.url ?? data.url;
+  if (!imgUrl) return null;
+  const img = await fetch(imgUrl, { signal: AbortSignal.timeout(18_000) });
   if (!img.ok) return null;
   const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
   const bytes = new Uint8Array(await img.arrayBuffer());
@@ -179,16 +184,11 @@ async function tryGen(apiKey: string, model: string, facts: MintFacts): Promise<
 }
 
 async function drawPortrait(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
-  const models = ["grok-imagine-image", "grok-imagine-image-2.0"];
-  for (const model of models) {
-    const edited = await tryEdit(apiKey, model, facts, imageDataUrl).catch(() => null);
-    if (edited) return edited;
-  }
-  for (const model of models) {
-    const generated = await tryGen(apiKey, model, facts).catch(() => null);
-    if (generated) return generated;
-  }
-  return null;
+  const model = imageModel(apiKey);
+  const edited = await tryEdit(apiKey, model, facts, imageDataUrl).catch(() => null);
+  if (edited) return edited;
+  const generated = await tryGen(apiKey, model, facts).catch(() => null);
+  return generated;
 }
 
 export const mintHomie = createServerFn({ method: "POST" })
