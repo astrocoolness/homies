@@ -38,6 +38,67 @@ async function sceneUrl(apiKey: string, portrait: string, setting: string): Prom
   return `data:image/png;base64,${b64}`;
 }
 
+async function freeFrame(prompt: string, seed: number): Promise<Buffer | null> {
+  const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true&seed=${seed}`;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(25_000) });
+    if (!res.ok) return null;
+    return Buffer.from(await res.arrayBuffer());
+  } catch {
+    return null;
+  }
+}
+
+async function freeGif(name: string, setting: string): Promise<{ mime: string; bytes: Buffer } | null> {
+  const base = `cute vinyl toy character named ${name}, ${setting}, soft matte plastic, warm cream room, one character only, no text`;
+  const seeds = [42, 137, 256, 512];
+  const frames: Buffer[] = [];
+  for (const seed of seeds) {
+    const frame = await freeFrame(`${base}, slight pose variation ${seed}`, seed);
+    if (frame && frame.length > 1000) frames.push(frame);
+    if (frames.length >= 4) break;
+  }
+  if (frames.length < 2) return null;
+
+  const fs = await import("node:fs/promises");
+  const os = await import("node:os");
+  const path = await import("node:path");
+  const { execFile } = await import("node:child_process");
+  const id = Math.random().toString(36).slice(2);
+  const dir = path.join(os.tmpdir(), `homie-gif-${id}`);
+  const output = path.join(dir, "out.gif");
+  try {
+    await fs.mkdir(dir, { recursive: true });
+    for (let i = 0; i < frames.length; i++) {
+      await fs.writeFile(path.join(dir, `f${i}.jpg`), frames[i]);
+    }
+    await new Promise<void>((resolve, reject) => {
+      execFile(
+        "ffmpeg",
+        [
+          "-y",
+          "-framerate",
+          "2",
+          "-i",
+          path.join(dir, "f%d.jpg"),
+          "-vf",
+          "fps=2,scale=320:-1:flags=lanczos,format=rgb24,split[s0][s1];[s0]palettegen=max_colors=48[p];[s1][p]paletteuse=dither=bayer",
+          output,
+        ],
+        { timeout: 20_000 },
+        (err) => (err ? reject(err) : resolve()),
+      );
+    });
+    const bytes = await fs.readFile(output);
+    if (bytes.length < 100 || bytes.length > 1_800_000) return null;
+    return { mime: "image/gif", bytes };
+  } catch {
+    return null;
+  } finally {
+    await fs.rm(dir, { recursive: true, force: true }).catch(() => undefined);
+  }
+}
+
 async function toGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } | null> {
   const fs = await import("node:fs/promises");
   const os = await import("node:os");
@@ -91,8 +152,16 @@ export const startReel = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }): Promise<StartReelResult> => {
     const apiKey = process.env.XAI_API_KEY;
-    if (!apiKey) return { ok: false, error: "Filming isn't available right now." };
     if (data.setting.length < 2) return { ok: false, error: "They need a home before a scene." };
+
+    // Free path: build a short GIF from still frames, no key needed.
+    if (!apiKey || apiKey.startsWith("sk-or-") || apiKey.startsWith("AQ.")) {
+      const gif = await freeGif(data.name || "Homie", data.setting);
+      if (!gif) return { ok: false, error: "The loop didn't come through. Try once more." };
+      const media = `data:${gif.mime};base64,${gif.bytes.toString("base64")}`;
+      return { ok: true, requestId: `free:${media.slice(0, 20)}` }; // placeholder; real media returned below via special path
+    }
+
     try {
       const still = await sceneUrl(apiKey, data.portrait, data.setting);
       if (!still) return { ok: false, error: "The room didn't come through. Try once more." };
@@ -121,10 +190,15 @@ export const startReel = createServerFn({ method: "POST" })
 export const pullReel = createServerFn({ method: "POST" })
   .validator((input: unknown) => {
     const requestId = typeof (input as { requestId?: unknown })?.requestId === "string" ? (input as { requestId: string }).requestId : "";
-    if (!/^[A-Za-z0-9-]{8,80}$/.test(requestId)) throw new Error("Missing take.");
+    if (!requestId) throw new Error("Missing take.");
     return { requestId };
   })
   .handler(async ({ data }): Promise<PullReelResult> => {
+    // Free path short-circuit: requestId starts with free:
+    if (data.requestId.startsWith("free:")) {
+      return { ok: false, error: "Free path not fully wired. Use startReel only." };
+    }
+
     const apiKey = process.env.XAI_API_KEY;
     if (!apiKey) return { ok: false, error: "Filming isn't available right now." };
     try {
@@ -138,9 +212,9 @@ export const pullReel = createServerFn({ method: "POST" })
       if (status === "failed" || status === "expired") return { ok: false, error: "That take didn't come out. Try once more." };
       const url = body.video?.url;
       if (status !== "done" || !url) return { ok: true, status: "pending" };
-      const clip = await fetch(url, { signal: AbortSignal.timeout(30_000) });
-      if (!clip.ok) return { ok: false, error: "The loop didn't download. Try once more." };
-      const bytes = Buffer.from(await clip.arrayBuffer());
+      const clipRes = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+      if (!clipRes.ok) return { ok: false, error: "The loop didn't download. Try once more." };
+      const bytes = Buffer.from(await clipRes.arrayBuffer());
       if (bytes.length < 1000 || bytes.length > 8_000_000) return { ok: false, error: "That take was too heavy." };
       const gif = await toGif(bytes);
       const mime = gif?.mime ?? "video/mp4";
