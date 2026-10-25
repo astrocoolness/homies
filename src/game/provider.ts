@@ -10,13 +10,13 @@ export function chatUrl(key: string) {
 
 export function imageGenUrl(key: string) {
   return isOpenRouter(key)
-    ? "https://openrouter.ai/api/v1/images/generations"
+    ? "https://openrouter.ai/api/v1/images"
     : "https://api.x.ai/v1/images/generations";
 }
 
 export function imageEditUrl(key: string) {
   return isOpenRouter(key)
-    ? "https://openrouter.ai/api/v1/images/generations" // OpenRouter uses gen for most
+    ? "https://openrouter.ai/api/v1/images"
     : "https://api.x.ai/v1/images/edits";
 }
 
@@ -31,5 +31,5 @@ export function chatModel(key: string) {
 }
 
 export function imageModel(key: string) {
-  return isOpenRouter(key) ? "black-forest-labs/flux.2-pro" : "grok-imagine-image";
+  return isOpenRouter(key) ? "black-forest-labs/flux.2-max" : "grok-imagine-image";
 }
