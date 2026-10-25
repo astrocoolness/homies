@@ -110,43 +110,44 @@ function imagePrompt(facts: MintFacts) {
   return `Turn the person in this photo into one cute ${age}, full body, standing, centered. Keep their face, hair, and notable features recognizable. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Outfit hints at this life: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
-async function drawPortrait(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
-  const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
-  for (const model of models) {
-    const res = await fetch("https://api.x.ai/v1/images/edits", {
+async function drawPortraitGemini(geminiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
+  const match = imageDataUrl.match(/^data:(image\/\w+);base64,(.+)$/);
+  if (!match) return null;
+  const [, mime, b64] = match;
+  const model = "gemini-nano-banana-2.1";
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`,
+    {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      signal: AbortSignal.timeout(70_000),
+      headers: { "Content-Type": "application/json" },
+      signal: AbortSignal.timeout(60_000),
       body: JSON.stringify({
-        model,
-        prompt: imagePrompt(facts),
-        image: { url: imageDataUrl, type: "image_url" },
+        contents: [
+          {
+            role: "user",
+            parts: [
+              { text: imagePrompt(facts) },
+              { inline_data: { mime_type: mime, data: b64 } },
+            ],
+          },
+        ],
+        generationConfig: {
+          responseModalities: ["IMAGE"],
+        },
       }),
-    });
-    if (!res.ok) {
-      if (res.status === 400 || res.status === 404) continue;
-      return null;
-    }
-    const body = (await res.json()) as {
-      data?: { b64_json?: string; url?: string }[];
-      url?: string;
-      b64_json?: string;
-    };
-    const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
-    if (b64) return `data:image/png;base64,${b64}`;
-    const url = body.data?.[0]?.url ?? body.url;
-    if (!url) continue;
-    const img = await fetch(url, { signal: AbortSignal.timeout(20_000) });
-    if (!img.ok) return null;
-    const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
-    const bytes = new Uint8Array(await img.arrayBuffer());
-    const encoded = Buffer.from(bytes).toString("base64");
-    return `data:${type};base64,${encoded}`;
+    },
+  );
+  if (!res.ok) {
+    console.error("gemini portrait", res.status, await res.text().catch(() => ""));
+    return null;
   }
-  return null;
+  const body = (await res.json()) as {
+    candidates?: { content?: { parts?: { inlineData?: { mimeType?: string; data?: string } }[] } }[];
+  };
+  const part = body.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data);
+  if (!part?.inlineData?.data) return null;
+  const outMime = part.inlineData.mimeType || "image/png";
+  return `data:${outMime};base64,${part.inlineData.data}`;
 }
 
 export const mintHomie = createServerFn({ method: "POST" })
@@ -184,13 +185,12 @@ export const mintHomie = createServerFn({ method: "POST" })
     if (facts.home.length < 2 || facts.days.length < 2 || facts.habit.length < 2) {
       return { ok: false, error: "Tell me where they live, how they spend the day, and one habit." };
     }
-    const apiKey = process.env.XAI_API_KEY;
-    if (!apiKey) return { ok: false, error: "Making new Homies isn't available right now." };
+    const xaiKey = process.env.XAI_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (!xaiKey && !geminiKey) return { ok: false, error: "Making new Homies isn't available right now." };
     try {
-      const [sheet, portrait] = await Promise.all([
-        writeSheet(apiKey, facts),
-        drawPortrait(apiKey, facts, data.imageDataUrl),
-      ]);
+      const sheet = xaiKey ? await writeSheet(xaiKey, facts) : templateSheet(facts);
+      const portrait = geminiKey ? await drawPortraitGemini(geminiKey, facts, data.imageDataUrl) : null;
       if (!portrait) return { ok: false, error: "The portrait didn't come through. Try the photo again." };
       sheet.portrait = portrait;
       sheet.name = facts.name;
