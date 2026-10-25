@@ -35,8 +35,11 @@ function randomFacts(neighbors: string[]): MintFacts {
 
 async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts: MintFacts; sheet: CustomProfile }> {
   const fallbackFacts = randomFacts(neighbors);
+  const isOr = apiKey.startsWith("sk-or-");
+  const url = isOr ? "https://openrouter.ai/api/v1/chat/completions" : "https://api.x.ai/v1/chat/completions";
+  const model = isOr ? "x-ai/grok-4" : "grok-4.5";
   try {
-    const res = await fetch("https://api.x.ai/v1/chat/completions", {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +47,7 @@ async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts
       },
       signal: AbortSignal.timeout(22_000),
       body: JSON.stringify({
-        model: "grok-4.5",
+        model,
         temperature: 0.9,
         max_tokens: 1400,
         messages: [
@@ -98,9 +101,14 @@ function portraitPrompt(facts: MintFacts) {
 }
 
 async function drawPortrait(apiKey: string, facts: MintFacts): Promise<string | null> {
-  const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
+  const isOr = apiKey.startsWith("sk-or-");
+  const endpoint = isOr ? "https://openrouter.ai/api/v1/images" : "https://api.x.ai/v1/images/generations";
+  const models = isOr
+    ? ["x-ai/grok-imagine-image-2.0", "x-ai/grok-imagine-image-quality"]
+    : ["grok-imagine-image-2.0", "grok-imagine-image"];
+
   for (const model of models) {
-    const res = await fetch("https://api.x.ai/v1/images/generations", {
+    const res = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -115,6 +123,7 @@ async function drawPortrait(apiKey: string, facts: MintFacts): Promise<string | 
     });
     if (!res.ok) {
       if (res.status === 400 || res.status === 404) continue;
+      console.error("invent portrait", res.status, await res.text().catch(() => ""));
       return null;
     }
     const body = (await res.json()) as {
