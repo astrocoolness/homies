@@ -33,8 +33,11 @@ function randomFacts(neighbors: string[]): MintFacts {
   };
 }
 
-async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts: MintFacts; sheet: CustomProfile }> {
+async function inventSheet(apiKey: string | undefined, neighbors: string[]): Promise<{ facts: MintFacts; sheet: CustomProfile }> {
   const fallbackFacts = randomFacts(neighbors);
+  if (!apiKey) {
+    return { facts: fallbackFacts, sheet: templateSheet(fallbackFacts) };
+  }
   const isOr = apiKey.startsWith("sk-or-");
   const url = isOr ? "https://openrouter.ai/api/v1/chat/completions" : "https://api.x.ai/v1/chat/completions";
   const model = isOr ? "x-ai/grok-4" : "grok-4.5";
@@ -100,7 +103,22 @@ function portraitPrompt(facts: MintFacts) {
   return `One cute ${age} vinyl toy character, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Personality: ${facts.descriptors.join(", ")}. Vibe: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
-async function drawPortrait(apiKey: string, facts: MintFacts): Promise<string | null> {
+async function drawPortraitFree(facts: MintFacts): Promise<string | null> {
+  const prompt = encodeURIComponent(portraitPrompt(facts));
+  const seed = Math.floor(Math.random() * 100000);
+  const url = `https://image.pollinations.ai/prompt/${prompt}?width=768&height=768&nologo=true&seed=${seed}`;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(40_000) });
+    if (!res.ok) return null;
+    const type = (res.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
+  } catch {
+    return null;
+  }
+}
+
+async function drawPortraitKeyed(apiKey: string, facts: MintFacts): Promise<string | null> {
   const isOr = apiKey.startsWith("sk-or-");
   const endpoint = isOr ? "https://openrouter.ai/api/v1/images" : "https://api.x.ai/v1/images/generations";
   const models = isOr
@@ -123,7 +141,6 @@ async function drawPortrait(apiKey: string, facts: MintFacts): Promise<string | 
     });
     if (!res.ok) {
       if (res.status === 400 || res.status === 404) continue;
-      console.error("invent portrait", res.status, await res.text().catch(() => ""));
       return null;
     }
     const body = (await res.json()) as {
@@ -152,10 +169,10 @@ export const inventHomie = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }): Promise<InventResult> => {
     const apiKey = process.env.XAI_API_KEY;
-    if (!apiKey) return { ok: false, error: "Making new Homies isn't available right now." };
     try {
       const invented = await inventSheet(apiKey, data.neighbors);
-      const portrait = await drawPortrait(apiKey, invented.facts);
+      let portrait = await drawPortraitFree(invented.facts);
+      if (!portrait && apiKey) portrait = await drawPortraitKeyed(apiKey, invented.facts);
       if (!portrait) return { ok: false, error: "Couldn't draw the portrait. Try once more." };
       invented.sheet.portrait = portrait;
       return { ok: true, profile: invented.sheet, stage: invented.facts.stage };
