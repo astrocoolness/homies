@@ -117,25 +117,12 @@ function genPrompt(facts: MintFacts) {
   return `One cute ${age} vinyl toy character inspired by a real person, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic. Personality: ${facts.descriptors.join(", ")}. Days: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
-async function tryEdit(apiKey: string, model: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
-  const url = isOpenRouter(apiKey) ? imageGenUrl(apiKey) : imageEditUrl(apiKey);
-  const body: Record<string, unknown> = {
-    model,
-    prompt: isOpenRouter(apiKey) ? genPrompt(facts) : imagePrompt(facts),
-  };
-  if (!isOpenRouter(apiKey)) {
-    body.image = { url: imageDataUrl, type: "image_url" };
+async function extractImage(res: Response): Promise<string | null> {
+  if (!res.ok) {
+    const err = await res.text().catch(() => "");
+    console.error("image api", res.status, err.slice(0, 300));
+    return null;
   }
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    signal: AbortSignal.timeout(55_000),
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) return null;
   const data = (await res.json()) as {
     data?: { b64_json?: string; url?: string }[];
     url?: string;
@@ -152,6 +139,29 @@ async function tryEdit(apiKey: string, model: string, facts: MintFacts, imageDat
   return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
 }
 
+async function tryEdit(apiKey: string, model: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
+  const url = isOpenRouter(apiKey) ? imageGenUrl(apiKey) : imageEditUrl(apiKey);
+  const body: Record<string, unknown> = {
+    model,
+    prompt: isOpenRouter(apiKey) ? genPrompt(facts) : imagePrompt(facts),
+  };
+  if (isOpenRouter(apiKey)) {
+    body.input_references = [imageDataUrl];
+  } else {
+    body.image = { url: imageDataUrl, type: "image_url" };
+  }
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    signal: AbortSignal.timeout(55_000),
+    body: JSON.stringify(body),
+  });
+  return extractImage(res);
+}
+
 async function tryGen(apiKey: string, model: string, facts: MintFacts): Promise<string | null> {
   const res = await fetch(imageGenUrl(apiKey), {
     method: "POST",
@@ -166,21 +176,7 @@ async function tryGen(apiKey: string, model: string, facts: MintFacts): Promise<
       n: 1,
     }),
   });
-  if (!res.ok) return null;
-  const data = (await res.json()) as {
-    data?: { b64_json?: string; url?: string }[];
-    url?: string;
-    b64_json?: string;
-  };
-  const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
-  if (b64) return `data:image/png;base64,${b64}`;
-  const imgUrl = data.data?.[0]?.url ?? data.url;
-  if (!imgUrl) return null;
-  const img = await fetch(imgUrl, { signal: AbortSignal.timeout(18_000) });
-  if (!img.ok) return null;
-  const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
-  const bytes = new Uint8Array(await img.arrayBuffer());
-  return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
+  return extractImage(res);
 }
 
 async function drawPortrait(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
