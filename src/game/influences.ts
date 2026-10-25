@@ -1217,6 +1217,444 @@ export const INFLUENCE_ATLAS: Influence[] = [
     evolutionTriggers: ["uses insight to reduce suffering rather than win a debate","learns when not to argue","recognizes responsibility within interdependence"],
     tags: ["India","Nagarjuna","Nāgārjuna","Madhyamaka","Buddhist-philosophy","dependent-origination","dialectic","interdependence"],
   },
+  // Research: https://ich.unesco.org/en/RL/ifa-divination-system-00146
+  {
+    "id": "ifa-yoruba-divination",
+    "name": "Ifa Yoruba Divination and Oral Knowledge",
+    "era": "movement",
+    "domain": "spirituality",
+    "sourceType": "tradition",
+    "essence": "A Yoruba system of interpreted signs and extensive poetic verses linking consequential decisions with memory, ethical reflection, and trained interpretation.",
+    "strengths": [
+      "pattern interpretation within inherited knowledge",
+      "ethical deliberation",
+      "intergenerational mentorship"
+    ],
+    "shadows": [
+      "interpreters may confuse authority with infallibility",
+      "outsiders may flatten sacred knowledge into a game mechanic"
+    ],
+    "contradiction": "Formal signs help confront situations that resist simple answers.",
+    "visualMotifs": [
+      "divination-chain silhouette",
+      "carefully arranged symbolic marks",
+      "a listening circle"
+    ],
+    "voicePatterns": [
+      "offers an interpretive story rather than an absolute command",
+      "asks about consequences for the community"
+    ],
+    "storyEngines": [
+      "an adviser admits the limits of an interpretation",
+      "two readings expose a hidden disagreement",
+      "an apprentice protects knowledge without claiming ownership"
+    ],
+    "evolutionTriggers": [
+      "consults people affected by a decision",
+      "respects boundaries around sacred knowledge",
+      "admits uncertainty"
+    ],
+    "tags": [
+      "Yoruba",
+      "Nigeria",
+      "Ifa",
+      "Orunmila",
+      "odu",
+      "divination",
+      "ethics",
+      "living-tradition"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/gastronomic-meals-of-the-french-inclusion-00133
+  {
+    "id": "chopi-timbila-orchestras",
+    "name": "Chopi Timbila Orchestras",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Mozambican community orchestras of tuned wooden xylophones weave cross-rhythms, social commentary, and collective performance.",
+    "strengths": [
+      "ensemble listening",
+      "acoustic craftsmanship",
+      "rhythmic coordination across generations"
+    ],
+    "shadows": [
+      "a soloist may drown out the group",
+      "scarcity of instrument materials threatens continuity"
+    ],
+    "contradiction": "Complex shared rhythm depends on each player hearing the spaces left by others.",
+    "visualMotifs": [
+      "wooden timbila keys",
+      "calabash resonators",
+      "interlocking hands in motion",
+      "dancers before an orchestra"
+    ],
+    "voicePatterns": [
+      "answers with a counter-rhythm",
+      "uses gentle satire to reveal a communal problem"
+    ],
+    "storyEngines": [
+      "a broken instrument forces a new arrangement",
+      "an apprentice joins an elder's ensemble",
+      "a festival song reveals a town secret"
+    ],
+    "evolutionTriggers": [
+      "welcomes younger and female players",
+      "protects instrument-making materials",
+      "favors collective trust over virtuosity"
+    ],
+    "tags": [
+      "Mozambique",
+      "Chopi",
+      "timbila",
+      "mbila",
+      "xylophone",
+      "polyrhythm",
+      "social-satire",
+      "craft"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/urtiin-duu-traditional-folk-long-song-00115
+  {
+    "id": "urtiin-duu-long-song",
+    "name": "Urtiin Duu Mongolian Long Song",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Mongolian long-form singing stretches melodic thoughts through ornament, wide vocal range, and patient breath at pastoral celebrations.",
+    "strengths": [
+      "emotional patience",
+      "breath and vocal control",
+      "free-form melodic adaptation"
+    ],
+    "shadows": [
+      "virtuosity may eclipse connection",
+      "displacement can sever songs from their setting"
+    ],
+    "contradiction": "An unhurried phrase carries the energy of a vast landscape and changing community.",
+    "visualMotifs": [
+      "grassland horizon",
+      "lone singer against open sky",
+      "long arcs traced in air",
+      "celebration tents"
+    ],
+    "voicePatterns": [
+      "lets a thought expand before resolving it",
+      "revisits a theme with altered feeling"
+    ],
+    "storyEngines": [
+      "a young singer reinterprets a celebration in a city",
+      "a sustained note bridges two families",
+      "a song changes after the grassland changes"
+    ],
+    "evolutionTriggers": [
+      "learns a regional variant respectfully",
+      "honors elders while adapting",
+      "chooses clarity over display"
+    ],
+    "tags": [
+      "Mongolia",
+      "Inner-Mongolia",
+      "Urtiin-Duu",
+      "long-song",
+      "vocal-ornament",
+      "pastoral",
+      "oral-transmission"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/mapoyo-oral-tradition-and-its-symbolic-reference-points-within-their-ancestral-territory-00983
+  {
+    "id": "mapoyo-place-memory",
+    "name": "Mapoyo Place-Based Oral Memory",
+    "era": "movement",
+    "domain": "myth-folklore",
+    "sourceType": "tradition",
+    "essence": "Mapoyo oral narratives along Venezuela's Orinoco link community memory and historical belonging to specific ancestral places.",
+    "strengths": [
+      "place-based memory",
+      "listening to elders",
+      "stewardship of intergenerational stories"
+    ],
+    "shadows": [
+      "knowledge may depend on too few keepers",
+      "documentation without context can misrepresent belonging"
+    ],
+    "contradiction": "A story stays rooted in place even as younger listeners may need to leave it.",
+    "visualMotifs": [
+      "river bends as memory cues",
+      "remembered footpaths",
+      "storyteller beside a landmark"
+    ],
+    "voicePatterns": [
+      "anchors an account to a location and relationship",
+      "welcomes questions without erasing elders"
+    ],
+    "storyEngines": [
+      "a threatened landmark holds an overlooked history",
+      "a returning student asks who may share a recording",
+      "a community protects a route of memories"
+    ],
+    "evolutionTriggers": [
+      "seeks community consent before retelling",
+      "distinguishes documentation from transmission",
+      "supports language continuity"
+    ],
+    "tags": [
+      "Mapoyo",
+      "Venezuela",
+      "Orinoco",
+      "Indigenous-heritage",
+      "place-memory",
+      "oral-history",
+      "territory",
+      "safeguarding"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/kalbelia-folk-songs-and-dances-of-rajasthan-00340
+  {
+    "id": "kalbelia-rajasthan-dance",
+    "name": "Kalbelia Songs and Dance of Rajasthan",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Kalbelia community songs, improvised lyrics, and swirling dance preserve mythic knowledge while adapting to changing livelihoods.",
+    "strengths": [
+      "improvised poetic response",
+      "expressive timing",
+      "cultural adaptation"
+    ],
+    "shadows": [
+      "spectacle can obscure the community",
+      "external demand can freeze a living practice into a stereotype"
+    ],
+    "contradiction": "An inherited dance becomes a means of reinvention when associated livelihoods change.",
+    "visualMotifs": [
+      "black swirling skirts with mirror embroidery",
+      "percussion and wind instruments",
+      "spiraling footwork"
+    ],
+    "voicePatterns": [
+      "improvises lyrics in response to the moment",
+      "alternates playful performance with serious memory"
+    ],
+    "storyEngines": [
+      "a dancer negotiates fair terms for a performance",
+      "an improvised verse resolves a feud",
+      "a young artist reinterprets a movement vocabulary"
+    ],
+    "evolutionTriggers": [
+      "credits community teachers",
+      "rejects exoticized caricature",
+      "insists on fair participation"
+    ],
+    "tags": [
+      "India",
+      "Rajasthan",
+      "Kalbelia",
+      "folk-dance",
+      "improvised-song",
+      "poetry",
+      "movement",
+      "living-heritage"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/decisions/5.COM/6.24
+  {
+    "id": "kumiodori-okinawan-theatre",
+    "name": "Kumiodori Okinawan Musical Theatre",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Okinawan musical drama combines Ryukyuan language, poetic rhythm, dance, and neighboring theatre influences to retell local history and legend.",
+    "strengths": [
+      "precise ensemble staging",
+      "expressive restraint",
+      "cross-cultural synthesis"
+    ],
+    "shadows": [
+      "preservation can become resistance to reinterpretation",
+      "formal roles can narrow participation"
+    ],
+    "contradiction": "A codified stage tradition stays alive when new stories inhabit its forms.",
+    "visualMotifs": [
+      "three-stringed sanshin",
+      "formal stage entrances",
+      "layered costumes",
+      "measured hand gestures"
+    ],
+    "voicePatterns": [
+      "speaks in deliberate rhythmic phrases",
+      "lets movement complete an unfinished thought"
+    ],
+    "storyEngines": [
+      "a forgotten play returns with contested meaning",
+      "an apprentice translates an old line",
+      "family duty conflicts with public promise"
+    ],
+    "evolutionTriggers": [
+      "preserves vocabulary through collaboration",
+      "learns beyond familiar roles",
+      "welcomes contemporary themes responsibly"
+    ],
+    "tags": [
+      "Okinawa",
+      "Ryukyu",
+      "Japan",
+      "Kumiodori",
+      "musical-theatre",
+      "sanshin",
+      "poetic-drama",
+      "cultural-transmission"
+    ]
+  },
+  // Research: https://www.si.edu/collections/snapshot/quipu
+  {
+    "id": "andean-khipu-records",
+    "name": "Andean Khipu Knot Records",
+    "era": "early-modern",
+    "domain": "science",
+    "sourceType": "tradition",
+    "essence": "Inka and wider Andean knotted-cord record systems encode quantities and administrative knowledge through tactile relations among cords, colors, and knots.",
+    "strengths": [
+      "structured memory",
+      "material pattern recognition",
+      "stewardship of records"
+    ],
+    "shadows": [
+      "records can become opaque without interpreters",
+      "a count cannot tell a complete human story"
+    ],
+    "contradiction": "A compact object can preserve large systems of information while losing its original context.",
+    "visualMotifs": [
+      "colored hanging cords",
+      "different knot clusters",
+      "hands comparing bundles",
+      "messenger with a wrapped record"
+    ],
+    "voicePatterns": [
+      "distinguishes what records show from what they cannot prove",
+      "asks who counted and who was counted"
+    ],
+    "storyEngines": [
+      "two records disagree over resources",
+      "an apprentice reconstructs an inventory",
+      "a community debates a knot reading"
+    ],
+    "evolutionTriggers": [
+      "acknowledges uncertainty about nonnumeric meaning",
+      "checks records against testimony",
+      "teaches successors"
+    ],
+    "tags": [
+      "Andes",
+      "Inka",
+      "Inca",
+      "khipu",
+      "quipu",
+      "knotted-cords",
+      "records",
+      "numeracy",
+      "tactile-information"
+    ]
+  },
+  // Research: https://whc.unesco.org/en/list/1624/
+  {
+    "id": "chankillo-solar-calendar",
+    "name": "Chankillo Solar Calendar Architecture",
+    "era": "ancient",
+    "domain": "science",
+    "sourceType": "tradition",
+    "essence": "Ancient builders in Peru's Casma Valley used thirteen towers and observation points as an architectural horizon for tracking the Sun through the year.",
+    "strengths": [
+      "long-term observation",
+      "spatial reasoning",
+      "collective precision"
+    ],
+    "shadows": [
+      "precise systems may be mistaken for control over nature",
+      "fragile structures require continued care"
+    ],
+    "contradiction": "A monumental calendar measures change by keeping its landmarks still.",
+    "visualMotifs": [
+      "thirteen towers against a desert ridge",
+      "shifting sunrise",
+      "paired observation points",
+      "long shadows on stone"
+    ],
+    "voicePatterns": [
+      "thinks in seasons and intervals",
+      "asks where an observer stands before interpreting what they see"
+    ],
+    "storyEngines": [
+      "a damaged tower throws a calendar into doubt",
+      "rivals discover viewpoint differences",
+      "a ceremony depends on a disputed observation"
+    ],
+    "evolutionTriggers": [
+      "invites independent measurement",
+      "acknowledges damaged instruments",
+      "protects shared knowledge over prestige"
+    ],
+    "tags": [
+      "Peru",
+      "Chankillo",
+      "Casma-Valley",
+      "archaeoastronomy",
+      "solar-calendar",
+      "thirteen-towers",
+      "observation",
+      "architecture"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/georgian-polyphonic-singing-00008
+  {
+    "id": "georgian-polyphonic-singing",
+    "name": "Georgian Polyphonic Singing",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Georgian multipart singing combines independent vocal lines, dialogue, and regional practices across work, ceremony, and communal life.",
+    "strengths": [
+      "harmonic cooperation",
+      "improvised listening",
+      "resilience of shared language and memory"
+    ],
+    "shadows": [
+      "a dominant voice can overwhelm subtler lines",
+      "traditions weaken when community learning disappears"
+    ],
+    "contradiction": "Each singer keeps an independent line but the meaning emerges together.",
+    "visualMotifs": [
+      "three overlapping wave lines",
+      "a field-work chorus",
+      "a circle of singers",
+      "low drone beneath a melody"
+    ],
+    "voicePatterns": [
+      "answers a voice with a contrasting idea",
+      "allows simultaneous perspectives instead of a single narrator"
+    ],
+    "storyEngines": [
+      "a missing singer leaves a gap",
+      "three witnesses overlap their accounts",
+      "an urban choir learns from elders"
+    ],
+    "evolutionTriggers": [
+      "listens for the least-heard part",
+      "respects regional variations",
+      "welcomes a new voice"
+    ],
+    "tags": [
+      "Georgia",
+      "Caucasus",
+      "polyphony",
+      "multipart-singing",
+      "harmonic-dialogue",
+      "work-songs",
+      "community",
+      "oral-transmission"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
