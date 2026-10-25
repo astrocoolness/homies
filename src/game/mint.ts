@@ -43,8 +43,11 @@ function extractJson(text: string): unknown {
 
 async function writeSheet(apiKey: string, facts: MintFacts): Promise<CustomProfile> {
   const fallback = templateSheet(facts);
+  const isOr = apiKey.startsWith("sk-or-");
+  const url = isOr ? "https://openrouter.ai/api/v1/chat/completions" : "https://api.x.ai/v1/chat/completions";
+  const model = isOr ? "x-ai/grok-4" : "grok-4.5";
   try {
-    const res = await fetch("https://api.x.ai/v1/chat/completions", {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +55,7 @@ async function writeSheet(apiKey: string, facts: MintFacts): Promise<CustomProfi
       },
       signal: AbortSignal.timeout(20_000),
       body: JSON.stringify({
-        model: "grok-4.5",
+        model,
         temperature: 0.7,
         max_tokens: 1200,
         messages: [
@@ -111,40 +114,51 @@ function imagePrompt(facts: MintFacts) {
 }
 
 async function drawPortrait(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
-  const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
+  const isOr = apiKey.startsWith("sk-or-");
+  const endpoint = isOr ? "https://openrouter.ai/api/v1/images" : "https://api.x.ai/v1/images/edits";
+  const models = isOr
+    ? ["x-ai/grok-imagine-image-2.0", "x-ai/grok-imagine-image-quality"]
+    : ["grok-imagine-image-2.0", "grok-imagine-image"];
+
   for (const model of models) {
-    const res = await fetch("https://api.x.ai/v1/images/edits", {
+    const body: Record<string, unknown> = {
+      model,
+      prompt: imagePrompt(facts),
+    };
+    if (isOr) {
+      body.image = imageDataUrl;
+    } else {
+      body.image = { url: imageDataUrl, type: "image_url" };
+    }
+
+    const res = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
       signal: AbortSignal.timeout(70_000),
-      body: JSON.stringify({
-        model,
-        prompt: imagePrompt(facts),
-        image: { url: imageDataUrl, type: "image_url" },
-      }),
+      body: JSON.stringify(body),
     });
     if (!res.ok) {
       if (res.status === 400 || res.status === 404) continue;
+      console.error("portrait", res.status, await res.text().catch(() => ""));
       return null;
     }
-    const body = (await res.json()) as {
+    const data = (await res.json()) as {
       data?: { b64_json?: string; url?: string }[];
       url?: string;
       b64_json?: string;
     };
-    const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
+    const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
     if (b64) return `data:image/png;base64,${b64}`;
-    const url = body.data?.[0]?.url ?? body.url;
+    const url = data.data?.[0]?.url ?? data.url;
     if (!url) continue;
     const img = await fetch(url, { signal: AbortSignal.timeout(20_000) });
     if (!img.ok) return null;
     const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
     const bytes = new Uint8Array(await img.arrayBuffer());
-    const encoded = Buffer.from(bytes).toString("base64");
-    return `data:${type};base64,${encoded}`;
+    return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
   }
   return null;
 }
