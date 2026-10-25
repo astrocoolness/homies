@@ -97,31 +97,52 @@ function portraitPrompt(facts: MintFacts) {
   return `One cute ${age} vinyl toy character, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Personality: ${facts.descriptors.join(", ")}. Vibe: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
-async function drawPortraitGemini(geminiKey: string, facts: MintFacts): Promise<string | null> {
-  const model = "gemini-nano-banana-2.1";
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      signal: AbortSignal.timeout(50_000),
-      body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: portraitPrompt(facts) }] }],
-        generationConfig: { responseModalities: ["IMAGE"] },
-      }),
+async function drawPortraitGemini(geminiKey: string, facts: MintFacts): Promise<{ ok: true; data: string } | { ok: false; error: string }> {
+  const res = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-goog-api-key": geminiKey,
     },
-  );
+    signal: AbortSignal.timeout(50_000),
+    body: JSON.stringify({
+      model: "gemini-nano-banana-2.1",
+      input: [{ type: "text", text: portraitPrompt(facts) }],
+      response_format: { type: "image", aspect_ratio: "1:1", image_size: "1K" },
+    }),
+  });
+  const text = await res.text();
   if (!res.ok) {
-    console.error("gemini invent", res.status, await res.text().catch(() => ""));
-    return null;
+    return { ok: false, error: `Gemini ${res.status}: ${text.slice(0, 180)}` };
   }
-  const body = (await res.json()) as {
-    candidates?: { content?: { parts?: { inlineData?: { mimeType?: string; data?: string } }[] } }[];
-  };
-  const part = body.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data);
-  if (!part?.inlineData?.data) return null;
-  const mime = part.inlineData.mimeType || "image/png";
-  return `data:${mime};base64,${part.inlineData.data}`;
+  let body: any;
+  try {
+    body = JSON.parse(text);
+  } catch {
+    return { ok: false, error: "Gemini response was not JSON" };
+  }
+  const steps = body.steps ?? body.output ?? [];
+  for (const step of steps) {
+    const content = step.content ?? step.parts ?? [];
+    for (const part of Array.isArray(content) ? content : [content]) {
+      const data = part?.data ?? part?.inlineData?.data ?? part?.inline_data?.data;
+      if (data) {
+        const mime = part.mime_type ?? part.inlineData?.mimeType ?? "image/png";
+        return { ok: true, data: `data:${mime};base64,${data}` };
+      }
+    }
+  }
+  const candidates = body.candidates ?? [];
+  for (const c of candidates) {
+    for (const part of c.content?.parts ?? []) {
+      const data = part.inlineData?.data ?? part.inline_data?.data;
+      if (data) {
+        const mime = part.inlineData?.mimeType ?? "image/png";
+        return { ok: true, data: `data:${mime};base64,${data}` };
+      }
+    }
+  }
+  return { ok: false, error: "No image in Gemini response" };
 }
 
 export const inventHomie = createServerFn({ method: "POST" })
@@ -137,8 +158,8 @@ export const inventHomie = createServerFn({ method: "POST" })
     try {
       const invented = xaiKey ? await inventSheet(xaiKey, data.neighbors) : { facts: randomFacts(data.neighbors), sheet: templateSheet(randomFacts(data.neighbors)) };
       const portrait = await drawPortraitGemini(geminiKey, invented.facts);
-      if (!portrait) return { ok: false, error: "Couldn't draw the portrait. Try once more." };
-      invented.sheet.portrait = portrait;
+      if (!portrait.ok) return { ok: false, error: portrait.error };
+      invented.sheet.portrait = portrait.data;
       return { ok: true, profile: invented.sheet, stage: invented.facts.stage };
     } catch (err) {
       console.error("inventHomie", err instanceof Error ? err.message : "failed");
