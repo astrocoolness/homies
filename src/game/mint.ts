@@ -41,8 +41,9 @@ function extractJson(text: string): unknown {
   }
 }
 
-async function writeSheet(apiKey: string, facts: MintFacts): Promise<CustomProfile> {
+async function writeSheet(apiKey: string | undefined, facts: MintFacts): Promise<CustomProfile> {
   const fallback = templateSheet(facts);
+  if (!apiKey) return fallback;
   const isOr = apiKey.startsWith("sk-or-");
   const url = isOr ? "https://openrouter.ai/api/v1/chat/completions" : "https://api.x.ai/v1/chat/completions";
   const model = isOr ? "x-ai/grok-4" : "grok-4.5";
@@ -110,10 +111,25 @@ function imagePrompt(facts: MintFacts) {
           : facts.stage === "elder"
             ? "an older vinyl toy"
             : "an adult vinyl toy";
-  return `Turn the person in this photo into one cute ${age}, full body, standing, centered. Keep their face, hair, and notable features recognizable. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Outfit hints at this life: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
+  return `One cute ${age}, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Outfit hints at this life: ${facts.days}. Personality: ${facts.descriptors.join(", ")}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
-async function drawPortrait(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
+async function drawPortraitFree(facts: MintFacts): Promise<string | null> {
+  const prompt = encodeURIComponent(imagePrompt(facts));
+  const seed = Math.floor(Math.random() * 100000);
+  const url = `https://image.pollinations.ai/prompt/${prompt}?width=768&height=768&nologo=true&seed=${seed}`;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(40_000) });
+    if (!res.ok) return null;
+    const type = (res.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
+  } catch {
+    return null;
+  }
+}
+
+async function drawPortraitKeyed(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
   const isOr = apiKey.startsWith("sk-or-");
   const endpoint = isOr ? "https://openrouter.ai/api/v1/images" : "https://api.x.ai/v1/images/edits";
   const models = isOr
@@ -142,7 +158,6 @@ async function drawPortrait(apiKey: string, facts: MintFacts, imageDataUrl: stri
     });
     if (!res.ok) {
       if (res.status === 400 || res.status === 404) continue;
-      console.error("portrait", res.status, await res.text().catch(() => ""));
       return null;
     }
     const data = (await res.json()) as {
@@ -199,12 +214,10 @@ export const mintHomie = createServerFn({ method: "POST" })
       return { ok: false, error: "Tell me where they live, how they spend the day, and one habit." };
     }
     const apiKey = process.env.XAI_API_KEY;
-    if (!apiKey) return { ok: false, error: "Making new Homies isn't available right now." };
     try {
-      const [sheet, portrait] = await Promise.all([
-        writeSheet(apiKey, facts),
-        drawPortrait(apiKey, facts, data.imageDataUrl),
-      ]);
+      const sheet = await writeSheet(apiKey, facts);
+      let portrait = apiKey ? await drawPortraitKeyed(apiKey, facts, data.imageDataUrl) : null;
+      if (!portrait) portrait = await drawPortraitFree(facts);
       if (!portrait) return { ok: false, error: "The portrait didn't come through. Try the photo again." };
       sheet.portrait = portrait;
       sheet.name = facts.name;
