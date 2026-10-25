@@ -27,9 +27,11 @@ export function videoUrl(key: string) {
 }
 
 export function chatModel(key: string) {
-  return isOpenRouter(key) ? "x-ai/grok-4" : "grok-4.5";
+  // Free models on OpenRouter (no image gen free models exist)
+  return isOpenRouter(key) ? "google/gemma-4-31b-it:free" : "grok-4.5";
 }
 
 export function imageModel(key: string) {
+  // Cheapest reliable image model; no free image models on OpenRouter
   return isOpenRouter(key) ? "black-forest-labs/flux.2-max" : "grok-imagine-image";
 }
