@@ -2,7 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import type { CustomProfile, Stage } from "./types";
 import { STAGES } from "./types";
 import { DESCRIPTORS, cleanName, clip, sheetFromModel, templateSheet, type MintFacts } from "./sheet";
-import { chatUrl, chatModel, imageGenUrl, imageModel } from "./provider";
 
 export type InventResult =
   | { ok: true; profile: CustomProfile; stage: Stage }
@@ -37,7 +36,7 @@ function randomFacts(neighbors: string[]): MintFacts {
 async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts: MintFacts; sheet: CustomProfile }> {
   const fallbackFacts = randomFacts(neighbors);
   try {
-    const res = await fetch(chatUrl(apiKey), {
+    const res = await fetch("https://api.x.ai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +44,7 @@ async function inventSheet(apiKey: string, neighbors: string[]): Promise<{ facts
       },
       signal: AbortSignal.timeout(22_000),
       body: JSON.stringify({
-        model: chatModel(apiKey),
+        model: "grok-4.5",
         temperature: 0.9,
         max_tokens: 1400,
         messages: [
@@ -98,44 +97,31 @@ function portraitPrompt(facts: MintFacts) {
   return `One cute ${age} vinyl toy character, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Personality: ${facts.descriptors.join(", ")}. Vibe: ${facts.days}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
-async function extractImage(res: Response): Promise<string | null> {
+async function drawPortraitGemini(geminiKey: string, facts: MintFacts): Promise<string | null> {
+  const model = "gemini-nano-banana-2.1";
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: AbortSignal.timeout(50_000),
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: portraitPrompt(facts) }] }],
+        generationConfig: { responseModalities: ["IMAGE"] },
+      }),
+    },
+  );
   if (!res.ok) {
-    const err = await res.text().catch(() => "");
-    console.error("image api", res.status, err.slice(0, 300));
+    console.error("gemini invent", res.status, await res.text().catch(() => ""));
     return null;
   }
-  const data = (await res.json()) as {
-    data?: { b64_json?: string; url?: string }[];
-    url?: string;
-    b64_json?: string;
+  const body = (await res.json()) as {
+    candidates?: { content?: { parts?: { inlineData?: { mimeType?: string; data?: string } }[] } }[];
   };
-  const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
-  if (b64) return `data:image/png;base64,${b64}`;
-  const imgUrl = data.data?.[0]?.url ?? data.url;
-  if (!imgUrl) return null;
-  const img = await fetch(imgUrl, { signal: AbortSignal.timeout(18_000) });
-  if (!img.ok) return null;
-  const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
-  const bytes = new Uint8Array(await img.arrayBuffer());
-  return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
-}
-
-async function drawPortrait(apiKey: string, facts: MintFacts): Promise<string | null> {
-  const model = imageModel(apiKey);
-  const res = await fetch(imageGenUrl(apiKey), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    signal: AbortSignal.timeout(50_000),
-    body: JSON.stringify({
-      model,
-      prompt: portraitPrompt(facts),
-      n: 1,
-    }),
-  });
-  return extractImage(res);
+  const part = body.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data);
+  if (!part?.inlineData?.data) return null;
+  const mime = part.inlineData.mimeType || "image/png";
+  return `data:${mime};base64,${part.inlineData.data}`;
 }
 
 export const inventHomie = createServerFn({ method: "POST" })
@@ -145,11 +131,12 @@ export const inventHomie = createServerFn({ method: "POST" })
     return { neighbors };
   })
   .handler(async ({ data }): Promise<InventResult> => {
-    const apiKey = process.env.XAI_API_KEY;
-    if (!apiKey) return { ok: false, error: "Making new Homies isn't available right now." };
+    const xaiKey = process.env.XAI_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (!geminiKey) return { ok: false, error: "Making new Homies isn't available right now." };
     try {
-      const invented = await inventSheet(apiKey, data.neighbors);
-      const portrait = await drawPortrait(apiKey, invented.facts);
+      const invented = xaiKey ? await inventSheet(xaiKey, data.neighbors) : { facts: randomFacts(data.neighbors), sheet: templateSheet(randomFacts(data.neighbors)) };
+      const portrait = await drawPortraitGemini(geminiKey, invented.facts);
       if (!portrait) return { ok: false, error: "Couldn't draw the portrait. Try once more." };
       invented.sheet.portrait = portrait;
       return { ok: true, profile: invented.sheet, stage: invented.facts.stage };
