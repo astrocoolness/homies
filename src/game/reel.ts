@@ -49,7 +49,7 @@ async function freeFrame(prompt: string, seed: number): Promise<Buffer | null> {
   }
 }
 
-async function freeGif(name: string, setting: string): Promise<{ mime: string; bytes: Buffer } | null> {
+async function freeGif(name: string, setting: string): Promise<string | null> {
   const base = `cute vinyl toy character named ${name}, ${setting}, soft matte plastic, warm cream room, one character only, no text`;
   const seeds = [42, 137, 256, 512];
   const frames: Buffer[] = [];
@@ -91,7 +91,7 @@ async function freeGif(name: string, setting: string): Promise<{ mime: string; b
     });
     const bytes = await fs.readFile(output);
     if (bytes.length < 100 || bytes.length > 1_800_000) return null;
-    return { mime: "image/gif", bytes };
+    return `data:image/gif;base64,${bytes.toString("base64")}`;
   } catch {
     return null;
   } finally {
@@ -154,12 +154,11 @@ export const startReel = createServerFn({ method: "POST" })
     const apiKey = process.env.XAI_API_KEY;
     if (data.setting.length < 2) return { ok: false, error: "They need a home before a scene." };
 
-    // Free path: build a short GIF from still frames, no key needed.
+    // Free path: return the GIF data URL as the requestId so pullReel can hand it back immediately.
     if (!apiKey || apiKey.startsWith("sk-or-") || apiKey.startsWith("AQ.")) {
-      const gif = await freeGif(data.name || "Homie", data.setting);
-      if (!gif) return { ok: false, error: "The loop didn't come through. Try once more." };
-      const media = `data:${gif.mime};base64,${gif.bytes.toString("base64")}`;
-      return { ok: true, requestId: `free:${media.slice(0, 20)}` }; // placeholder; real media returned below via special path
+      const media = await freeGif(data.name || "Homie", data.setting);
+      if (!media) return { ok: false, error: "The loop didn't come through. Try once more." };
+      return { ok: true, requestId: media };
     }
 
     try {
@@ -194,9 +193,9 @@ export const pullReel = createServerFn({ method: "POST" })
     return { requestId };
   })
   .handler(async ({ data }): Promise<PullReelResult> => {
-    // Free path short-circuit: requestId starts with free:
-    if (data.requestId.startsWith("free:")) {
-      return { ok: false, error: "Free path not fully wired. Use startReel only." };
+    // Free path: requestId is the data URL itself.
+    if (data.requestId.startsWith("data:image/gif")) {
+      return { ok: true, status: "done", mime: "image/gif", media: data.requestId };
     }
 
     const apiKey = process.env.XAI_API_KEY;
