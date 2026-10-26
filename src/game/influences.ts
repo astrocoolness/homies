@@ -1063,7 +1063,7 @@ export const INFLUENCE_ATLAS: Influence[] = [
     storyEngines: ["an unfair count sparks a region-wide debate","local networks outmaneuver distant officials","a movement struggles to protect its many unsung leaders"],
     evolutionTriggers: ["shares the platform with other organizers","protects participants from avoidable risk","transforms a moment of protest into durable representation"],
     tags: ["Nigeria","Igbo","Womens-War-1929","Oloko","anticolonial","collective-action","women-leadership"],
-  }
+  },
   // Research: https://ich.unesco.org/en/RL/community-of-palenque-de-san-basio-00001
   {
     id: "garifuna-language-music-dance",
