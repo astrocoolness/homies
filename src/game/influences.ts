@@ -1655,6 +1655,390 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "oral-transmission"
     ]
   },
+  // Research: https://www.rhs.org.uk/education-learning/libraries-at-rhs/articles/janaki-ammal
+  {
+    "id": "janaki-ammal-cytogenetics",
+    "name": "E. K. Janaki Ammal",
+    "era": "mid-century",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A pioneering Indian plant cytogeneticist who joined rigorous chromosome research with crop improvement and a commitment to conserving living diversity.",
+    "strengths": [
+      "careful cross-disciplinary observation",
+      "persistence through institutional barriers",
+      "practical plant-breeding imagination"
+    ],
+    "shadows": [
+      "can distrust institutions after exclusion",
+      "may shoulder conservation battles alone"
+    ],
+    "contradiction": "Improves cultivated crops through deliberate selection while defending the complexity of wild ecosystems.",
+    "visualMotifs": [
+      "chromosome sketches beside pressed leaves",
+      "sugarcane rows at dawn",
+      "herbarium cabinets and orchid specimens"
+    ],
+    "voicePatterns": [
+      "asks what the specimen actually shows",
+      "moves from laboratory detail to ecological consequence"
+    ],
+    "storyEngines": [
+      "a promising hybrid threatens a rare habitat",
+      "a disputed notebook contains the missing evidence",
+      "a botanist must persuade an institution to protect an overlooked valley"
+    ],
+    "evolutionTriggers": [
+      "invites a junior researcher to challenge a conclusion",
+      "builds a local collection rather than extracting specimens",
+      "shares credit despite past exclusion"
+    ],
+    "tags": [
+      "India",
+      "Kerala",
+      "botany",
+      "cytogenetics",
+      "plant-breeding",
+      "biodiversity",
+      "conservation",
+      "scientific-resilience"
+    ]
+  },
+  // Research: https://www.moma.org/artists/27445-lygia-clark
+  {
+    "id": "lygia-clark-participatory-art",
+    "name": "Lygia Clark",
+    "era": "mid-century",
+    "domain": "visual-art",
+    "sourceType": "historical-person",
+    "essence": "Brazilian artist who shifted geometric abstraction toward movable objects, sensory experiments, and art completed through participation.",
+    "strengths": [
+      "inventive material thinking",
+      "empathetic attention to the participant",
+      "comfort with unfinished forms"
+    ],
+    "shadows": [
+      "may mistake invitation for consent",
+      "can resist stable definitions so strongly that collaborators lose direction"
+    ],
+    "contradiction": "Designs precise structures whose meaning cannot be controlled once another person handles them.",
+    "visualMotifs": [
+      "hinged metal planes changing shape",
+      "folded paper loops",
+      "hands negotiating an object together"
+    ],
+    "voicePatterns": [
+      "asks what changes when you touch the work",
+      "offers an experiment instead of an explanation"
+    ],
+    "storyEngines": [
+      "a gallery object only works when strangers cooperate",
+      "a rigid sculpture becomes a living negotiation",
+      "a maker must let go of authorship"
+    ],
+    "evolutionTriggers": [
+      "sets clearer boundaries for participation",
+      "welcomes an interpretation unlike her own",
+      "learns when not to intervene"
+    ],
+    "tags": [
+      "Brazil",
+      "Neoconcretism",
+      "participatory-art",
+      "kinetic-sculpture",
+      "sensation",
+      "interaction",
+      "co-creation"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/ahellil-of-gourara-00121
+  {
+    "id": "ahellil-gourara",
+    "name": "Ahellil of Gourara",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Zenete poetic song, chorus, clapping, and slow circular movement in Algerian oases, sustaining community memory through an all-night sequence.",
+    "strengths": [
+      "patient ensemble coordination",
+      "oral memory",
+      "collective endurance across generations"
+    ],
+    "shadows": [
+      "reduced opportunities can weaken transmission",
+      "experienced performers may unintentionally exclude newcomers"
+    ],
+    "contradiction": "A shared celebration depends on both a welcoming chorus and progressively more specialized performance.",
+    "visualMotifs": [
+      "oasis palms against night sky",
+      "shoulder-to-shoulder circle",
+      "flute player before a dawn horizon"
+    ],
+    "voicePatterns": [
+      "repeats a line until a chorus transforms its meaning",
+      "builds a whisper into a collective answer"
+    ],
+    "storyEngines": [
+      "a village celebration loses its final singer",
+      "an urban returnee learns the dawn sequence",
+      "two generations debate how to keep a threatened language audible"
+    ],
+    "evolutionTriggers": [
+      "makes space for apprentices in the circle",
+      "documents without replacing live participation",
+      "reconnects a displaced neighbor with community"
+    ],
+    "tags": [
+      "Algeria",
+      "Gourara",
+      "Zenete",
+      "Amazigh",
+      "oasis",
+      "choral-poetry",
+      "communal-music",
+      "oral-heritage"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/traditional-knowledge-and-skills-in-making-kyrgyz-kazakh-and-karakalpak-yurts-turkic-nomadic-dwellings-02284
+  {
+    "id": "central-asian-yurt-craft",
+    "name": "Kyrgyz, Kazakh and Karakalpak Yurt-Making",
+    "era": "movement",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Collaborative construction of portable circular dwellings from wooden frames, felt, rope, and decorated coverings, combining craft with hospitality and continuity.",
+    "strengths": [
+      "modular design",
+      "cooperative craftsmanship",
+      "resource-conscious material choices"
+    ],
+    "shadows": [
+      "complex apprenticeship can be disrupted by migration",
+      "ceremonial expectations can make experimentation difficult"
+    ],
+    "contradiction": "A home built to travel becomes a stable anchor for family memory.",
+    "visualMotifs": [
+      "collapsible lattice opening like a flower",
+      "felt roof against steppe wind",
+      "braided ropes and patterned interior textiles"
+    ],
+    "voicePatterns": [
+      "explains a structure by how it comes apart",
+      "asks who will gather and be sheltered within it"
+    ],
+    "storyEngines": [
+      "a damaged frame must be repaired before a journey",
+      "two artisans disagree about a new material",
+      "a family heirloom dwelling shelters unexpected guests"
+    ],
+    "evolutionTriggers": [
+      "teaches assembly to someone outside the usual workshop",
+      "adapts responsibly to new conditions",
+      "shares credit among specialized makers"
+    ],
+    "tags": [
+      "Kyrgyzstan",
+      "Kazakhstan",
+      "Karakalpak",
+      "Central-Asia",
+      "yurt",
+      "portable-architecture",
+      "felt",
+      "craft",
+      "hospitality"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/Decisions/4.COM/13.59
+  {
+    "id": "manden-charter-oral-governance",
+    "name": "Manden Charter Oral Governance",
+    "era": "medieval",
+    "domain": "philosophy",
+    "sourceType": "tradition",
+    "essence": "The Malinke oral charter tradition associated with Kurukan Fuga, remembered through community ceremonies and ideas of social peace, dignity, education, and mutual obligation.",
+    "strengths": [
+      "public deliberation",
+      "community accountability",
+      "intergenerational transmission"
+    ],
+    "shadows": [
+      "appeals to ancestral authority can silence dissent",
+      "oral versions can be contested or simplified"
+    ],
+    "contradiction": "A remembered foundation for collective order must still be interpreted by people facing new injustices.",
+    "visualMotifs": [
+      "assembly beneath an open sky",
+      "speakers gathered at a clearing",
+      "woven paths joining villages"
+    ],
+    "voicePatterns": [
+      "frames a dispute as a shared responsibility",
+      "asks whose dignity a rule protects and whose voice is missing"
+    ],
+    "storyEngines": [
+      "two elders remember a rule differently",
+      "a young mediator challenges an exclusionary custom",
+      "a council must choose between precedent and urgent care"
+    ],
+    "evolutionTriggers": [
+      "welcomes a marginalized witness",
+      "admits that versions differ",
+      "updates practice without claiming to rewrite history"
+    ],
+    "tags": [
+      "Mali",
+      "Manden",
+      "Malinke",
+      "Kurukan-Fuga",
+      "oral-charter",
+      "customary-law",
+      "mediation",
+      "collective-ethics"
+    ]
+  },
+  // Research: https://www.usgs.gov/publications/first-direct-evidence-pre-columbian-sources-palygorskite-maya-blue
+  {
+    "id": "maya-blue-pigment-knowledge",
+    "name": "Maya Blue Pigment Knowledge",
+    "era": "classical",
+    "domain": "visual-art",
+    "sourceType": "tradition",
+    "essence": "Mesoamerican makers developed a remarkably durable blue-green pigment by combining indigo dye with mineral clay, uniting material knowledge and visual meaning.",
+    "strengths": [
+      "experimental materials literacy",
+      "patient craft refinement",
+      "durability across generations"
+    ],
+    "shadows": [
+      "a treasured formula may become inaccessible when knowledge networks break",
+      "technical admiration can obscure the people who sustained the practice"
+    ],
+    "contradiction": "A color associated with living cycles survives on objects long after their makers are gone.",
+    "visualMotifs": [
+      "indigo-stained fingers and pale clay",
+      "blue-green glyphs on plaster",
+      "pigment jars beside a rain-soaked mural"
+    ],
+    "voicePatterns": [
+      "explains color as a material relationship",
+      "asks what survives weather and what stories survive neglect"
+    ],
+    "storyEngines": [
+      "an old wall retains color while its meaning is disputed",
+      "an apprentice traces the source of a rare clay",
+      "a conservation team must decide how much to restore"
+    ],
+    "evolutionTriggers": [
+      "credits Indigenous material knowledge",
+      "tests a substitute before using it",
+      "shares preservation methods with local stewards"
+    ],
+    "tags": [
+      "Mesoamerica",
+      "Maya",
+      "pigment",
+      "indigo",
+      "palygorskite",
+      "material-science",
+      "conservation",
+      "color"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/tsiattista-poetic-duelling-00536
+  {
+    "id": "tsiattista-cypriot-poetic-duels",
+    "name": "Tsiattista Poetic Duelling",
+    "era": "movement",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "Cypriot improvised rhyming-couplet contests reward quick wit, strict meter, listening, and playful rivalry in public celebrations.",
+    "strengths": [
+      "verbal improvisation",
+      "rhythmic precision",
+      "graceful public sparring"
+    ],
+    "shadows": [
+      "competitive cleverness can humiliate the vulnerable",
+      "a narrow circle of experts may discourage new performers"
+    ],
+    "contradiction": "A duel seeks a winner but flourishes only when opponents keep giving each other something worth answering.",
+    "visualMotifs": [
+      "paired poets facing a cheering crowd",
+      "lute and violin beside a festival stage",
+      "verses scribbled then crossed out"
+    ],
+    "voicePatterns": [
+      "responds to the previous speaker's image",
+      "turns a boast into a teasing question without copying historic verses"
+    ],
+    "storyEngines": [
+      "a contest reveals an unexpected alliance",
+      "an outsider wins respect by listening before replying",
+      "a rival chooses kindness over the perfect insult"
+    ],
+    "evolutionTriggers": [
+      "recognizes a talented newcomer",
+      "ends a duel without cruelty",
+      "learns to improvise under unfamiliar rules"
+    ],
+    "tags": [
+      "Cyprus",
+      "Tsiattista",
+      "oral-poetry",
+      "rhyming-couplets",
+      "improvisation",
+      "wit",
+      "performance",
+      "friendly-competition"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/coaxing-ritual-for-camels-01061
+  {
+    "id": "mongolian-camel-coaxing",
+    "name": "Mongolian Camel Coaxing Ritual",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Mongolian herders use attentive singing, gesture, and sometimes fiddle or flute to encourage a mother camel to accept a newborn or orphaned calf.",
+    "strengths": [
+      "close behavioral observation",
+      "gentle persistence",
+      "coordination of music and animal care"
+    ],
+    "shadows": [
+      "skill can fade when apprenticeships disappear",
+      "romanticizing a ritual can obscure the practical work and uncertainty"
+    ],
+    "contradiction": "The coaxer offers carefully shaped sound while knowing the animal's response cannot be commanded.",
+    "visualMotifs": [
+      "twilight over a camel enclosure",
+      "horse-head fiddle near a calf",
+      "a singer watching the mother's smallest movement"
+    ],
+    "voicePatterns": [
+      "softens or changes a phrase in response to behavior",
+      "speaks of care as patience rather than conquest"
+    ],
+    "storyEngines": [
+      "a newborn needs acceptance before a storm",
+      "an apprentice notices a subtle sign the elder missed",
+      "a displaced herding family passes on a rare skill"
+    ],
+    "evolutionTriggers": [
+      "accepts that not every attempt succeeds",
+      "combines elder guidance with careful observation",
+      "teaches a new generation without spectacle"
+    ],
+    "tags": [
+      "Mongolia",
+      "camel",
+      "pastoralism",
+      "coaxing-ritual",
+      "animal-care",
+      "music",
+      "empathy",
+      "intergenerational-knowledge"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
