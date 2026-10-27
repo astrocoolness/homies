@@ -151,16 +151,19 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
     const url = URL.createObjectURL(reel.blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${sheet.name}-moment.${reel.mime === "image/gif" ? "gif" : "mp4"}`;
+    link.download = `${sheet.name}-moment.${reel.mime === "image/gif" ? "gif" : reel.mime.startsWith("video/") ? "mp4" : "jpg"}`;
     link.click();
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
+
+  const isVideo = featured?.mime.startsWith("video/");
+  const isStill = featured && !isVideo && !featured.mime.includes("gif");
 
   return (
     <div>
       <div className="relative overflow-hidden rounded-3xl bg-cream-2">
         {featured && featuredUrl ? (
-          featured.mime.startsWith("video/") ? (
+          isVideo ? (
             <video
               key={featured.id}
               src={featuredUrl}
@@ -171,7 +174,15 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
               playsInline
             />
           ) : (
-            <img key={featured.id} src={featuredUrl} alt={featured.caption} className="aspect-[4/3] w-full object-cover" />
+            <img
+              key={featured.id}
+              src={featuredUrl}
+              alt={featured.caption}
+              className={cx(
+                "aspect-[4/3] w-full object-cover",
+                isStill && "homie-moment-still",
+              )}
+            />
           )
         ) : room ? (
           <>
@@ -232,6 +243,15 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
           <p className="text-sm text-ink-soft">A short loop in their room. It stays on this phone.</p>
         )}
       </div>
+      <style>{`
+        @keyframes homie-moment-breathe {
+          0%, 100% { transform: scale(1) translateY(0); }
+          50% { transform: scale(1.015) translateY(-2px); }
+        }
+        .homie-moment-still {
+          animation: homie-moment-breathe 3.2s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
