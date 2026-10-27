@@ -246,6 +246,11 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
             <img src={still} alt="" className="h-36 w-36 object-contain" />
           </div>
         )}
+        {isStill && featured && (
+          <span className="absolute left-2 top-2 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-medium text-white">
+            Animated still
+          </span>
+        )}
         {dirt > 0.05 && <div className="grime pointer-events-none absolute inset-0" style={{ opacity: dirt }} />}
       </div>
       {reels.length > 1 && (
@@ -296,12 +301,20 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
         )}
       </div>
       <style>{`
-        @keyframes homie-moment-breathe {
-          0%, 100% { transform: scale(1) translateY(0); }
-          50% { transform: scale(1.015) translateY(-2px); }
+        @keyframes homie-moment-cinema {
+          0% { transform: scale(1.04) translate(0.6%, 0.4%); }
+          50% { transform: scale(1.09) translate(-0.8%, -1%); }
+          100% { transform: scale(1.04) translate(-0.4%, 0.6%); }
         }
         .homie-moment-still {
-          animation: homie-moment-breathe 3.2s ease-in-out infinite;
+          animation: homie-moment-cinema 16s ease-in-out infinite alternate;
+          transform-origin: center;
+          will-change: transform;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .homie-moment-still {
+            animation: none;
+          }
         }
       `}</style>
     </div>

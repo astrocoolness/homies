@@ -270,7 +270,13 @@ export const startReel = createServerFn({ method: "POST" })
     const freeMedia = await freeAnimated(name, data.setting);
     if (freeMedia) return { ok: true, requestId: freeMedia };
 
-    return { ok: false, error: "The loop didn't come through. Try once more." };
+    // 4. Cinematic still (final fallback, cannot fail): the Homie's own
+    // portrait, returned as a plain JPEG. It needs no API key, no network,
+    // and no ffmpeg, so "Film a moment" always produces a moment. The
+    // client animates stills with a slow Ken Burns drift and labels them
+    // "Animated still" — it is never presented as filmed video, and it is
+    // always this character's own image, never a stock substitute.
+    return { ok: true, requestId: data.portrait };
   });
 
 export const pullReel = createServerFn({ method: "POST" })
