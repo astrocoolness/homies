@@ -22,30 +22,44 @@ function isUsableXaiKey(key: string | undefined): key is string {
   return !!key && key.length > 10 && !key.startsWith("sk-or-") && !key.startsWith("AQ.");
 }
 
+function framesToDataUrl(frames: Buffer[]): string | null {
+  if (frames.length === 0) return null;
+  const dataUrls = frames.map((buf) => `data:image/jpeg;base64,${buf.toString("base64")}`);
+  const payload = JSON.stringify(dataUrls);
+  return `data:application/x-homie-frames;base64,${Buffer.from(payload).toString("base64")}`;
+}
+
 async function sceneUrl(apiKey: string, portrait: string, setting: string): Promise<string | null> {
-  const res = await fetch("https://api.x.ai/v1/images/edits", {
-    method: "POST",
-    headers: authHeaders(apiKey),
-    signal: AbortSignal.timeout(45_000),
-    body: JSON.stringify({
-      model: "grok-imagine-image-2.0",
-      prompt: `Place this exact vinyl-toy character inside their home, same face and outfit, full scene, one character only. Setting: ${setting}. Warm toy-like room, no text, no watermark, no extra people.`,
-      image: { url: portrait, type: "image_url" },
-    }),
-  });
-  if (!res.ok) return null;
-  const body = (await res.json()) as { data?: { url?: string; b64_json?: string }[]; url?: string; b64_json?: string };
-  const url = body.data?.[0]?.url ?? body.url;
-  if (url) return url;
-  const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
-  if (!b64) return null;
-  return `data:image/png;base64,${b64}`;
+  const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
+  for (const model of models) {
+    try {
+      const res = await fetch("https://api.x.ai/v1/images/edits", {
+        method: "POST",
+        headers: authHeaders(apiKey),
+        signal: AbortSignal.timeout(40_000),
+        body: JSON.stringify({
+          model,
+          prompt: `Place this exact vinyl-toy character inside their home, same face and outfit, full scene, one character only. Setting: ${setting}. Warm toy-like room, no text, no watermark, no extra people.`,
+          image: { url: portrait, type: "image_url" },
+        }),
+      });
+      if (!res.ok) continue;
+      const body = (await res.json()) as { data?: { url?: string; b64_json?: string }[]; url?: string; b64_json?: string };
+      const url = body.data?.[0]?.url ?? body.url;
+      if (url) return url;
+      const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
+      if (b64) return `data:image/png;base64,${b64}`;
+    } catch {
+      // try next model
+    }
+  }
+  return null;
 }
 
 async function freeFrame(prompt: string, seed: number): Promise<Buffer | null> {
   const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true&seed=${seed}`;
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(25_000) });
+    const res = await fetch(url, { signal: AbortSignal.timeout(20_000) });
     if (!res.ok) return null;
     return Buffer.from(await res.arrayBuffer());
   } catch {
@@ -80,7 +94,7 @@ async function framesToGif(frames: Buffer[]): Promise<string | null> {
           "fps=2,scale=320:-1:flags=lanczos,format=rgb24,split[s0][s1];[s0]palettegen=max_colors=48[p];[s1][p]paletteuse=dither=bayer",
           output,
         ],
-        { timeout: 20_000 },
+        { timeout: 18_000 },
         (err) => (err ? reject(err) : resolve()),
       );
     });
@@ -98,36 +112,36 @@ async function framesToGif(frames: Buffer[]): Promise<string | null> {
 
 async function freeAnimated(name: string, setting: string): Promise<string | null> {
   const base = `cute vinyl toy character named ${name}, ${setting}, soft matte plastic, warm cream room, one character only, no text`;
-  const seeds = [42, 137, 256, 512, 777, 999];
+  const variations = ["slight lean left", "slight lean right", "gentle head tilt", "small smile", "looking down", "looking up"];
   const frames: Buffer[] = [];
-  for (const seed of seeds) {
-    const frame = await freeFrame(`${base}, slight pose variation ${seed}, small motion`, seed);
-    if (frame && frame.length > 1000) frames.push(frame);
-    if (frames.length >= 4) break;
+  for (let i = 0; i < variations.length && frames.length < 4; i++) {
+    const frame = await freeFrame(`${base}, ${variations[i]}, small motion`, 100 + i * 37);
+    if (frame && frame.length > 800) frames.push(frame);
   }
   if (frames.length === 0) return null;
 
-  // 1. Try real GIF via ffmpeg
   const gif = await framesToGif(frames);
   if (gif) return gif;
 
-  // 2. Still of the best frame
+  // Multi-frame flipbook fallback (client animates)
+  if (frames.length >= 2) return framesToDataUrl(frames);
+
   return `data:image/jpeg;base64,${frames[0].toString("base64")}`;
 }
 
-async function xaiPoseSequence(apiKey: string, portrait: string, setting: string, name: string): Promise<string | null> {
-  // Generate a few sequential pose stills via xAI image gen, then try to animate them.
-  const poses = ["looking slightly left", "looking slightly right", "gentle lean", "small smile"];
+async function xaiPoseSequence(apiKey: string, setting: string, name: string): Promise<string | null> {
+  const poses = ["looking slightly left", "looking slightly right", "gentle lean forward", "small smile", "slight head tilt"];
   const frames: Buffer[] = [];
   for (const pose of poses) {
+    if (frames.length >= 4) break;
     try {
       const res = await fetch("https://api.x.ai/v1/images/generations", {
         method: "POST",
         headers: authHeaders(apiKey),
-        signal: AbortSignal.timeout(30_000),
+        signal: AbortSignal.timeout(28_000),
         body: JSON.stringify({
           model: "grok-imagine-image-2.0",
-          prompt: `A cute vinyl toy character named ${name}, ${pose}, in their cozy home. Setting: ${setting}. Soft matte plastic, warm cream room, one character only, no text, no watermark.`,
+          prompt: `A cute vinyl toy character named ${name}, ${pose}, standing in their cozy home. Setting: ${setting}. Soft matte plastic, warm cream room, one character only, no text, no watermark, high quality.`,
           n: 1,
         }),
       });
@@ -137,17 +151,20 @@ async function xaiPoseSequence(apiKey: string, portrait: string, setting: string
       if (item?.b64_json) {
         frames.push(Buffer.from(item.b64_json, "base64"));
       } else if (item?.url) {
-        const img = await fetch(item.url, { signal: AbortSignal.timeout(15_000) });
+        const img = await fetch(item.url, { signal: AbortSignal.timeout(12_000) });
         if (img.ok) frames.push(Buffer.from(await img.arrayBuffer()));
       }
-      if (frames.length >= 3) break;
     } catch {
       // continue
     }
   }
   if (frames.length === 0) return null;
+
   const gif = await framesToGif(frames);
   if (gif) return gif;
+
+  if (frames.length >= 2) return framesToDataUrl(frames);
+
   return `data:image/jpeg;base64,${frames[0].toString("base64")}`;
 }
 
@@ -174,7 +191,7 @@ async function toGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } |
           "fps=8,scale=320:-1:flags=lanczos,format=rgb24,split[s0][s1];[s0]palettegen=max_colors=48[p];[s1][p]paletteuse=dither=bayer",
           output,
         ],
-        { timeout: 25_000 },
+        { timeout: 22_000 },
         (err) => (err ? reject(err) : resolve()),
       );
     });
@@ -208,42 +225,48 @@ export const startReel = createServerFn({ method: "POST" })
 
     const name = data.name || "Homie";
 
-    // 1. Prefer xAI video when a usable key is present.
+    // 1. Prefer xAI video (with model fallback)
     if (isUsableXaiKey(apiKey)) {
       try {
         const still = await sceneUrl(apiKey, data.portrait, data.setting);
         if (still) {
-          const res = await fetch("https://api.x.ai/v1/videos/generations", {
-            method: "POST",
-            headers: authHeaders(apiKey),
-            signal: AbortSignal.timeout(30_000),
-            body: JSON.stringify({
-              model: "grok-imagine-video-1.5",
-              duration: 6,
-              image: { url: still },
-              prompt: `${name} lives a few quiet seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
-            }),
-          });
-          if (res.ok) {
-            const body = (await res.json()) as { request_id?: string; id?: string };
-            const requestId = body.request_id ?? body.id ?? "";
-            if (/^[A-Za-z0-9-]{8,80}$/.test(requestId)) return { ok: true, requestId };
+          const models = ["grok-imagine-video-1.5", "grok-imagine-video"];
+          for (const model of models) {
+            try {
+              const res = await fetch("https://api.x.ai/v1/videos/generations", {
+                method: "POST",
+                headers: authHeaders(apiKey),
+                signal: AbortSignal.timeout(28_000),
+                body: JSON.stringify({
+                  model,
+                  duration: 6,
+                  image: { url: still },
+                  prompt: `${name} lives a few quiet seconds in this room. Small natural motion: a glance, a shift, their habit. Camera holds steady. No new people. No text.`,
+                }),
+              });
+              if (!res.ok) continue;
+              const body = (await res.json()) as { request_id?: string; id?: string };
+              const requestId = body.request_id ?? body.id ?? "";
+              if (/^[A-Za-z0-9-]{8,80}$/.test(requestId)) return { ok: true, requestId };
+            } catch {
+              // try next model
+            }
           }
         }
       } catch (err) {
         console.error("startReel xAI video", err instanceof Error ? err.message : "failed");
       }
 
-      // 2. xAI multi-pose stills → try GIF or still
+      // 2. xAI multi-pose frames → GIF or flipbook
       try {
-        const poseMedia = await xaiPoseSequence(apiKey, data.portrait, data.setting, name);
+        const poseMedia = await xaiPoseSequence(apiKey, data.setting, name);
         if (poseMedia) return { ok: true, requestId: poseMedia };
       } catch (err) {
         console.error("startReel xAI poses", err instanceof Error ? err.message : "failed");
       }
     }
 
-    // 3. Free multi-frame (ffmpeg GIF or still)
+    // 3. Free multi-frame (GIF or flipbook)
     const freeMedia = await freeAnimated(name, data.setting);
     if (freeMedia) return { ok: true, requestId: freeMedia };
 
@@ -257,10 +280,15 @@ export const pullReel = createServerFn({ method: "POST" })
     return { requestId };
   })
   .handler(async ({ data }): Promise<PullReelResult> => {
-    // Immediate media (GIF or still) from free / pose paths
+    // Immediate media from free / pose / frames paths
+    if (data.requestId.startsWith("data:image/gif")) {
+      return { ok: true, status: "done", mime: "image/gif", media: data.requestId };
+    }
     if (data.requestId.startsWith("data:image/")) {
-      const mime = data.requestId.startsWith("data:image/gif") ? "image/gif" : "image/jpeg";
-      return { ok: true, status: "done", mime, media: data.requestId };
+      return { ok: true, status: "done", mime: "image/jpeg", media: data.requestId };
+    }
+    if (data.requestId.startsWith("data:application/x-homie-frames")) {
+      return { ok: true, status: "done", mime: "application/x-homie-frames", media: data.requestId };
     }
 
     const apiKey = process.env.XAI_API_KEY;
@@ -268,7 +296,7 @@ export const pullReel = createServerFn({ method: "POST" })
     try {
       const res = await fetch(`https://api.x.ai/v1/videos/${data.requestId}`, {
         headers: { Authorization: `Bearer ${apiKey}` },
-        signal: AbortSignal.timeout(20_000),
+        signal: AbortSignal.timeout(18_000),
       });
       if (!res.ok) return { ok: false, error: "Lost the camera. Try once more." };
       const body = (await res.json()) as { status?: string; video?: { url?: string } };
@@ -276,7 +304,7 @@ export const pullReel = createServerFn({ method: "POST" })
       if (status === "failed" || status === "expired") return { ok: false, error: "That take didn't come out. Try once more." };
       const url = body.video?.url;
       if (status !== "done" || !url) return { ok: true, status: "pending" };
-      const clipRes = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+      const clipRes = await fetch(url, { signal: AbortSignal.timeout(28_000) });
       if (!clipRes.ok) return { ok: false, error: "The loop didn't download. Try once more." };
       const bytes = Buffer.from(await clipRes.arrayBuffer());
       if (bytes.length < 1000 || bytes.length > 8_000_000) return { ok: false, error: "That take was too heavy." };
