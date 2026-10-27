@@ -212,7 +212,13 @@ function Maker({
   const [habit, setHabit] = useState("");
   const [stage, setStage] = useState<Stage>("adult");
   const [photo, setPhoto] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
+  // Upload/photo, Surprise Me, and Make Homie each own their busy state.
+  // Sharing one flag made the photo flow light up "Inventing..." (and vice
+  // versa) — the workflows must stay visibly and logically independent.
+  const [photoBusy, setPhotoBusy] = useState(false);
+  const [surpriseBusy, setSurpriseBusy] = useState(false);
+  const [makeBusy, setMakeBusy] = useState(false);
+  const busy = photoBusy || surpriseBusy || makeBusy;
   const [error, setError] = useState<string | null>(null);
 
   function toggle(trait: string) {
@@ -229,24 +235,27 @@ function Maker({
       setError("Use a JPG or PNG.");
       return;
     }
+    setPhotoBusy(true);
     try {
       const fitted = await fitPhoto(file, 768, 0.82);
       setPhoto(fitted);
       setError(null);
     } catch {
       setError("That photo didn't open. Try a JPG or PNG.");
+    } finally {
+      setPhotoBusy(false);
     }
   }
 
   async function surprise() {
     if (full || busy) return;
-    setBusy(true);
+    setSurpriseBusy(true);
     setError(null);
     try {
       const result = await inventHomie({ data: { neighbors } });
       if (!result.ok) {
         setError(result.error);
-        setBusy(false);
+        setSurpriseBusy(false);
         return;
       }
       const portrait = await fitPhotoData(result.profile.portrait);
@@ -254,7 +263,7 @@ function Maker({
     } catch (err) {
       const message = err instanceof Error ? err.message : "That didn't work. Try once more.";
       setError(message.slice(0, 180));
-      setBusy(false);
+      setSurpriseBusy(false);
     }
   }
 
@@ -264,7 +273,7 @@ function Maker({
       setError("Add a photo so they have a face.");
       return;
     }
-    setBusy(true);
+    setMakeBusy(true);
     setError(null);
     try {
       const result = await mintHomie({
@@ -272,7 +281,7 @@ function Maker({
       });
       if (!result.ok) {
         setError(result.error);
-        setBusy(false);
+        setMakeBusy(false);
         return;
       }
       const portrait = await fitPhotoData(result.profile.portrait);
@@ -280,7 +289,7 @@ function Maker({
     } catch (err) {
       const message = err instanceof Error ? err.message : "That didn't work. Try once more.";
       setError(message.slice(0, 180));
-      setBusy(false);
+      setMakeBusy(false);
     }
   }
 
@@ -297,7 +306,7 @@ function Maker({
         className="mt-2 flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-paper font-display text-lg text-ink disabled:opacity-50"
       >
         <Sparkles className="size-4 text-tomato" />
-        {busy ? "Inventing..." : "Surprise me"}
+        {surpriseBusy ? "Inventing..." : "Surprise me"}
       </button>
       <p className="mt-1 text-center text-sm text-ink-soft">A random character, SillyTavern style.</p>
 
@@ -361,7 +370,8 @@ function Maker({
       <button
         type="button"
         onClick={() => fileRef.current?.click()}
-        className="mt-2 flex min-h-24 w-full items-center gap-3 rounded-2xl bg-paper px-3 text-left"
+        disabled={photoBusy}
+        className="mt-2 flex min-h-24 w-full items-center gap-3 rounded-2xl bg-paper px-3 text-left disabled:opacity-50"
       >
         {photo ? (
           <img src={photo} alt="" className="size-16 rounded-2xl object-cover" />
@@ -371,7 +381,7 @@ function Maker({
           </span>
         )}
         <span>
-          <span className="block font-display text-ink">{photo ? "Change photo" : "Upload a photo"}</span>
+          <span className="block font-display text-ink">{photoBusy ? "Reading photo..." : photo ? "Change photo" : "Upload a photo"}</span>
           <span className="block text-sm text-ink-soft">We'll draw them as a Homie, still them.</span>
         </span>
       </button>
@@ -393,7 +403,7 @@ function Maker({
         disabled={busy || full}
         className="mt-4 min-h-14 w-full rounded-2xl bg-tomato font-display text-xl text-paper disabled:opacity-50"
       >
-        {busy ? "Drawing them..." : full ? "The house is full" : "Make Homie"}
+        {makeBusy ? "Drawing them..." : full ? "The house is full" : "Make Homie"}
       </button>
     </div>
   );
