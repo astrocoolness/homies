@@ -18,6 +18,10 @@ function authHeaders(apiKey: string) {
   return { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` };
 }
 
+function isUsableXaiKey(key: string | undefined): key is string {
+  return !!key && key.length > 10 && !key.startsWith("sk-or-") && !key.startsWith("AQ.");
+}
+
 async function sceneUrl(apiKey: string, portrait: string, setting: string): Promise<string | null> {
   const res = await fetch("https://api.x.ai/v1/images/edits", {
     method: "POST",
@@ -58,8 +62,9 @@ async function freeGif(name: string, setting: string): Promise<string | null> {
     if (frame && frame.length > 1000) frames.push(frame);
     if (frames.length >= 4) break;
   }
-  if (frames.length < 2) return null;
+  if (frames.length === 0) return null;
 
+  // Prefer a real GIF when ffmpeg is available; otherwise fall back to a still of the first frame.
   const fs = await import("node:fs/promises");
   const os = await import("node:os");
   const path = await import("node:path");
@@ -90,13 +95,18 @@ async function freeGif(name: string, setting: string): Promise<string | null> {
       );
     });
     const bytes = await fs.readFile(output);
-    if (bytes.length < 100 || bytes.length > 1_800_000) return null;
-    return `data:image/gif;base64,${bytes.toString("base64")}`;
+    if (bytes.length >= 100 && bytes.length <= 1_800_000) {
+      return `data:image/gif;base64,${bytes.toString("base64")}`;
+    }
   } catch {
-    return null;
+    // ffmpeg unavailable or failed — fall through to still
   } finally {
     await fs.rm(dir, { recursive: true, force: true }).catch(() => undefined);
   }
+
+  // Still fallback so the moment is not completely lost.
+  const still = frames[0];
+  return `data:image/jpeg;base64,${still.toString("base64")}`;
 }
 
 async function toGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } | null> {
@@ -154,36 +164,37 @@ export const startReel = createServerFn({ method: "POST" })
     const apiKey = process.env.XAI_API_KEY;
     if (data.setting.length < 2) return { ok: false, error: "They need a home before a scene." };
 
-    // Free path: return the GIF data URL as the requestId so pullReel can hand it back immediately.
-    if (!apiKey || apiKey.startsWith("sk-or-") || apiKey.startsWith("AQ.")) {
-      const media = await freeGif(data.name || "Homie", data.setting);
-      if (!media) return { ok: false, error: "The loop didn't come through. Try once more." };
-      return { ok: true, requestId: media };
+    // Prefer xAI when a usable key is present.
+    if (isUsableXaiKey(apiKey)) {
+      try {
+        const still = await sceneUrl(apiKey, data.portrait, data.setting);
+        if (!still) return { ok: false, error: "The room didn't come through. Try once more." };
+        const res = await fetch("https://api.x.ai/v1/videos/generations", {
+          method: "POST",
+          headers: authHeaders(apiKey),
+          signal: AbortSignal.timeout(30_000),
+          body: JSON.stringify({
+            model: "grok-imagine-video-1.5",
+            duration: 6,
+            image: { url: still },
+            prompt: `${data.name || "The homie"} lives a few quiet seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
+          }),
+        });
+        if (!res.ok) return { ok: false, error: "The camera didn't start. Try once more." };
+        const body = (await res.json()) as { request_id?: string; id?: string };
+        const requestId = body.request_id ?? body.id ?? "";
+        if (!/^[A-Za-z0-9-]{8,80}$/.test(requestId)) return { ok: false, error: "The camera didn't start. Try once more." };
+        return { ok: true, requestId };
+      } catch (err) {
+        console.error("startReel xAI", err instanceof Error ? err.message : "failed");
+        // Fall through to free path on unexpected failure.
+      }
     }
 
-    try {
-      const still = await sceneUrl(apiKey, data.portrait, data.setting);
-      if (!still) return { ok: false, error: "The room didn't come through. Try once more." };
-      const res = await fetch("https://api.x.ai/v1/videos/generations", {
-        method: "POST",
-        headers: authHeaders(apiKey),
-        signal: AbortSignal.timeout(30_000),
-        body: JSON.stringify({
-          model: "grok-imagine-video-1.5",
-          duration: 6,
-          image: { url: still },
-          prompt: `${data.name || "The homie"} lives a few quiet seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
-        }),
-      });
-      if (!res.ok) return { ok: false, error: "The camera didn't start. Try once more." };
-      const body = (await res.json()) as { request_id?: string; id?: string };
-      const requestId = body.request_id ?? body.id ?? "";
-      if (!/^[A-Za-z0-9-]{8,80}$/.test(requestId)) return { ok: false, error: "The camera didn't start. Try once more." };
-      return { ok: true, requestId };
-    } catch (err) {
-      console.error("startReel", err instanceof Error ? err.message : "failed");
-      return { ok: false, error: "That didn't work. Try once more." };
-    }
+    // Free path (or fallback): return GIF or still data URL as the requestId.
+    const media = await freeGif(data.name || "Homie", data.setting);
+    if (!media) return { ok: false, error: "The loop didn't come through. Try once more." };
+    return { ok: true, requestId: media };
   });
 
 export const pullReel = createServerFn({ method: "POST" })
@@ -193,13 +204,14 @@ export const pullReel = createServerFn({ method: "POST" })
     return { requestId };
   })
   .handler(async ({ data }): Promise<PullReelResult> => {
-    // Free path: requestId is the data URL itself.
-    if (data.requestId.startsWith("data:image/gif")) {
-      return { ok: true, status: "done", mime: "image/gif", media: data.requestId };
+    // Free / still path: requestId is already a data URL.
+    if (data.requestId.startsWith("data:image/")) {
+      const mime = data.requestId.startsWith("data:image/gif") ? "image/gif" : "image/jpeg";
+      return { ok: true, status: "done", mime, media: data.requestId };
     }
 
     const apiKey = process.env.XAI_API_KEY;
-    if (!apiKey) return { ok: false, error: "Filming isn't available right now." };
+    if (!isUsableXaiKey(apiKey)) return { ok: false, error: "Filming isn't available right now." };
     try {
       const res = await fetch(`https://api.x.ai/v1/videos/${data.requestId}`, {
         headers: { Authorization: `Bearer ${apiKey}` },
