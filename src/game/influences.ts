@@ -2039,6 +2039,390 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "intergenerational-knowledge"
     ]
   },
+  // Research: https://ich.unesco.org/en/RL/darangen-epic-of-the-maranao-people-of-lake-lanao-00159
+  {
+    "id": "maranao-darangen-epic",
+    "name": "Maranao Darangen Epic",
+    "era": "movement",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "A sung Maranao epic of Lake Lanao weaving kinship, love, political duty, customary law, and heroic choices into layered cycles of narrative.",
+    "strengths": [
+      "long-form narrative memory",
+      "symbolic and ethical storytelling",
+      "intergenerational interpretation"
+    ],
+    "shadows": [
+      "an inherited duty can silence personal wishes",
+      "specialized vocabulary can narrow access between generations"
+    ],
+    "contradiction": "A hero must honor a community's code while recognizing when loyalty demands a different choice.",
+    "visualMotifs": [
+      "lake water catching torchlight",
+      "genealogical threads across a carved panel",
+      "a wedding gathering listening through the night"
+    ],
+    "voicePatterns": [
+      "builds an argument through remembered episodes",
+      "moves between ceremonial gravity and ironic understatement"
+    ],
+    "storyEngines": [
+      "two families interpret an old vow differently",
+      "a sung genealogy reveals a hidden alliance",
+      "a young performer must decide how to explain an ancient metaphor"
+    ],
+    "evolutionTriggers": [
+      "reconciles duty with individual compassion",
+      "invites a new generation into the story",
+      "allows a rival's account to change the accepted version"
+    ],
+    "tags": [
+      "Philippines",
+      "Maranao",
+      "Lake Lanao",
+      "Darangen",
+      "oral-epic",
+      "kinship",
+      "customary-law",
+      "narrative-memory"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/vimbuza-healing-dance-00158
+  {
+    "id": "tumbuka-vimbuza-dance",
+    "name": "Tumbuka Vimbuza Healing Dance",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A northern Malawian Tumbuka communal ritual joining drumming, song, and dance in a culturally specific practice of healing and social support.",
+    "strengths": [
+      "attentive communal coordination",
+      "rhythmic responsiveness",
+      "care across generations"
+    ],
+    "shadows": [
+      "outsiders may misread a living ritual as spectacle",
+      "a caregiver can overlook their own limits"
+    ],
+    "contradiction": "A circle gathers to support one person's experience, but no one in the circle can decide that person's inner outcome.",
+    "visualMotifs": [
+      "drummers at the edge of a circle",
+      "dust rising with measured footsteps",
+      "a shifting pattern of singers and dancers"
+    ],
+    "voicePatterns": [
+      "checks whether others feel included before leading",
+      "uses rhythm and repetition to make room for response"
+    ],
+    "storyEngines": [
+      "a village disagrees about how to support someone in distress",
+      "a young drummer learns that listening matters more than volume",
+      "a festival organizer must protect ritual meaning from commercial demands"
+    ],
+    "evolutionTriggers": [
+      "learns to ask rather than presume what help is wanted",
+      "shares leadership with experienced community members",
+      "protects cultural context while welcoming respectful learners"
+    ],
+    "tags": [
+      "Malawi",
+      "Tumbuka",
+      "Vimbuza",
+      "healing-dance",
+      "communal-care",
+      "drumming",
+      "ritual",
+      "performance"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/woodcrafting-knowledge-of-the-zafimaniry-00080
+  {
+    "id": "zafimaniry-woodcraft",
+    "name": "Zafimaniry Woodcraft Knowledge",
+    "era": "movement",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Madagascar's Zafimaniry woodcraft unites joinery, practical architecture, and symbolic carved patterns tied to family and community life.",
+    "strengths": [
+      "material literacy",
+      "patient geometric craftsmanship",
+      "design that carries social memory"
+    ],
+    "shadows": [
+      "commercial demand can displace the meaning of craft",
+      "resource scarcity can put mastery in conflict with stewardship"
+    ],
+    "contradiction": "The maker creates a lasting home from a living forest that also needs time to recover.",
+    "visualMotifs": [
+      "interlocking mortise-and-tenon joints",
+      "spiderweb and honeycomb carvings",
+      "highland wooden granaries"
+    ],
+    "voicePatterns": [
+      "explains relationships through how pieces fit together",
+      "uses the grain and age of materials as metaphors"
+    ],
+    "storyEngines": [
+      "a builder must repair a house without losing its family symbols",
+      "a new market values speed over careful work",
+      "two apprentices disagree on adapting a traditional motif"
+    ],
+    "evolutionTriggers": [
+      "finds a sustainable source for materials",
+      "teaches the meaning behind a pattern",
+      "accepts innovation that protects the craft's purpose"
+    ],
+    "tags": [
+      "Madagascar",
+      "Zafimaniry",
+      "woodcraft",
+      "joinery",
+      "architecture",
+      "geometric-patterns",
+      "stewardship",
+      "craft"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/textile-art-of-taquile-00166
+  {
+    "id": "taquile-textile-art",
+    "name": "Taquile Textile Art",
+    "era": "movement",
+    "domain": "visual-art",
+    "sourceType": "tradition",
+    "essence": "On Peru's Lake Titicaca, Taquile textile practices carry calendars, communal knowledge, identity, and everyday skill through knitting and weaving.",
+    "strengths": [
+      "pattern-based memory",
+      "shared craftsmanship",
+      "collaborative decision-making"
+    ],
+    "shadows": [
+      "tourist demand can flatten complex symbols into souvenirs",
+      "tradition may become harder to sustain when materials grow scarce"
+    ],
+    "contradiction": "A woven calendar holds a community's long memory even as each new year demands a new response.",
+    "visualMotifs": [
+      "a woven calendar belt",
+      "a chullo with earflaps",
+      "loom stakes beside high-altitude lake light"
+    ],
+    "voicePatterns": [
+      "describes time through recurring seasons and patterns",
+      "notices tiny changes in familiar designs"
+    ],
+    "storyEngines": [
+      "a misplaced belt hides a record of a family promise",
+      "an apprentice designs a new symbol for an unfamiliar season",
+      "a community debates whether a popular design has lost its meaning"
+    ],
+    "evolutionTriggers": [
+      "balances craft income with cultural context",
+      "invites young makers to contribute symbols",
+      "explains the history behind a textile before selling it"
+    ],
+    "tags": [
+      "Peru",
+      "Taquile",
+      "Lake Titicaca",
+      "textiles",
+      "weaving",
+      "knitting",
+      "calendar",
+      "communal-memory"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/bsp/safeguarding-programme-for-hezhen-yimakan-storytelling-02474
+  {
+    "id": "hezhen-yimakan-storytelling",
+    "name": "Hezhen Yimakan Storytelling",
+    "era": "movement",
+    "domain": "myth-folklore",
+    "sourceType": "tradition",
+    "essence": "A Hezhen oral narrative tradition in northeast China preserving language, cultural knowledge, and stories through skilled vocal storytelling.",
+    "strengths": [
+      "oral improvisation",
+      "language stewardship",
+      "intergenerational teaching"
+    ],
+    "shadows": [
+      "a fragile transmission chain can place too much pressure on a few storytellers",
+      "formal teaching may lose the intimacy of a lived gathering"
+    ],
+    "contradiction": "To keep a story alive, its guardian must let new voices speak without treating change as erasure.",
+    "visualMotifs": [
+      "a riverside gathering in winter",
+      "a storyteller framed by firelight",
+      "a classroom notebook beside an elder's memory"
+    ],
+    "voicePatterns": [
+      "shifts cadence to mark different speakers",
+      "returns to key images to anchor a long tale"
+    ],
+    "storyEngines": [
+      "an apprentice records a story but misses its intended audience",
+      "a nearly forgotten word unlocks a family history",
+      "a storyteller must choose how to welcome a new interpretation"
+    ],
+    "evolutionTriggers": [
+      "partners with younger speakers",
+      "distinguishes a translation from the full lived context",
+      "learns that preservation includes participation"
+    ],
+    "tags": [
+      "China",
+      "Hezhen",
+      "Yimakan",
+      "oral-storytelling",
+      "language",
+      "memory",
+      "intergenerational-learning",
+      "safeguarding"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/d%C3%A9cisions/5.COM/6.29
+  {
+    "id": "purepecha-pirekua-song",
+    "name": "P'urhépecha Pirekua Song",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "A P'urhépecha musical tradition of Michoacán in which songs of love, history, and civic life also mediate communication among families and communities.",
+    "strengths": [
+      "musical mediation",
+      "gentle emotional clarity",
+      "adaptability across ensembles"
+    ],
+    "shadows": [
+      "a beautiful song can postpone a difficult direct conversation",
+      "outsiders may mistake a living social practice for a generic folk style"
+    ],
+    "contradiction": "A singer can give everyone a voice in public while still struggling to speak plainly in private.",
+    "visualMotifs": [
+      "a small string ensemble in a courtyard",
+      "handwritten verses passed between relatives",
+      "a twilight community gathering"
+    ],
+    "voicePatterns": [
+      "frames disputes through shared images instead of accusations",
+      "leaves room for another singer's reply"
+    ],
+    "storyEngines": [
+      "a song carries a reconciliation message across a divided town",
+      "a young musician questions the meaning of an inherited verse",
+      "a performance reunites relatives with different memories"
+    ],
+    "evolutionTriggers": [
+      "learns when to speak without melody",
+      "invites contrasting voices into an arrangement",
+      "keeps community meaning ahead of applause"
+    ],
+    "tags": [
+      "Mexico",
+      "Michoacan",
+      "P'urhepecha",
+      "Pirekua",
+      "music",
+      "social-mediation",
+      "oral-transmission",
+      "song"
+    ]
+  },
+  // Research: https://mathshistory.st-andrews.ac.uk/Biographies/Madhava/
+  {
+    "id": "madhava-sangamagrama",
+    "name": "Madhava of Sangamagrama",
+    "era": "medieval",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "Kerala mathematician and astronomer associated with advances in infinite series and trigonometric calculation, known substantially through later scholars.",
+    "strengths": [
+      "patient approximation",
+      "mathematical invention",
+      "teaching across generations"
+    ],
+    "shadows": [
+      "can chase ever-finer precision past practical need",
+      "a discovery may be forgotten if its reasoning is not transmitted"
+    ],
+    "contradiction": "Seeks exact knowledge of a world that must often be approached through better and better approximations.",
+    "visualMotifs": [
+      "concentric circles on palm-leaf notes",
+      "alternating marks along a number series",
+      "a night sky beside calculation tables"
+    ],
+    "voicePatterns": [
+      "offers a closer estimate rather than an absolute claim",
+      "explains progress through repeated corrections"
+    ],
+    "storyEngines": [
+      "an astronomical prediction depends on one more term",
+      "a student's proof challenges a trusted shortcut",
+      "a lost manuscript survives through another person's notes"
+    ],
+    "evolutionTriggers": [
+      "explains a method instead of only a result",
+      "accepts the useful limit of precision",
+      "credits the chain of people who preserve a discovery"
+    ],
+    "tags": [
+      "India",
+      "Kerala",
+      "Madhava",
+      "mathematics",
+      "infinite-series",
+      "astronomy",
+      "approximation",
+      "scientific-lineage"
+    ]
+  },
+  // Research: https://plato.stanford.edu/entries/18thGerman-preKant/
+  {
+    "id": "anton-wilhelm-amo",
+    "name": "Anton Wilhelm Amo",
+    "era": "enlightenment",
+    "domain": "philosophy",
+    "sourceType": "historical-person",
+    "essence": "An African-born philosopher teaching in eighteenth-century German universities who investigated mind, body, reasoning, and the practice of rigorous philosophy.",
+    "strengths": [
+      "careful conceptual distinctions",
+      "intellectual persistence",
+      "cross-context scholarship"
+    ],
+    "shadows": [
+      "an insistence on precision can distance an audience",
+      "institutional exclusion can tempt a thinker to work in isolation"
+    ],
+    "contradiction": "Explores the boundary between mind and embodied sensation while navigating institutions that question his own belonging.",
+    "visualMotifs": [
+      "a Latin dissertation beside a map of the Gold Coast",
+      "two overlapping diagrams marked mind and body",
+      "a university lecture hall with an empty chair"
+    ],
+    "voicePatterns": [
+      "defines terms before debating them",
+      "tests claims for internal consistency rather than status"
+    ],
+    "storyEngines": [
+      "a scholar must defend a thesis to a hostile audience",
+      "a missing manuscript leaves only contested summaries",
+      "a teacher reframes a dispute by distinguishing two senses of a word"
+    ],
+    "evolutionTriggers": [
+      "makes difficult reasoning accessible",
+      "separates disagreement from personal contempt",
+      "builds intellectual allies beyond one institution"
+    ],
+    "tags": [
+      "Ghana",
+      "Nzema",
+      "Amo",
+      "philosophy-of-mind",
+      "enlightenment",
+      "reasoning",
+      "education",
+      "intellectual-history"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
