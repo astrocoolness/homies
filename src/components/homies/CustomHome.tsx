@@ -32,6 +32,18 @@ async function mediaToBlob(media: string, mime: string): Promise<Blob> {
   return await res.blob();
 }
 
+function parseFrames(media: string): string[] {
+  try {
+    if (!media.startsWith("data:application/x-homie-frames")) return [];
+    const b64 = media.split(",")[1] ?? "";
+    const json = atob(b64);
+    const arr = JSON.parse(json);
+    return Array.isArray(arr) ? arr.filter((x): x is string => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
 export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
   const homie = useHomies((s) => s.save.homies[id]);
   const profile = homie?.profile;
@@ -40,6 +52,8 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
   const [urls, setUrls] = useState<Record<string, string>>({});
   const [phase, setPhase] = useState<"idle" | "room" | "film">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [frameIdx, setFrameIdx] = useState(0);
+  const [currentFrameUrl, setCurrentFrameUrl] = useState<string | null>(null);
   const token = useRef(0);
 
   useEffect(() => {
@@ -70,13 +84,43 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
     };
   }, [reels]);
 
+  const featured = reels.find((reel) => reel.id === picked) ?? reels[0];
+  const featuredUrl = featured ? urls[featured.id] : null;
+  const isFrames = featured?.mime === "application/x-homie-frames";
+
+  useEffect(() => {
+    if (!isFrames || !featuredUrl) {
+      setCurrentFrameUrl(null);
+      setFrameIdx(0);
+      return;
+    }
+    let cancelled = false;
+    let frames: string[] = [];
+    void fetch(featuredUrl)
+      .then((r) => r.text())
+      .then((text) => {
+        if (cancelled) return;
+        frames = parseFrames(text);
+        setCurrentFrameUrl(frames[0] ?? null);
+      })
+      .catch(() => {});
+    const timer = window.setInterval(() => {
+      setFrameIdx((i) => {
+        const next = frames.length ? (i + 1) % frames.length : 0;
+        setCurrentFrameUrl(frames[next] ?? frames[0] ?? null);
+        return next;
+      });
+    }, 320);
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [isFrames, featuredUrl]);
+
   if (!profile || !homie || homie.hatchedAt == null) return null;
   const sheet = profile;
   const still = portraitSrc(id, homie.stage);
   const room = roomOf(id);
-
-  const featured = reels.find((reel) => reel.id === picked) ?? reels[0];
-  const featuredUrl = featured ? urls[featured.id] : null;
   const full = reels.length >= CAP;
 
   async function film() {
@@ -151,13 +195,14 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
     const url = URL.createObjectURL(reel.blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${sheet.name}-moment.${reel.mime === "image/gif" ? "gif" : reel.mime.startsWith("video/") ? "mp4" : "jpg"}`;
+    link.download = `${sheet.name}-moment.${reel.mime === "image/gif" ? "gif" : reel.mime.startsWith("video/") ? "mp4" : reel.mime === "application/x-homie-frames" ? "frames" : "jpg"}`;
     link.click();
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   const isVideo = featured?.mime.startsWith("video/");
-  const isStill = featured && !isVideo && !featured.mime.includes("gif");
+  const isGif = featured?.mime.includes("gif");
+  const isStill = featured && !isVideo && !isGif && !isFrames;
 
   return (
     <div>
@@ -172,6 +217,13 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
               loop
               muted
               playsInline
+            />
+          ) : isFrames && currentFrameUrl ? (
+            <img
+              key={`${featured.id}-${frameIdx}`}
+              src={currentFrameUrl}
+              alt={featured.caption}
+              className="aspect-[4/3] w-full object-cover"
             />
           ) : (
             <img
