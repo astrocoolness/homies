@@ -2423,6 +2423,391 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "intellectual-history"
     ]
   },
+  // Research: https://ich.unesco.org/en/RL/olonkho-yakut-heroic-epos-00145
+  {
+    "id": "sakha-olonkho-heroic-epos",
+    "name": "Sakha (Yakut) Olonkho Heroic Epos",
+    "era": "movement",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "A Sakha oral epic tradition in which a skilled narrator sustains immense journeys through sung passages, spoken narrative, character shifts, and poetic improvisation.",
+    "strengths": [
+      "long-form narrative memory",
+      "flexible vocal characterization",
+      "patient worldbuilding"
+    ],
+    "shadows": [
+      "an epic-scale perspective may overlook small immediate needs",
+      "a gifted narrator may become protective of their version of a tale"
+    ],
+    "contradiction": "Carries an inherited cosmic story yet must remake it in the living moment for each audience.",
+    "visualMotifs": [
+      "a winter gathering around a storyteller",
+      "layered worlds suggested by branching paths",
+      "a long ribbon of spoken and sung verses"
+    ],
+    "voicePatterns": [
+      "shifts between narrated action and performed character voices",
+      "returns to rhythmic formulas while improvising transitions"
+    ],
+    "storyEngines": [
+      "an apprentice must complete an interrupted heroic tale",
+      "a journey across symbolic worlds exposes an ordinary family's dispute",
+      "two narrators remember different versions of a decisive event"
+    ],
+    "evolutionTriggers": [
+      "shares the story's authority with an apprentice",
+      "makes space for a minor character's perspective",
+      "preserves a tradition by allowing careful adaptation"
+    ],
+    "tags": [
+      "Sakha",
+      "Yakut",
+      "Siberia",
+      "Olonkho",
+      "oral-epic",
+      "heroic-narrative",
+      "performance",
+      "intergenerational-memory"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/rabinal-achi-dance-drama-tradition-00144
+  {
+    "id": "maya-rabinal-achi-dance-drama",
+    "name": "Maya Rabinal Achí Dance-Drama",
+    "era": "medieval",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A K'iche' and Rabinal-region Maya dramatic tradition weaving political conflict, masked dance, music, community memory, and ritual continuity.",
+    "strengths": [
+      "ensemble discipline",
+      "ethical conflict expressed through performance",
+      "historical and communal memory"
+    ],
+    "shadows": [
+      "ritual obligations may clash with a performer's personal ambitions",
+      "public spectacle can flatten a morally complex conflict"
+    ],
+    "contradiction": "Re-enacts a political confrontation to keep memory alive while inviting the present community to reckon with its meaning.",
+    "visualMotifs": [
+      "carved masks beside a rehearsal space",
+      "eagle and jaguar emblems",
+      "a ceremonial circle opening into a contested court"
+    ],
+    "voicePatterns": [
+      "formal exchanges that expose competing obligations",
+      "measured declarations punctuated by music and movement"
+    ],
+    "storyEngines": [
+      "a performer questions an inherited interpretation of a trial",
+      "two communities disagree about how to stage a shared history",
+      "a damaged mask forces an ensemble to recover forgotten knowledge"
+    ],
+    "evolutionTriggers": [
+      "listens to the opposing side without erasing accountability",
+      "protects a living practice from becoming empty spectacle",
+      "reconciles personal conviction with communal duty"
+    ],
+    "tags": [
+      "Guatemala",
+      "Maya",
+      "Rabinal-Achi",
+      "masked-theatre",
+      "dance-drama",
+      "ancestral-memory",
+      "political-conflict",
+      "ritual-performance"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/shashmaqom-music-00089
+  {
+    "id": "central-asian-shashmaqom",
+    "name": "Central Asian Shashmaqom Music",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "A Tajik and Uzbek classical music tradition joining six maqom cycles, instrumental and vocal forms, poetry, and master-to-student transmission.",
+    "strengths": [
+      "patient melodic architecture",
+      "collaborative listening",
+      "poetic and technical fluency"
+    ],
+    "shadows": [
+      "strict training can discourage unexpected interpretations",
+      "an elaborate form may distance a new audience"
+    ],
+    "contradiction": "Works within a demanding inherited framework that depends on living performers to give it fresh emotional force.",
+    "visualMotifs": [
+      "a circle of lutes and frame drums",
+      "a handwritten poem beside a melodic outline",
+      "a quiet instrumental opening before voices enter"
+    ],
+    "voicePatterns": [
+      "builds an argument through recurring melodic ideas",
+      "lets poetry and measured pauses guide emotional emphasis"
+    ],
+    "storyEngines": [
+      "a conservatory student seeks an elder's unnotated variation",
+      "a scattered ensemble rebuilds a repertoire across borders",
+      "two musicians disagree over fidelity and renewal"
+    ],
+    "evolutionTriggers": [
+      "learns directly from an elder before changing the form",
+      "makes room for a less confident ensemble member",
+      "discovers that technical precision alone cannot create trust"
+    ],
+    "tags": [
+      "Tajikistan",
+      "Uzbekistan",
+      "Bukhara",
+      "Shashmaqom",
+      "maqom",
+      "classical-music",
+      "poetry",
+      "oral-transmission"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/noken-multifunctional-knotted-or-woven-bag-handcraft-of-the-people-of-papua-00619
+  {
+    "id": "papuan-noken-fibre-craft",
+    "name": "Papuan Noken Fibre Craft",
+    "era": "movement",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "A diverse set of Papuan knotted and woven bag-making practices that connect plant fibres, everyday carrying, exchange, and skilled intergenerational craft.",
+    "strengths": [
+      "resourceful material knowledge",
+      "patient handwork",
+      "practical design with social meaning"
+    ],
+    "shadows": [
+      "craft knowledge may be vulnerable when raw materials or apprentices disappear",
+      "a maker may resist useful adaptation out of fear of loss"
+    ],
+    "contradiction": "An object made for ordinary carrying can also hold extraordinary meaning in relationships and cultural continuity.",
+    "visualMotifs": [
+      "loops of plant-fibre cord",
+      "a partly finished net bag suspended by hand",
+      "natural dyes beside forest materials"
+    ],
+    "voicePatterns": [
+      "teaches through repeated hand movements and concrete examples",
+      "describes value through use, care, and who receives an object"
+    ],
+    "storyEngines": [
+      "a peace offering must be crafted before two groups will meet",
+      "an apprentice searches for a threatened fibre source",
+      "a damaged everyday object reveals a family connection"
+    ],
+    "evolutionTriggers": [
+      "teaches a novice without demanding perfect imitation",
+      "experiments with sustainable material substitutions",
+      "learns when to preserve a technique and when to adapt its use"
+    ],
+    "tags": [
+      "Papua",
+      "Indonesia",
+      "Noken",
+      "fibre-craft",
+      "weaving",
+      "knotted-bags",
+      "material-knowledge",
+      "sustainability"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/sbek-thom-khmer-shadow-theatre-00108
+  {
+    "id": "khmer-sbek-thom-shadow-theatre",
+    "name": "Khmer Sbek Thom Shadow Theatre",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Cambodian performance tradition using large non-articulated leather silhouettes, coordinated dancers, narration, and music to stage epic scenes.",
+    "strengths": [
+      "ensemble movement precision",
+      "monumental silhouette design",
+      "ceremonial storytelling"
+    ],
+    "shadows": [
+      "complex staging can depend on fragile chains of skilled collaboration",
+      "spectacle may overpower the human stakes of a scene"
+    ],
+    "contradiction": "A motionless leather figure becomes vividly alive only through a whole moving ensemble.",
+    "visualMotifs": [
+      "towering cut-leather silhouettes",
+      "firelight behind a white screen",
+      "paired bamboo supports and dancers' synchronized steps"
+    ],
+    "voicePatterns": [
+      "narrators alternate exposition with dramatic emphasis",
+      "allows percussion and shadow movement to carry unspoken meaning"
+    ],
+    "storyEngines": [
+      "a troupe rebuilds lost figures from incomplete memories",
+      "a dancer must replace a missing narrator mid-performance",
+      "an apprentice learns that the largest shadow requires collective timing"
+    ],
+    "evolutionTriggers": [
+      "credits artisans as well as performers",
+      "reconstructs a lost sequence through shared testimony",
+      "chooses narrative clarity over visual grandeur"
+    ],
+    "tags": [
+      "Cambodia",
+      "Khmer",
+      "Sbek-Thom",
+      "shadow-theatre",
+      "leather-puppets",
+      "ensemble",
+      "silhouette",
+      "Reamker"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/traditional-li-textile-techniques-spinning-dyeing-weaving-and-embroidering-02153
+  {
+    "id": "hainan-li-textile-knowledge",
+    "name": "Hainan Li Textile Knowledge",
+    "era": "movement",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Li community spinning, dyeing, weaving, and embroidery practices in Hainan that preserve historical memory through textile patterns and teaching.",
+    "strengths": [
+      "pattern-based memory",
+      "complex fibre craftsmanship",
+      "collaborative knowledge transfer"
+    ],
+    "shadows": [
+      "a maker can mistake one family's pattern for a universal account",
+      "time-intensive apprenticeship may be hard to sustain under economic pressure"
+    ],
+    "contradiction": "Cloth made for everyday life can also carry histories that are not written down.",
+    "visualMotifs": [
+      "double-face embroidery showing two coherent sides",
+      "naturally dyed cotton threads",
+      "a loom where repeating patterns become a family record"
+    ],
+    "voicePatterns": [
+      "explains a motif by tracing its making step by step",
+      "uses tactile comparisons to describe history and belonging"
+    ],
+    "storyEngines": [
+      "a missing pattern leaves a family history incomplete",
+      "an apprentice translates a remembered motif into a new textile",
+      "a market demand threatens the time needed for careful work"
+    ],
+    "evolutionTriggers": [
+      "invites younger makers to learn and reinterpret responsibly",
+      "asks whose memories a design represents",
+      "balances livelihood with patient transmission"
+    ],
+    "tags": [
+      "Hainan",
+      "China",
+      "Li-people",
+      "textiles",
+      "embroidery",
+      "weaving",
+      "natural-dyes",
+      "cultural-memory"
+    ]
+  },
+  // Research: https://www.ascleiden.nl/content/library-weekly/nana-asmau
+  {
+    "id": "nana-asmau-educator-poet",
+    "name": "Nana Asma'u",
+    "era": "19th-century",
+    "domain": "literature",
+    "sourceType": "historical-person",
+    "essence": "A nineteenth-century Sokoto scholar and multilingual poet whose teaching networks made knowledge more accessible, especially to women.",
+    "strengths": [
+      "multilingual communication",
+      "education through poetry",
+      "building distributed teaching networks"
+    ],
+    "shadows": [
+      "a dedicated organizer can carry too much responsibility",
+      "an urgent mission may leave little room for uncertainty"
+    ],
+    "contradiction": "Works within an established scholarly world while widening who can participate in its learning.",
+    "visualMotifs": [
+      "handwritten verses shared between teachers",
+      "a traveling study circle",
+      "a notebook moving from village to village"
+    ],
+    "voicePatterns": [
+      "uses memorable poetic structures to teach complex ideas",
+      "adapts explanations to the learner without diluting the question"
+    ],
+    "storyEngines": [
+      "a traveling teacher must rebuild trust after a misunderstanding",
+      "a poem carries a lesson across a language boundary",
+      "an apprentice discovers that teaching changes the teacher"
+    ],
+    "evolutionTriggers": [
+      "delegates authority to a new educator",
+      "revises a lesson after hearing a student's objection",
+      "makes a learning network resilient without her presence"
+    ],
+    "tags": [
+      "Nigeria",
+      "Sokoto",
+      "Nana-Asmau",
+      "Fulani",
+      "Hausa",
+      "education",
+      "poetry",
+      "women-scholars",
+      "yan-taru"
+    ]
+  },
+  // Research: https://www.aps.org/apsnews/2005/10/this-month-in-physics-history
+  {
+    "id": "satyendra-nath-bose",
+    "name": "Satyendra Nath Bose",
+    "era": "early-modern",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "An Indian theoretical physicist whose unconventional counting of indistinguishable light quanta helped open a new framework for quantum statistics.",
+    "strengths": [
+      "conceptual reframing",
+      "mathematical persistence",
+      "willingness to seek cross-border critique"
+    ],
+    "shadows": [
+      "an elegant model can be difficult to communicate without shared assumptions",
+      "a breakthrough may depend on gatekeepers to be heard"
+    ],
+    "contradiction": "Changes what can be counted by recognizing that some things cannot be distinguished in the usual way.",
+    "visualMotifs": [
+      "identical points arranged in shared cells",
+      "a handwritten derivation crossing a desk",
+      "a blackboard with two competing counting methods"
+    ],
+    "voicePatterns": [
+      "questions a hidden assumption before doing more calculation",
+      "explains a surprising result through a simpler counting example"
+    ],
+    "storyEngines": [
+      "a rejected paper reaches an unexpected collaborator",
+      "a tiny mathematical discrepancy exposes a new physical rule",
+      "a team argues whether two apparently identical objects can be tracked separately"
+    ],
+    "evolutionTriggers": [
+      "credits collaborators without surrendering independent judgment",
+      "turns an abstract result into a teachable analogy",
+      "accepts criticism that improves the original derivation"
+    ],
+    "tags": [
+      "India",
+      "Bengal",
+      "Dhaka",
+      "Satyendra-Nath-Bose",
+      "quantum-statistics",
+      "physics",
+      "mathematics",
+      "conceptual-breakthrough"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
