@@ -31,13 +31,20 @@ export function cliqueCloudStatus(): CliqueCloudStatus {
   return { supabase: cfg.supabase, supabaseDb: cfg.supabaseDb, r2: cfg.r2 };
 }
 
+// JSON RPC transport limit is intentionally lower than the 10 MB local-file limit.
+// Larger photos remain stored on-device until a streaming upload endpoint exists.
 export const MAX_PHOTO_DATA_URL = 1_900_000;
 
 function decodeDataUrl(dataUrl: string): { bytes: Buffer; declared: string } | null {
   const match = /^data:(image\/[a-z]+);base64,([A-Za-z0-9+/=]+)$/.exec(dataUrl);
   if (!match) return null;
   try {
-    return { bytes: Buffer.from(match[2], "base64"), declared: match[1] };
+    const payload = match[2];
+    // Buffer.from(base64) silently accepts malformed encodings. Reject them.
+    if (payload.length % 4 !== 0 || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(payload)) return null;
+    const bytes = Buffer.from(payload, "base64");
+    if (bytes.toString("base64") !== payload) return null;
+    return { bytes, declared: match[1] };
   } catch {
     return null;
   }
@@ -111,7 +118,7 @@ export async function uploadCliquePhotoForUser(
   }
   if (input.slot !== "profile") return { ok: false, error: "Unknown photo slot" };
   if (!input.dataUrl.startsWith("data:image/") || input.dataUrl.length > MAX_PHOTO_DATA_URL) {
-    return { ok: false, error: "Photo is too large for cloud upload" };
+    return { ok: false, error: "This photo exceeds the current cloud-transfer limit (about 1.4 MB). Your local copy is safe; choose a smaller image or compress it before cloud backup." };
   }
   const decoded = decodeDataUrl(input.dataUrl);
   if (!decoded) return { ok: false, error: "That photo couldn't be read." };
