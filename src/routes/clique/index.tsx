@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Home, Link2, MessagesSquare, Sparkles, UserRound } from "lucide-react";
 import { LocalProfilePhoto } from "@/components/clique/LocalProfilePhoto";
+import { CliqueCloudStatus } from "@/components/clique/CliqueCloudStatus";
 
 export const Route = createFileRoute("/clique/")({
   component: CliqueHubPage,
@@ -64,6 +65,9 @@ function CliqueHubPage() {
           </p>
           <div className="mt-4">
             <LocalProfilePhoto />
+          </div>
+          <div className="mt-4 border-t border-neutral-800 pt-4">
+            <CliqueCloudStatus />
           </div>
         </section>
 
