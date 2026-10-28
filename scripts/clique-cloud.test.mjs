@@ -35,3 +35,11 @@ test("Supabase receiver schema is idempotent with RLS on and unique idempotency"
   assert.match(sql, /alter table public\.clique_profiles enable row level security/);
   assert.match(sql, /alter table public\.clique_photos enable row level security/);
 });
+
+
+test("cloud transport cap is explicit and malformed base64 is rejected", () => {
+  assert.match(server, /MAX_PHOTO_DATA_URL = 1_900_000/);
+  assert.match(server, /payload\.length % 4 !== 0/);
+  assert.match(server, /bytes\.toString\("base64"\) !== payload/);
+  assert.match(server, /local copy is safe/);
+});
