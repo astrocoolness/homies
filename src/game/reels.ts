@@ -4,6 +4,7 @@ export type SavedReel = {
   caption: string;
   at: number;
   mime: string;
+  note?: string;
   blob: Blob;
 };
 

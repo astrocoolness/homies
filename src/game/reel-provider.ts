@@ -72,27 +72,15 @@ export async function requestReelScene(apiKey: string, portrait: string, setting
       prompt: `Place this exact vinyl-toy character inside their home, same face and outfit, full scene, one character only. Setting: ${setting}. Warm toy-like room, no text, no watermark, no extra people.`,
       image: { url: portrait, type: "image_url" },
     }, 40_000);
-    if (result.ok) {
-      const url = extractImage(result.body);
-      if (url) return { ok: true, url };
-    } else if (result.reason === "model" && index === 0) {
-      continue;
-    } else if (result.reason === "auth" || result.reason === "credits" || result.reason === "timeout" || result.reason === "unavailable") {
+    if (!result.ok) {
+      if (result.reason === "model" && index === 0) continue;
       return result;
     }
+    const url = extractImage(result.body);
+    if (url) return { ok: true, url };
+    return failure("room", 200, "response");
   }
-  for (const model of models) {
-    const result = await request(apiKey, "room", "images/generations", {
-      model,
-      prompt: `A cute vinyl toy character with a friendly face, similar style to a collectible figurine, standing in their cozy home. Setting: ${setting}. Warm pastel toy-like room, one character only, no text, no watermark, no extra people. Soft wholesome aesthetic.`,
-      n: 1,
-    }, 40_000);
-    if (result.ok) {
-      const url = extractImage(result.body);
-      if (url) return { ok: true, url };
-    }
-  }
-  return failure("room", 200, "response");
+  return failure("room", 404, "model");
 }
 
 export async function requestReelVideo(apiKey: string, image: string, name: string): Promise<{ ok: true; requestId: string } | Failure> {
