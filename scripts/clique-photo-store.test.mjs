@@ -17,8 +17,8 @@ test("profile photo UI wires the uploader to the device adapter and reads it bac
   assert.match(local, /uploadPhotoToDevice\(PROFILE_PHOTO_SLOT, file\)/);
   assert.match(local, /loadDevicePhoto\(PROFILE_PHOTO_SLOT\)/);
   assert.match(local, /dropDevicePhoto\(PROFILE_PHOTO_SLOT\)/);
-  // Persistence honesty: the UI must say the photo stays on the device.
-  assert.match(local, /not uploaded to a server/);
+  // Persistence honesty: the UI must say the device copy never leaves it.
+  assert.match(local, /this copy never leaves it/);
 });
 
 test("the /clique hub mounts the local profile photo section", () => {
