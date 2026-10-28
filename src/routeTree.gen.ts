@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CliqueIndexRouteImport } from './routes/clique/index'
+import { Route as CliqueLinkRouteImport } from './routes/clique/link'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CliqueIndexRoute = CliqueIndexRouteImport.update({
+  id: '/clique/',
+  path: '/clique/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CliqueLinkRoute = CliqueLinkRouteImport.update({
+  id: '/clique/link',
+  path: '/clique/link',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clique/link': typeof CliqueLinkRoute
+  '/clique/': typeof CliqueIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clique/link': typeof CliqueLinkRoute
+  '/clique': typeof CliqueIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/clique/link': typeof CliqueLinkRoute
+  '/clique/': typeof CliqueIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/clique/link' | '/clique/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/clique/link' | '/clique'
+  id: '__root__' | '/' | '/clique/link' | '/clique/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CliqueLinkRoute: typeof CliqueLinkRoute
+  CliqueIndexRoute: typeof CliqueIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clique/': {
+      id: '/clique/'
+      path: '/clique'
+      fullPath: '/clique/'
+      preLoaderRoute: typeof CliqueIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clique/link': {
+      id: '/clique/link'
+      path: '/clique/link'
+      fullPath: '/clique/link'
+      preLoaderRoute: typeof CliqueLinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CliqueLinkRoute: CliqueLinkRoute,
+  CliqueIndexRoute: CliqueIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,0 +1,45 @@
+name: Clique account-linking checks
+
+on:
+  push:
+    branches:
+      - feature/clique-linking
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/lib/clique-link.ts'
+      - 'src/routes/clique/link.tsx'
+      - 'scripts/clique-link.test.mjs'
+      - '.github/workflows/clique-link-checks.yml'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clique-linking-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Generate TanStack route tree
+        run: npm run build:dev
+      - name: TypeScript
+        run: npm run typecheck
+      - name: Lint changed files
+        run: npx eslint src/lib/clique-link.ts src/routes/clique/link.tsx scripts/clique-link.test.mjs
+      - name: Focused account-linking tests
+        run: node --test scripts/clique-link.test.mjs
+      - name: Production build
+        run: npm run build
