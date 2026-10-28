@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Home, Link2, MessagesSquare, Sparkles, UserRound } from "lucide-react";
+import { LocalProfilePhoto } from "@/components/clique/LocalProfilePhoto";
 
 export const Route = createFileRoute("/clique/")({
   component: CliqueHubPage,
@@ -54,6 +55,17 @@ function CliqueHubPage() {
             </p>
           </div>
         </div>
+
+        <section className="mt-8 rounded-3xl border border-neutral-800 bg-neutral-900 p-5">
+          <h2 className="font-semibold">Your Flyspace photo</h2>
+          <p className="mt-1 max-w-xl text-sm leading-6 text-neutral-400">
+            Uploads are validated on the spot (real JPG/PNG/WebP, under 10 MB) and stored on this
+            device for free — no account, no server. Uploading a photo never starts Surprise Me.
+          </p>
+          <div className="mt-4">
+            <LocalProfilePhoto />
+          </div>
+        </section>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <Link
