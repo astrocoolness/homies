@@ -30,7 +30,7 @@ function framesToDataUrl(frames: Buffer[]): string | null {
 }
 
 async function sceneUrl(apiKey: string, portrait: string, setting: string): Promise<string | null> {
-  const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
+  const models = ["grok-imagine-image-2.0", "grok-imagine-image", "grok-imagine-image-quality"];
   for (const model of models) {
     try {
       const res = await fetch("https://api.x.ai/v1/images/edits", {
@@ -57,14 +57,56 @@ async function sceneUrl(apiKey: string, portrait: string, setting: string): Prom
 }
 
 async function freeFrame(prompt: string, seed: number): Promise<Buffer | null> {
-  const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true&seed=${seed}`;
+  // 1. Pollinations (legacy free URL)
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(20_000) });
-    if (!res.ok) return null;
-    return Buffer.from(await res.arrayBuffer());
+    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true&seed=${seed}`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(18_000) });
+    if (res.ok) {
+      const buf = Buffer.from(await res.arrayBuffer());
+      if (buf.length > 800) return buf;
+    }
   } catch {
-    return null;
+    // continue
   }
+
+  // 2. AI Horde anonymous (slow but free, no key)
+  try {
+    const res = await fetch("https://stablehorde.net/api/v2/generate/async", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", apikey: "0000000000" },
+      signal: AbortSignal.timeout(12_000),
+      body: JSON.stringify({
+        prompt,
+        params: { width: 512, height: 512, steps: 20, n: 1 },
+        nsfw: false,
+        censor_nsfw: true,
+        models: ["stable_diffusion"],
+      }),
+    });
+    if (res.ok) {
+      const body = (await res.json()) as { id?: string };
+      if (body.id) {
+        await new Promise((r) => setTimeout(r, 8000));
+        const check = await fetch(`https://stablehorde.net/api/v2/generate/check/${body.id}`, {
+          signal: AbortSignal.timeout(8_000),
+        });
+        if (check.ok) {
+          const status = (await check.json()) as { done?: boolean; generations?: { img?: string }[] };
+          if (status.done && status.generations?.[0]?.img) {
+            const imgRes = await fetch(status.generations[0].img, { signal: AbortSignal.timeout(10_000) });
+            if (imgRes.ok) {
+              const buf = Buffer.from(await imgRes.arrayBuffer());
+              if (buf.length > 800) return buf;
+            }
+          }
+        }
+      }
+    }
+  } catch {
+    // skip
+  }
+
+  return null;
 }
 
 async function framesToGif(frames: Buffer[]): Promise<string | null> {
@@ -112,10 +154,19 @@ async function framesToGif(frames: Buffer[]): Promise<string | null> {
 
 async function freeAnimated(name: string, setting: string): Promise<string | null> {
   const base = `cute vinyl toy character named ${name}, ${setting}, soft matte plastic, warm cream room, one character only, no text`;
-  const variations = ["slight lean left", "slight lean right", "gentle head tilt", "small smile", "looking down", "looking up"];
+  const variations = [
+    "slight lean left",
+    "slight lean right",
+    "gentle head tilt",
+    "small smile",
+    "looking down",
+    "looking up",
+    "soft wave",
+    "tiny step forward",
+  ];
   const frames: Buffer[] = [];
-  for (let i = 0; i < variations.length && frames.length < 4; i++) {
-    const frame = await freeFrame(`${base}, ${variations[i]}, small motion`, 100 + i * 37);
+  for (let i = 0; i < variations.length && frames.length < 5; i++) {
+    const frame = await freeFrame(`${base}, ${variations[i]}, small motion`, 100 + i * 41);
     if (frame && frame.length > 800) frames.push(frame);
   }
   if (frames.length === 0) return null;
@@ -123,39 +174,52 @@ async function freeAnimated(name: string, setting: string): Promise<string | nul
   const gif = await framesToGif(frames);
   if (gif) return gif;
 
-  // Multi-frame flipbook fallback (client animates)
   if (frames.length >= 2) return framesToDataUrl(frames);
 
   return `data:image/jpeg;base64,${frames[0].toString("base64")}`;
 }
 
 async function xaiPoseSequence(apiKey: string, setting: string, name: string): Promise<string | null> {
-  const poses = ["looking slightly left", "looking slightly right", "gentle lean forward", "small smile", "slight head tilt"];
+  const models = ["grok-imagine-image-2.0", "grok-imagine-image", "grok-imagine-image-quality"];
+  const poses = [
+    "looking slightly left",
+    "looking slightly right",
+    "gentle lean forward",
+    "small smile",
+    "slight head tilt",
+    "soft wave",
+  ];
   const frames: Buffer[] = [];
   for (const pose of poses) {
     if (frames.length >= 4) break;
-    try {
-      const res = await fetch("https://api.x.ai/v1/images/generations", {
-        method: "POST",
-        headers: authHeaders(apiKey),
-        signal: AbortSignal.timeout(28_000),
-        body: JSON.stringify({
-          model: "grok-imagine-image-2.0",
-          prompt: `A cute vinyl toy character named ${name}, ${pose}, standing in their cozy home. Setting: ${setting}. Soft matte plastic, warm cream room, one character only, no text, no watermark, high quality.`,
-          n: 1,
-        }),
-      });
-      if (!res.ok) continue;
-      const body = (await res.json()) as { data?: { b64_json?: string; url?: string }[] };
-      const item = body.data?.[0];
-      if (item?.b64_json) {
-        frames.push(Buffer.from(item.b64_json, "base64"));
-      } else if (item?.url) {
-        const img = await fetch(item.url, { signal: AbortSignal.timeout(12_000) });
-        if (img.ok) frames.push(Buffer.from(await img.arrayBuffer()));
+    for (const model of models) {
+      try {
+        const res = await fetch("https://api.x.ai/v1/images/generations", {
+          method: "POST",
+          headers: authHeaders(apiKey),
+          signal: AbortSignal.timeout(26_000),
+          body: JSON.stringify({
+            model,
+            prompt: `A cute vinyl toy character named ${name}, ${pose}, standing in their cozy home. Setting: ${setting}. Soft matte plastic, warm cream room, one character only, no text, no watermark, high quality.`,
+            n: 1,
+          }),
+        });
+        if (!res.ok) continue;
+        const body = (await res.json()) as { data?: { b64_json?: string; url?: string }[] };
+        const item = body.data?.[0];
+        if (item?.b64_json) {
+          frames.push(Buffer.from(item.b64_json, "base64"));
+          break;
+        } else if (item?.url) {
+          const img = await fetch(item.url, { signal: AbortSignal.timeout(12_000) });
+          if (img.ok) {
+            frames.push(Buffer.from(await img.arrayBuffer()));
+            break;
+          }
+        }
+      } catch {
+        // try next model
       }
-    } catch {
-      // continue
     }
   }
   if (frames.length === 0) return null;
@@ -225,12 +289,12 @@ export const startReel = createServerFn({ method: "POST" })
 
     const name = data.name || "Homie";
 
-    // 1. Prefer xAI video (with model fallback)
+    // 1. Prefer xAI video (expanded model list)
     if (isUsableXaiKey(apiKey)) {
       try {
         const still = await sceneUrl(apiKey, data.portrait, data.setting);
         if (still) {
-          const models = ["grok-imagine-video-1.5", "grok-imagine-video"];
+          const models = ["grok-imagine-video-1.5", "grok-imagine-video", "grok-imagine-video-1.5-lite"];
           for (const model of models) {
             try {
               const res = await fetch("https://api.x.ai/v1/videos/generations", {
@@ -257,7 +321,7 @@ export const startReel = createServerFn({ method: "POST" })
         console.error("startReel xAI video", err instanceof Error ? err.message : "failed");
       }
 
-      // 2. xAI multi-pose frames → GIF or flipbook
+      // 2. xAI multi-pose frames → GIF or flipbook (more models)
       try {
         const poseMedia = await xaiPoseSequence(apiKey, data.setting, name);
         if (poseMedia) return { ok: true, requestId: poseMedia };
@@ -266,16 +330,11 @@ export const startReel = createServerFn({ method: "POST" })
       }
     }
 
-    // 3. Free multi-frame (GIF or flipbook)
+    // 3. Free multi-frame (Pollinations + AI Horde, GIF or flipbook)
     const freeMedia = await freeAnimated(name, data.setting);
     if (freeMedia) return { ok: true, requestId: freeMedia };
 
-    // 4. Cinematic still (final fallback, cannot fail): the Homie's own
-    // portrait, returned as a plain JPEG. It needs no API key, no network,
-    // and no ffmpeg, so "Film a moment" always produces a moment. The
-    // client animates stills with a slow Ken Burns drift and labels them
-    // "Animated still" — it is never presented as filmed video, and it is
-    // always this character's own image, never a stock substitute.
+    // 4. Final guaranteed still: the Homie's own portrait (client animates it)
     return { ok: true, requestId: data.portrait };
   });
 
@@ -286,7 +345,6 @@ export const pullReel = createServerFn({ method: "POST" })
     return { requestId };
   })
   .handler(async ({ data }): Promise<PullReelResult> => {
-    // Immediate media from free / pose / frames paths
     if (data.requestId.startsWith("data:image/gif")) {
       return { ok: true, status: "done", mime: "image/gif", media: data.requestId };
     }
