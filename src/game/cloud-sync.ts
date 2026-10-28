@@ -2,6 +2,8 @@ import { dropCloudHomie, dropCloudReel, dropCloudShelf, pullCloud, pushCloudHomi
 import { readKeeperId } from "./keeper";
 import { restoreHomie } from "./logic";
 import { listReels, putReel, type SavedReel } from "./reels";
+import { queueFlyspaceSync } from "../lib/integrations/flyspace-sync-publisher";
+import type { HomieProfile } from "../lib/integrations/flyspace-profile";
 import type { HomieState, Save, Stage } from "./types";
 
 function blobToDataUrl(blob: Blob) {
@@ -13,10 +15,46 @@ function blobToDataUrl(blob: Blob) {
   });
 }
 
-export async function publishHomie(id: string, homie: HomieState) {
+/**
+ * Map a published game Homie onto the shared Flyspace profile contract.
+ * A custom Homie's profile never changes after adoption (editing in the
+ * Maker adopts a brand-new Homie id), so the adoption wall time —
+ * originMs + hatchedAt minutes — is a stable version for the idempotency
+ * key: re-publishing the same Homie queues nothing new. The portrait is a
+ * local data URL, not hosted media, so it is not sent as an avatar; the
+ * contract only carries https media.
+ */
+function toHomieProfile(id: string, homie: HomieState, originMs: number): HomieProfile | null {
+  const profile = homie.profile;
+  if (!profile || homie.hatchedAt == null) return null;
+  return {
+    id,
+    displayName: profile.name,
+    biography: profile.bio,
+    personality: { traits: profile.descriptors, interests: [], goals: [] },
+    appearance: {
+      avatarUrl: profile.portrait.startsWith("https://") ? profile.portrait : undefined,
+      referenceUrls: [],
+    },
+    media: [],
+    animations: [],
+    updatedAt: new Date(originMs + homie.hatchedAt * 60_000).toISOString(),
+  };
+}
+
+export async function publishHomie(id: string, homie: HomieState, originMs?: number) {
   const keeperId = readKeeperId();
   if (!keeperId || !homie.profile || !homie.profile.portrait.startsWith("data:image/")) return;
   await pushCloudHomie({ data: { keeperId, id, stage: homie.stage, profile: homie.profile } }).catch(() => undefined);
+  // Queue the Flyspace profile sync for this publish. Durable and local:
+  // it records intent even while the sync flag is off (no receiver yet),
+  // and it must never break the cloud publish above.
+  try {
+    const character = toHomieProfile(id, homie, originMs ?? 0);
+    if (character) queueFlyspaceSync(character);
+  } catch {
+    /* the cloud copy is already kept */
+  }
 }
 
 export async function forgetCloudHomie(id: string) {
@@ -115,7 +153,7 @@ export async function syncKeeper(
   for (const id of Object.keys(save.homies)) {
     const homie = save.homies[id];
     if (!id.startsWith("c") || !homie?.profile || remoteIds.has(id) || !pushLocal) continue;
-    void publishHomie(id, homie);
+    void publishHomie(id, homie, save.originMs);
   }
   void pullReels(save, remote.reels, pushLocal);
   return arrived;

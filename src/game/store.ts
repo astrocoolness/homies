@@ -247,7 +247,7 @@ export const useHomies = create<State>((set, get) => ({
     schedulePersist(save, true);
     const id = save.activeId;
     const homie = save.homies[id];
-    if (homie) void publishHomie(id, homie);
+    if (homie) void publishHomie(id, homie, save.originMs);
   },
   release: (id) => {
     const save = releaseHomie(get().save, id);
