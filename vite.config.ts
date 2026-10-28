@@ -171,6 +171,8 @@ export default defineConfig(({ command, isPreview }) => ({
       ? [
           nitro({
             preset: "vercel",
+            // Each moment step is bounded to 38s of provider work plus encoding.
+            vercel: { functions: { maxDuration: 60 } },
             // Auto-registers server/middleware/* (the PWA install page +
             // manifest + head-tag middleware). Nitro v3 defaults serverDir to
             // false, so removing this silently unwires /?install=1 on deploys.

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Film } from "lucide-react";
 import { portraitSrc, roomOf } from "@/game/content";
 import { pullReel, startReel } from "@/game/reel";
+import { filmMoment, parseReelFrames } from "@/game/reel-client";
 import { dataUrlToBlob, dropReel, listReels, putReel, type SavedReel } from "@/game/reels";
 import { forgetCloudReel, publishReel } from "@/game/cloud-sync";
 import { useHomies } from "@/game/store";
@@ -13,8 +14,8 @@ function cx(...parts: Array<string | false | undefined>) {
 }
 
 async function filmPortrait(src: string) {
-  if (src.startsWith("data:image/") || src.startsWith("https://")) return src;
-  const res = await fetch(src);
+  if (src.startsWith("data:image/")) return src;
+  const res = await fetch(src, { signal: AbortSignal.timeout(15_000) });
   if (!res.ok) throw new Error("portrait");
   const blob = await res.blob();
   return await new Promise<string>((resolve, reject) => {
@@ -32,18 +33,6 @@ async function mediaToBlob(media: string, mime: string): Promise<Blob> {
   return await res.blob();
 }
 
-function parseFrames(media: string): string[] {
-  try {
-    if (!media.startsWith("data:application/x-homie-frames")) return [];
-    const b64 = media.split(",")[1] ?? "";
-    const json = atob(b64);
-    const arr = JSON.parse(json);
-    return Array.isArray(arr) ? arr.filter((x): x is string => typeof x === "string") : [];
-  } catch {
-    return [];
-  }
-}
-
 export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
   const homie = useHomies((s) => s.save.homies[id]);
   const profile = homie?.profile;
@@ -52,12 +41,19 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
   const [urls, setUrls] = useState<Record<string, string>>({});
   const [phase, setPhase] = useState<"idle" | "room" | "film">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState("Putting them in the room…");
+  const [allowCommunity, setAllowCommunity] = useState(false);
+  const [frameSets, setFrameSets] = useState<Record<string, string[]>>({});
   const [frameIdx, setFrameIdx] = useState(0);
   const [currentFrameUrl, setCurrentFrameUrl] = useState<string | null>(null);
   const token = useRef(0);
+  const filming = useRef(false);
 
   useEffect(() => {
     const mine = token.current;
+    filming.current = false;
+    setPhase("idle");
+    setError(null);
     return () => {
       if (token.current === mine) token.current += 1;
     };
@@ -84,6 +80,22 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
     };
   }, [reels]);
 
+  useEffect(() => {
+    let live = true;
+    void Promise.all(
+      reels
+        .filter((reel) => reel.mime === "application/x-homie-frames")
+        .map(async (reel) => [reel.id, parseReelFrames(await reel.blob.text())] as const),
+    )
+      .then((entries) => {
+        if (live) setFrameSets(Object.fromEntries(entries));
+      })
+      .catch(() => undefined);
+    return () => {
+      live = false;
+    };
+  }, [reels]);
+
   const featured = reels.find((reel) => reel.id === picked) ?? reels[0];
   const featuredUrl = featured ? urls[featured.id] : null;
   const isFrames = featured?.mime === "application/x-homie-frames";
@@ -94,16 +106,10 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
       setFrameIdx(0);
       return;
     }
-    let cancelled = false;
-    let frames: string[] = [];
-    void fetch(featuredUrl)
-      .then((r) => r.text())
-      .then((text) => {
-        if (cancelled) return;
-        frames = parseFrames(text);
-        setCurrentFrameUrl(frames[0] ?? null);
-      })
-      .catch(() => {});
+    const frames = frameSets[featured.id] ?? [];
+    setCurrentFrameUrl(frames[0] ?? null);
+    setFrameIdx(0);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(() => {
       setFrameIdx((i) => {
         const next = frames.length ? (i + 1) % frames.length : 0;
@@ -112,10 +118,9 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
       });
     }, 320);
     return () => {
-      cancelled = true;
       window.clearInterval(timer);
     };
-  }, [isFrames, featuredUrl]);
+  }, [isFrames, featuredUrl, featured?.id, frameSets]);
 
   if (!profile || !homie || homie.hatchedAt == null) return null;
   const sheet = profile;
@@ -124,62 +129,53 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
   const full = reels.length >= CAP;
 
   async function film() {
-    if (phase !== "idle" || full) return;
+    if (filming.current || phase !== "idle" || full) return;
+    filming.current = true;
     const mine = token.current;
     setError(null);
     setPhase("room");
     try {
-      const started = await startReel({
-        data: {
+      const result = await filmMoment(
+        {
           portrait: await filmPortrait(still),
-          name: sheet.name,
-          setting: `${sheet.homeTitle}. ${sheet.homeLine} Days: ${sheet.job}`,
+          name: sheet.name.slice(0, 24),
+          setting: `${sheet.homeTitle}. ${sheet.homeLine} Days: ${sheet.job}`.slice(0, 240),
+          allowCommunity,
         },
-      });
-      if (!started.ok) {
-        if (token.current === mine) {
-          setError(started.error);
-          setPhase("idle");
-        }
-        return;
-      }
-      if (token.current === mine) setPhase("film");
-      for (let i = 0; i < 30; i += 1) {
-        await new Promise((resolve) => window.setTimeout(resolve, 3000));
-        const pulled = await pullReel({ data: { requestId: started.requestId } });
-        if (!pulled.ok) {
-          if (token.current === mine) {
-            setError(pulled.error);
-            setPhase("idle");
-          }
-          return;
-        }
-        if (pulled.status === "pending") continue;
-        const blob = await mediaToBlob(pulled.media, pulled.mime);
-        const reel: SavedReel = {
-          id: `r${Date.now().toString(36)}`,
-          homieId: id,
-          caption: sheet.homeTitle,
-          at: Date.now(),
-          mime: pulled.mime,
-          blob,
-        };
-        await putReel(reel);
-        void publishReel(reel);
-        if (token.current !== mine) return;
-        const rows = await listReels(id);
-        setReels(rows);
-        setPicked(reel.id);
-        setPhase("idle");
-        return;
-      }
+        {
+          start: (data) => startReel({ data }),
+          pull: (requestId) => pullReel({ data: { requestId } }),
+          active: () => token.current === mine,
+          progress: (message) => {
+            setPhase("film");
+            setProgress(message);
+          },
+        },
+      );
+      if (!result || token.current !== mine) return;
+      const blob = await mediaToBlob(result.media, result.mime);
+      const reel: SavedReel = {
+        id: `r${Date.now().toString(36)}`,
+        homieId: id,
+        caption: sheet.homeTitle,
+        at: Date.now(),
+        mime: result.mime,
+        note: result.note,
+        blob,
+      };
+      await putReel(reel);
+      void publishReel(reel);
       if (token.current !== mine) return;
-      setError("The filming ran long. Try once more.");
+      const rows = await listReels(id);
+      setReels(rows);
+      setPicked(reel.id);
       setPhase("idle");
     } catch {
       if (token.current !== mine) return;
       setError("That didn't work. Try once more.");
       setPhase("idle");
+    } finally {
+      if (token.current === mine) filming.current = false;
     }
   }
 
@@ -218,10 +214,10 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
               muted
               playsInline
             />
-          ) : isFrames && currentFrameUrl ? (
+          ) : isFrames ? (
             <img
               key={`${featured.id}-${frameIdx}`}
-              src={currentFrameUrl}
+              src={currentFrameUrl ?? still}
               alt={featured.caption}
               className="aspect-[4/3] w-full object-cover"
             />
@@ -230,28 +226,31 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
               key={featured.id}
               src={featuredUrl}
               alt={featured.caption}
-              className={cx(
-                "aspect-[4/3] w-full object-cover",
-                isStill && "homie-moment-still",
-              )}
+              className={cx("aspect-[4/3] w-full object-cover", isStill && "homie-moment-still")}
             />
           )
         ) : room ? (
           <>
             <img src={room} alt="" className="aspect-[4/3] w-full object-cover" />
-            <img src={still} alt="" className="absolute bottom-2 left-2 h-20 w-20 object-contain drop-shadow-md" />
+            <img
+              src={still}
+              alt=""
+              className="absolute bottom-2 left-2 h-20 w-20 object-contain drop-shadow-md"
+            />
           </>
         ) : (
           <div className="flex aspect-[4/3] items-end p-3">
             <img src={still} alt="" className="h-36 w-36 object-contain" />
           </div>
         )}
-        {isStill && featured && (
-          <span className="absolute left-2 top-2 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-medium text-white">
-            Animated still
+        {featured && (
+          <span className="absolute left-2 top-2 rounded-full bg-ink px-2.5 py-1 text-xs font-medium text-paper">
+            {isStill ? "Animated still" : isFrames ? "Pose sequence" : isGif ? "GIF loop" : "Video"}
           </span>
         )}
-        {dirt > 0.05 && <div className="grime pointer-events-none absolute inset-0" style={{ opacity: dirt }} />}
+        {dirt > 0.05 && (
+          <div className="grime pointer-events-none absolute inset-0" style={{ opacity: dirt }} />
+        )}
       </div>
       {reels.length > 1 && (
         <div className="mt-2 flex gap-2 overflow-x-auto">
@@ -267,15 +266,44 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
               )}
             >
               {urls[reel.id] && reel.mime.startsWith("video/") ? (
-                <video src={urls[reel.id]} muted playsInline className="h-full w-full object-cover" />
+                <video
+                  src={urls[reel.id]}
+                  muted
+                  playsInline
+                  className="h-full w-full object-cover"
+                />
               ) : (
-                urls[reel.id] && <img src={urls[reel.id]} alt="" className="h-full w-full object-cover" />
+                urls[reel.id] && (
+                  <img
+                    src={
+                      reel.mime === "application/x-homie-frames"
+                        ? (frameSets[reel.id]?.[0] ?? still)
+                        : urls[reel.id]
+                    }
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
+                )
               )}
             </button>
           ))}
         </div>
       )}
       <div className="mt-3 flex flex-col gap-2">
+        <label className="flex min-h-11 items-center gap-3 text-sm text-ink-soft">
+          <input
+            type="checkbox"
+            checked={allowCommunity}
+            disabled={phase !== "idle"}
+            onChange={(event) => setAllowCommunity(event.target.checked)}
+            className="size-5 accent-tomato"
+          />
+          <span>
+            Use free community generation
+            <br />
+            <span className="text-xs">AI Horde may publicly share generated images.</span>
+          </span>
+        </label>
         <button
           type="button"
           onClick={() => void film()}
@@ -283,21 +311,42 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
           className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-tomato font-display text-lg text-paper disabled:opacity-50"
         >
           <Film className="size-4" aria-hidden />
-          {phase === "room" ? "Putting them in the room..." : phase === "film" ? "Filming..." : full ? "Three moments saved" : "Film a 10-second moment"}
+          {phase === "room"
+            ? "Putting them in the room…"
+            : phase === "film"
+              ? progress
+              : full
+                ? "Three moments saved"
+                : "Film a moment"}
         </button>
         {featured && (
           <div className="flex justify-between">
-            <button type="button" onClick={() => keepCopy(featured)} className="min-h-11 font-display text-sm text-ink-soft">
+            <button
+              type="button"
+              onClick={() => keepCopy(featured)}
+              className="min-h-11 font-display text-sm text-ink-soft"
+            >
               Save a copy
             </button>
-            <button type="button" onClick={() => void remove(featured.id)} className="min-h-11 font-display text-sm text-ink-soft">
+            <button
+              type="button"
+              onClick={() => void remove(featured.id)}
+              className="min-h-11 font-display text-sm text-ink-soft"
+            >
               Let this one go
             </button>
           </div>
         )}
         {error && <p className="text-pretty text-sm text-tomato">{error}</p>}
+        {featured?.note && !error && phase === "idle" && (
+          <p role="status" className="text-pretty text-sm text-ink-soft">
+            {featured.note}
+          </p>
+        )}
         {!featured && !error && phase === "idle" && (
-          <p className="text-sm text-ink-soft">A short loop in their room. It stays on this phone.</p>
+          <p className="text-sm text-ink-soft">
+            A short loop in their room. It stays on this phone.
+          </p>
         )}
       </div>
       <style>{`

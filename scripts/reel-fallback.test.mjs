@@ -1,29 +1,25 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
+import { beginReel, advanceReel, REEL_LIFETIME_MS } from "../src/game/reel-engine.ts";
 
-const reel = readFileSync(new URL("../src/game/reel.ts", import.meta.url), "utf8");
-const home = readFileSync(new URL("../src/components/homies/CustomHome.tsx", import.meta.url), "utf8");
+const home = readFileSync(
+  new URL("../src/components/homies/CustomHome.tsx", import.meta.url),
+  "utf8",
+);
 
-test("fallback chain ends with a guaranteed cinematic still, not an error", () => {
-  // Order matters: video → poses → free frames → the Homie's own portrait.
-  // Anchor inside startReel so helper definitions above it don't skew indexes.
-  const start = reel.slice(reel.indexOf("export const startReel"));
-  const video = start.indexOf("grok-imagine-video");
-  const poses = start.indexOf("xaiPoseSequence(apiKey");
-  const free = start.indexOf("freeAnimated(name");
-  const still = start.indexOf("requestId: data.portrait");
-  assert.ok(video > -1 && poses > video, "xAI poses run after the video attempt");
-  assert.ok(free > poses, "free frames run after xAI poses");
-  assert.ok(still > free, "portrait still is the final fallback");
-  // The old hard failure must not come back as the end of startReel.
-  assert.doesNotMatch(start, /The loop didn't come through/);
-});
-
-test("cinematic still is the character's own image and honestly labelled", () => {
-  assert.match(reel, /requestId: data\.portrait/);
+test("an exhausted fallback keeps the original portrait and identifies the result", async () => {
+  const portrait =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=";
+  const result = beginReel({ portrait, name: "Boop", setting: "A cozy room." }, "", 1000);
+  const done = await advanceReel(result.requestId, "", {
+    now: () => 1001 + REEL_LIFETIME_MS,
+    fetch: async () => assert.fail("deadline must not call a provider"),
+  });
+  assert.equal(done.media, portrait);
+  assert.equal(done.mime, "image/png");
+  assert.match(done.note, /animated still/);
   assert.match(home, /Animated still/);
-  assert.match(home, /isStill && featured/);
 });
 
 test("still animation is a slow Ken Burns drift and respects reduced motion", () => {
