@@ -2808,6 +2808,399 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "conceptual-breakthrough"
     ]
   },
+  // Research: https://ich.unesco.org/en/rl/hudhud-chants-of-the-ifugao-00015
+  {
+    "id": "ifugao-hudhud-chants",
+    "name": "Ifugao Hudhud Narrative Chants",
+    "era": "movement",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "An Ifugao narrative-chant tradition from the Philippine Cordilleras that joins rice cultivation, ancestral stories, customary law, and communal memory through a lead voice and chorus.",
+    "strengths": [
+      "long-form narrative recall",
+      "call-and-response coordination",
+      "linking stories to seasonal responsibilities"
+    ],
+    "shadows": [
+      "knowledge can become fragile when few experienced narrators remain",
+      "a story tied to one setting can be harder to transmit when livelihoods change"
+    ],
+    "contradiction": "A narrative repeated across generations stays alive only when each new generation finds a reason to sing it.",
+    "visualMotifs": [
+      "terraced rice fields under mist",
+      "a lead chanter facing a listening chorus",
+      "harvest baskets and remembered pathways"
+    ],
+    "voicePatterns": [
+      "a refrain returns with a changed emotional meaning",
+      "one narrator advances the story while the chorus anchors memory",
+      "metaphor and rhythmic repetition carry difficult lessons"
+    ],
+    "storyEngines": [
+      "a harvest gathering reveals a forgotten family obligation",
+      "a young listener must reconstruct an interrupted chant",
+      "a dispute is reframed by an ancestral episode"
+    ],
+    "evolutionTriggers": [
+      "invites a younger voice to lead a verse",
+      "adapts a story for a changing harvest without erasing its roots",
+      "listens to a version that differs from the one first learned"
+    ],
+    "tags": [
+      "Philippines",
+      "Ifugao",
+      "Cordillera",
+      "Hudhud",
+      "oral-epic",
+      "rice-terraces",
+      "choral-storytelling",
+      "intergenerational-memory"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/andean-cosmovision-of-the-kallawaya-00048
+  {
+    "id": "kallawaya-andean-cosmovision",
+    "name": "Kallawaya Andean Cosmovision",
+    "era": "movement",
+    "domain": "spirituality",
+    "sourceType": "tradition",
+    "essence": "A living Andean knowledge tradition in Bolivia connecting ecological observation, ritual practice, travel, apprenticeship, and community relationships with mountain landscapes.",
+    "strengths": [
+      "attentive ecological observation",
+      "apprenticeship across varied environments",
+      "careful stewardship of inherited knowledge"
+    ],
+    "shadows": [
+      "specialized knowledge may become vulnerable when transmission breaks",
+      "outsiders can mistake a complex cultural worldview for a simple collection of remedies"
+    ],
+    "contradiction": "Knowledge grows through journeys away from home while drawing meaning from belonging to a particular place.",
+    "visualMotifs": [
+      "mountain passes connecting distinct plant zones",
+      "a travel satchel with carefully labeled specimens",
+      "woven patterns echoing highland landscapes"
+    ],
+    "voicePatterns": [
+      "describes a problem through relationships among place, season, and community",
+      "asks what an elder or local observer has noticed",
+      "distinguishes inherited practice from personal interpretation"
+    ],
+    "storyEngines": [
+      "a traveler must choose whether to reveal knowledge entrusted to them",
+      "an apprentice finds that two valleys require different approaches",
+      "a community debates how to safeguard knowledge amid outside commercial pressure"
+    ],
+    "evolutionTriggers": [
+      "credits the community behind an insight",
+      "shares learning responsibly with the next apprentice",
+      "recognizes the limits of personal knowledge and seeks appropriate expertise"
+    ],
+    "tags": [
+      "Bolivia",
+      "Andes",
+      "Kallawaya",
+      "ecological-knowledge",
+      "apprenticeship",
+      "cultural-stewardship",
+      "mountain-travel",
+      "ritual-tradition"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/saman-dance-00509
+  {
+    "id": "gayo-saman-dance",
+    "name": "Gayo Saman Dance",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Gayo performance tradition from Aceh in which tightly coordinated seated movement, rhythmic body percussion, and sung verse build collective energy.",
+    "strengths": [
+      "ensemble synchronization",
+      "precision through attentive listening",
+      "turning small gestures into powerful visual rhythm"
+    ],
+    "shadows": [
+      "group timing can leave little space for a hesitant member",
+      "a performance may lose its social context when reduced to spectacle"
+    ],
+    "contradiction": "Individual performers disappear into unison while every participant remains essential to the whole.",
+    "visualMotifs": [
+      "a close row of kneeling performers",
+      "embroidered black garments with Gayo motifs",
+      "hands tracing alternating waves of movement"
+    ],
+    "voicePatterns": [
+      "short sung lines answer one another",
+      "rhythmic acceleration communicates urgency",
+      "humor and counsel appear within a shared performance"
+    ],
+    "storyEngines": [
+      "one missed beat threatens an important communal performance",
+      "two rival groups find a shared tempo",
+      "a young performer must earn trust without taking the spotlight"
+    ],
+    "evolutionTriggers": [
+      "adjusts pace to include a struggling teammate",
+      "learns to lead through listening",
+      "protects the meaning of a performance while welcoming newcomers"
+    ],
+    "tags": [
+      "Indonesia",
+      "Aceh",
+      "Gayo",
+      "Saman",
+      "body-percussion",
+      "ensemble-dance",
+      "synchronization",
+      "movement-design"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/chhau-dance-00337
+  {
+    "id": "eastern-india-chhau-dance",
+    "name": "Eastern Indian Chhau Dance",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A family of eastern Indian dance traditions blending dramatic storytelling, martial-derived movement, regional folk themes, and expressive character embodiment.",
+    "strengths": [
+      "athletic physical storytelling",
+      "translating animal movement into character",
+      "regional variation within a shared dramatic vocabulary"
+    ],
+    "shadows": [
+      "spectacle can overpower narrative clarity",
+      "demanding movement may encourage performance beyond safe limits"
+    ],
+    "contradiction": "A stylized body can reveal an emotion that an ordinary face might conceal.",
+    "visualMotifs": [
+      "a festival ground lit after dark",
+      "bold masks in Seraikella or Purulia styles",
+      "leaping silhouettes against drum rhythms"
+    ],
+    "voicePatterns": [
+      "character intent is expressed through posture before words",
+      "short calls punctuate movement transitions",
+      "rhythmic pauses carry emotional reversals"
+    ],
+    "storyEngines": [
+      "a masked rival must communicate without revealing identity",
+      "a dancer learns a new character through observing animals",
+      "a festival performance stages a conflict the village cannot discuss openly"
+    ],
+    "evolutionTriggers": [
+      "chooses expressive restraint over a showy leap",
+      "learns a regional style without flattening its differences",
+      "makes space for an understudy to interpret a role"
+    ],
+    "tags": [
+      "India",
+      "Chhau",
+      "Seraikella",
+      "Purulia",
+      "Mayurbhanj",
+      "dance-theatre",
+      "martial-movement",
+      "masked-performance",
+      "animation-reference"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/moorish-epic-t-heydinn-00524
+  {
+    "id": "mauritanian-theydinn-epic",
+    "name": "Mauritanian T’heydinn Epic",
+    "era": "movement",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "A Hassaniya-language Mauritanian epic-poetry tradition performed by griots, connecting historical memory, family repertoires, musical skill, and social reconciliation.",
+    "strengths": [
+      "preserving many-voiced community history",
+      "musical-poetic improvisation",
+      "using shared stories to strengthen social ties"
+    ],
+    "shadows": [
+      "family-held repertoires can become isolated when transmission falters",
+      "praising past heroes can leave difficult historical perspectives unspoken"
+    ],
+    "contradiction": "An epic celebrates conflict and courage while its performance can help communities make peace.",
+    "visualMotifs": [
+      "a stringed instrument beside a storyteller",
+      "families gathered at a reconciliation ceremony",
+      "a remembered journey mapped through verses"
+    ],
+    "voicePatterns": [
+      "a story unfolds through measured poetic praise",
+      "musical phrases cue changes in narrator perspective",
+      "a familiar heroic episode is reconsidered for a new audience"
+    ],
+    "storyEngines": [
+      "two families know different portions of a shared epic",
+      "a reconciliation gathering hinges on how an old conflict is retold",
+      "an apprentice must decide whether to shorten a difficult inherited passage"
+    ],
+    "evolutionTriggers": [
+      "makes room for competing memories without erasing them",
+      "helps a younger performer learn an endangered passage",
+      "uses an epic of rivalry to open a path toward cooperation"
+    ],
+    "tags": [
+      "Mauritania",
+      "Hassaniya",
+      "T-heydinn",
+      "griot",
+      "epic-poetry",
+      "oral-memory",
+      "reconciliation",
+      "musical-narrative"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/mak-yong-00167
+  {
+    "id": "malay-mak-yong-theatre",
+    "name": "Malay Mak Yong Theatre",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Malay theatrical tradition combining dance, music, acting, improvised dialogue, and folk narratives, with women historically performing many central roles.",
+    "strengths": [
+      "layering song, dance, and dialogue",
+      "improvising within an inherited story",
+      "balancing courtly refinement with village performance"
+    ],
+    "shadows": [
+      "complex training can make succession difficult",
+      "ritual context can be flattened when adapted solely for entertainment"
+    ],
+    "contradiction": "A performance can feel spontaneous even after years of disciplined apprenticeship.",
+    "visualMotifs": [
+      "a temporary palm-and-wood stage",
+      "a rebab beside drums and gongs",
+      "royal and clown figures sharing a performance space"
+    ],
+    "voicePatterns": [
+      "a comic aside interrupts solemn ceremony",
+      "dialogue shifts between formal narrative and playful improvisation",
+      "music signals a character's emotional entrance"
+    ],
+    "storyEngines": [
+      "a comic performer uncovers a court secret",
+      "a village troupe must reinterpret a neglected role",
+      "an apprentice struggles to keep improvisation alive under strict expectations"
+    ],
+    "evolutionTriggers": [
+      "honors a teacher while developing an original interpretation",
+      "lets a supporting character redirect the plot",
+      "finds a sustainable way to pass on a demanding craft"
+    ],
+    "tags": [
+      "Malaysia",
+      "Malay",
+      "Mak-Yong",
+      "theatre",
+      "improvisation",
+      "women-performers",
+      "music-and-dance",
+      "folk-narrative"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/chinese-zhusuan-knowledge-and-practices-of-mathematical-calculation-through-the-abacus-00853
+  {
+    "id": "chinese-zhusuan-abacus",
+    "name": "Chinese Zhusuan Abacus Calculation",
+    "era": "movement",
+    "domain": "science",
+    "sourceType": "tradition",
+    "essence": "A Chinese mathematical practice using abacus beads, spoken formulas, and trained mental models to make arithmetic a tactile and teachable process.",
+    "strengths": [
+      "algorithmic precision",
+      "spatial-number intuition",
+      "teaching through rhythmic repetition"
+    ],
+    "shadows": [
+      "fluency with a procedure can hide a misunderstood principle",
+      "speed can become more valued than explaining why an answer works"
+    ],
+    "contradiction": "A visible set of moving beads teaches a calculation that experts eventually perform without the instrument.",
+    "visualMotifs": [
+      "wooden abacus rods and sliding beads",
+      "fingertips pausing above a half-finished sum",
+      "rhymed formulas written beside a ledger"
+    ],
+    "voicePatterns": [
+      "breaks a problem into repeatable steps",
+      "checks a result through a second representation",
+      "uses a compact mnemonic before a complex calculation"
+    ],
+    "storyEngines": [
+      "a merchant discovers a hidden error in a ledger",
+      "an apprentice solves a problem after losing the physical abacus",
+      "two experts disagree on whether speed or explanation proves mastery"
+    ],
+    "evolutionTriggers": [
+      "slows down to teach the underlying principle",
+      "checks an elegant shortcut against evidence",
+      "welcomes a learner who invents a different valid method"
+    ],
+    "tags": [
+      "China",
+      "Zhusuan",
+      "abacus",
+      "mathematics",
+      "mental-arithmetic",
+      "mnemonics",
+      "tactile-learning",
+      "algorithmic-thinking"
+    ]
+  },
+  // Research: https://news.stanford.edu/stories/2014/08/stanfords-maryam-mirzakhani-wins-fields-medal
+  {
+    "id": "maryam-mirzakhani-geometry",
+    "name": "Maryam Mirzakhani",
+    "era": "contemporary",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "An Iranian mathematician whose imaginative connections across geometry and dynamical systems opened new ways to understand curved surfaces.",
+    "strengths": [
+      "deep exploratory patience",
+      "linking distant mathematical ideas",
+      "visual and conceptual problem solving"
+    ],
+    "shadows": [
+      "a difficult abstract question can consume attention for years",
+      "a beautiful conjecture can require extensive revision before proof"
+    ],
+    "contradiction": "Searches for rigorous certainty by first allowing messy sketches and uncertain possibilities.",
+    "visualMotifs": [
+      "loops traced across a curved surface",
+      "a desk covered in layered mathematical sketches",
+      "a maze of paths converging on an unexpected pattern"
+    ],
+    "voicePatterns": [
+      "frames a hard problem as a puzzle with hidden connections",
+      "tries a visual analogy before formalizing an argument",
+      "treats a failed approach as information"
+    ],
+    "storyEngines": [
+      "a neglected sketch becomes the key to a long-standing problem",
+      "two incompatible methods unexpectedly describe the same surface",
+      "a mentor encourages a student whose first attempt fails"
+    ],
+    "evolutionTriggers": [
+      "shares an unfinished idea with a collaborator",
+      "revises a favored conjecture after new evidence",
+      "mentors someone who approaches geometry differently"
+    ],
+    "tags": [
+      "Iran",
+      "Maryam-Mirzakhani",
+      "mathematics",
+      "geometry",
+      "dynamical-systems",
+      "curved-surfaces",
+      "creative-inquiry",
+      "mentorship"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
