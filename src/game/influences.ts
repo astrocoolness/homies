@@ -3201,6 +3201,390 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "mentorship"
     ]
   },
+  // Research: https://artsandculture.google.com/story/0011/qgWhCdKgS8UJIw
+  {
+    "id": "asima-chatterjee-natural-products-chemistry",
+    "name": "Asima Chatterjee",
+    "era": "mid-century",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A Kolkata chemist who traced the molecular possibilities of plants through painstaking natural-products research, joining patient laboratory craft to questions of human need.",
+    "strengths": [
+      "systematic chemical investigation",
+      "persistence across long research cycles",
+      "bridging botanical observation and molecular analysis"
+    ],
+    "shadows": [
+      "can become absorbed in a single difficult compound",
+      "institutional obstacles may make independence hard to relinquish"
+    ],
+    "contradiction": "Looks for practical remedies through years of slow, uncertain fundamental chemistry.",
+    "visualMotifs": [
+      "pressed leaves beside a laboratory notebook",
+      "hand-drawn ring structures on a chalkboard",
+      "amber sample vials arranged by experiment"
+    ],
+    "voicePatterns": [
+      "distinguishes a promising extract from a proven result",
+      "explains a complex structure one bond at a time"
+    ],
+    "storyEngines": [
+      "a plant sample leads to an unexpected chemical structure",
+      "a laboratory result must be replicated before anyone can trust it",
+      "a mentor and student disagree about which experiment deserves scarce resources"
+    ],
+    "evolutionTriggers": [
+      "shares credit for a difficult breakthrough",
+      "abandons an attractive hypothesis after contradictory data",
+      "makes research methods accessible to a new generation"
+    ],
+    "tags": [
+      "India",
+      "Bengal",
+      "Asima-Chatterjee",
+      "organic-chemistry",
+      "natural-products",
+      "medicinal-chemistry",
+      "laboratory-research",
+      "mentorship"
+    ]
+  },
+  // Research: https://www.moma.org/collection/artists/49158
+  {
+    "id": "tarsila-do-amaral-brazilian-modernism",
+    "name": "Tarsila do Amaral",
+    "era": "early-modern",
+    "domain": "visual-art",
+    "sourceType": "historical-person",
+    "essence": "A Brazilian modernist who transformed memories of landscape and everyday life into bold experiments in shape, scale and national artistic identity.",
+    "strengths": [
+      "inventive synthesis of artistic languages",
+      "expressive simplification of forms",
+      "confidence in local memories as artistic material"
+    ],
+    "shadows": [
+      "spectacular imagery can obscure social realities",
+      "a strong personal vision may resist collaborators"
+    ],
+    "contradiction": "Draws on international experiments while seeking a visual language rooted in Brazil rather than borrowed authority.",
+    "visualMotifs": [
+      "oversized tropical plant silhouettes",
+      "rounded hills under improbable skies",
+      "flat color fields and playful shifts of scale"
+    ],
+    "voicePatterns": [
+      "describes a place through color and shape before plot",
+      "uses vivid comparisons rather than elaborate explanations"
+    ],
+    "storyEngines": [
+      "a painter returns home and sees familiar terrain as strange",
+      "an exhibition forces a debate over whose vision represents a country",
+      "a seemingly whimsical image conceals a sharp social question"
+    ],
+    "evolutionTriggers": [
+      "listens to a subject who challenges the painting",
+      "lets collaborators reshape a familiar visual symbol",
+      "discovers that belonging can include internal contradiction"
+    ],
+    "tags": [
+      "Brazil",
+      "Tarsila-do-Amaral",
+      "modernism",
+      "painting",
+      "color",
+      "scale",
+      "identity",
+      "landscape"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/barkcloth-making-in-uganda-00139
+  {
+    "id": "uganda-baganda-barkcloth-making",
+    "name": "Baganda Barkcloth Making",
+    "era": "movement",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "An Ugandan material craft that transforms the inner bark of the mutuba tree through repeated skilled beating into cloth with social and ceremonial meaning.",
+    "strengths": [
+      "patient material transformation",
+      "tactile judgment and craftsmanship",
+      "intergenerational stewardship of technique"
+    ],
+    "shadows": [
+      "status markers can become barriers to participation",
+      "craft knowledge can be endangered when apprentices disappear"
+    ],
+    "contradiction": "Creates a soft, flexible surface through demanding, repetitive physical work.",
+    "visualMotifs": [
+      "terracotta sheets drying in an open shed",
+      "wooden mallets with varied striking surfaces",
+      "a textured fabric folded for a ceremony"
+    ],
+    "voicePatterns": [
+      "teaches through touch and demonstration",
+      "notices subtle changes in grain, moisture and sound"
+    ],
+    "storyEngines": [
+      "a damaged ceremonial cloth must be repaired without losing its history",
+      "an apprentice discovers a neglected practical use for an old technique",
+      "a maker chooses between quick production and preserving the tree"
+    ],
+    "evolutionTriggers": [
+      "adapts a technique without severing its lineage",
+      "passes expertise to a learner from outside the usual circle",
+      "learns to balance conservation with communal demand"
+    ],
+    "tags": [
+      "Uganda",
+      "Buganda",
+      "Baganda",
+      "barkcloth",
+      "mutuba",
+      "textile",
+      "material-craft",
+      "apprenticeship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/culture-of-jeju-haenyeo-women-divers-01068
+  {
+    "id": "jeju-haenyeo-women-divers",
+    "name": "Jeju Haenyeo Women Divers",
+    "era": "movement",
+    "domain": "science",
+    "sourceType": "tradition",
+    "essence": "A Jeju Island community of women divers whose marine knowledge, breath-hold harvesting, mutual support and ecological restraint shape work at sea.",
+    "strengths": [
+      "fine-grained knowledge of marine conditions",
+      "intergenerational mentoring",
+      "collective risk awareness"
+    ],
+    "shadows": [
+      "self-reliance can discourage admitting fatigue",
+      "livelihood pressures can strain ecological restraint"
+    ],
+    "contradiction": "Makes a living from the sea while depending on the sea remaining abundant for those who follow.",
+    "visualMotifs": [
+      "divers surfacing beside floating markers",
+      "wet stone walls and sorting baskets",
+      "a horizon watched before a difficult dive"
+    ],
+    "voicePatterns": [
+      "gives short practical instructions in uncertain conditions",
+      "uses memories of seasons and currents to explain decisions"
+    ],
+    "storyEngines": [
+      "a veteran diver must trust a younger partner's reading of the water",
+      "a threatened harvesting ground divides the community",
+      "a missing diver prompts a collective rescue and reckoning"
+    ],
+    "evolutionTriggers": [
+      "chooses safety over pride",
+      "teaches conservation alongside technique",
+      "accepts a younger leader's better plan"
+    ],
+    "tags": [
+      "Jeju",
+      "Korea",
+      "haenyeo",
+      "marine-ecology",
+      "women-divers",
+      "breath-hold",
+      "community",
+      "sustainability"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/khorazm-dance-lazgi-01364
+  {
+    "id": "khorazm-lazgi-dance",
+    "name": "Khorazm Lazgi Dance",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "An Uzbek dance tradition whose gestures respond to natural phenomena and everyday feeling, moving between recognizable scenes and accelerating improvisation.",
+    "strengths": [
+      "expressive control of hands and body",
+      "responsive ensemble timing",
+      "inventive movement variation"
+    ],
+    "shadows": [
+      "virtuosity can overshadow the feeling behind a gesture",
+      "an improvised performance can lose its shared rhythm"
+    ],
+    "contradiction": "Uses disciplined physical vocabulary to make spontaneity visible.",
+    "visualMotifs": [
+      "fingers tracing quick patterns in the air",
+      "a dancer's silhouette gathering momentum",
+      "musicians and dancers answering each other's tempo"
+    ],
+    "voicePatterns": [
+      "expresses emotional changes through physical metaphors",
+      "builds a description from a small motion to a larger one"
+    ],
+    "storyEngines": [
+      "a performer must improvise when the music changes unexpectedly",
+      "a family celebration exposes an old rivalry through dance",
+      "a quiet apprentice finds a movement no teacher expected"
+    ],
+    "evolutionTriggers": [
+      "replaces showmanship with genuine communication",
+      "makes room for a less experienced dancer",
+      "learns when to hold still instead of adding another flourish"
+    ],
+    "tags": [
+      "Uzbekistan",
+      "Khorazm",
+      "Lazgi",
+      "dance",
+      "gesture",
+      "improvisation",
+      "movement",
+      "ensemble"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/Decisions/4.COM/13.74
+  {
+    "id": "uruguay-candombe-drum-calls",
+    "name": "Uruguayan Candombe Drum Calls",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "An Afro-Uruguayan neighborhood drum-call practice in which interlocking rhythms, street processions and communal memory express both distinct local identities and solidarity.",
+    "strengths": [
+      "layered call-and-response listening",
+      "intergenerational rhythm transmission",
+      "building belonging through shared public performance"
+    ],
+    "shadows": [
+      "neighborhood rivalry can become exclusion",
+      "spectacle can eclipse the community that sustains it"
+    ],
+    "contradiction": "Many independent drum parts make one procession without erasing the identity of each neighborhood.",
+    "visualMotifs": [
+      "drums warmed near a communal fire",
+      "rows of drummers moving through a street",
+      "neighbors listening from balconies at dusk"
+    ],
+    "voicePatterns": [
+      "answers one rhythmic phrase with a complementary one",
+      "names places and relationships before discussing performance"
+    ],
+    "storyEngines": [
+      "two neighborhood groups must share a parade route",
+      "a young drummer learns why a familiar pattern carries family history",
+      "a public celebration must resist being reduced to a commercial show"
+    ],
+    "evolutionTriggers": [
+      "invites a rival group into a shared rhythm",
+      "learns the history behind a favored drum call",
+      "protects community participation over personal acclaim"
+    ],
+    "tags": [
+      "Uruguay",
+      "Montevideo",
+      "Afro-Uruguayan",
+      "Candombe",
+      "drumming",
+      "call-and-response",
+      "neighborhood",
+      "community-memory"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/sankirtana-ritual-singing-drumming-and-dancing-of-manipur-00843
+  {
+    "id": "manipur-sankirtana-performance",
+    "name": "Manipuri Sankirtana",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Vaishnava performance tradition of Manipur weaving drumming, sung narration and dance into communal observances and life-cycle ceremonies.",
+    "strengths": [
+      "integrating multiple performance disciplines",
+      "devotional ensemble coordination",
+      "mentor-to-disciple transmission"
+    ],
+    "shadows": [
+      "ritual precision can become inflexible",
+      "performers may confuse public devotion with private certainty"
+    ],
+    "contradiction": "Creates intense collective feeling through carefully coordinated individual responsibilities.",
+    "visualMotifs": [
+      "a circle of seated listeners around singer-dancers",
+      "paired drummers marking a changing pulse",
+      "courtyard light before a communal ceremony"
+    ],
+    "voicePatterns": [
+      "narrates through measured repetition and shared response",
+      "frames a personal event within a larger community story"
+    ],
+    "storyEngines": [
+      "a ceremony brings estranged relatives into the same courtyard",
+      "an apprentice must learn to listen before leading",
+      "a performer discovers a new meaning in an inherited narrative"
+    ],
+    "evolutionTriggers": [
+      "honors the community while admitting a personal doubt",
+      "lets an apprentice lead a passage",
+      "prioritizes participation over flawless execution"
+    ],
+    "tags": [
+      "India",
+      "Manipur",
+      "Sankirtana",
+      "Vaishnava",
+      "drumming",
+      "dance",
+      "sung-narration",
+      "ritual-performance"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/iraqi-maqam-00076
+  {
+    "id": "iraqi-maqam-classical-performance",
+    "name": "Iraqi Maqam",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "An Iraqi classical vocal tradition where poetic repertoire, melodic modes and improvised singing unfold in dialogue with an instrumental ensemble.",
+    "strengths": [
+      "poetic musical interpretation",
+      "sustained melodic attention",
+      "responsive singer-ensemble interplay"
+    ],
+    "shadows": [
+      "mastery of an inherited form can discourage experimentation",
+      "a celebrated soloist can overlook the supporting musicians"
+    ],
+    "contradiction": "Finds new emotional turns inside a form held together by long-standing conventions.",
+    "visualMotifs": [
+      "a santur beside a bowed jawzah",
+      "a singer framed by a small coffeehouse gathering",
+      "a handwritten poem marked for a performance"
+    ],
+    "voicePatterns": [
+      "returns to a poetic line with changed emotional emphasis",
+      "allows pauses and accompaniment to complete a thought"
+    ],
+    "storyEngines": [
+      "a singer must rebuild an ensemble after displacement",
+      "a familiar poem becomes a message between generations",
+      "an improvised phrase unexpectedly reveals a private grief"
+    ],
+    "evolutionTriggers": [
+      "shares the spotlight with the ensemble",
+      "learns from a younger interpreter without abandoning tradition",
+      "chooses a quieter setting where the music can be heard"
+    ],
+    "tags": [
+      "Iraq",
+      "Iraqi-Maqam",
+      "classical-music",
+      "Arabic-poetry",
+      "vocal-improvisation",
+      "santur",
+      "ensemble",
+      "transmission"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
