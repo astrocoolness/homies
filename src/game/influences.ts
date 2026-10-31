@@ -3585,6 +3585,389 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "transmission"
     ]
   },
+  // Research: https://ich.unesco.org/en/projects/safeguarding-of-vanuatu-sand-drawings-00022
+  {
+    "id": "vanuatu-sand-drawing-knowledge",
+    "name": "Vanuatu Sand Drawing Knowledge",
+    "era": "movement",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "A Vanuatu practice of tracing continuous geometric paths in sand, ash or clay to carry stories, communication and shared knowledge across language communities.",
+    "strengths": [
+      "single-line spatial reasoning",
+      "memory carried through gesture",
+      "patient intergenerational teaching"
+    ],
+    "shadows": [
+      "a beautiful pattern can be mistaken for decoration without its context",
+      "a keeper of knowledge may struggle to explain what must be learned by doing"
+    ],
+    "contradiction": "Makes fleeting marks that can carry enduring cultural knowledge.",
+    "visualMotifs": [
+      "one unbroken finger path across fine sand",
+      "interlocking symmetrical paths",
+      "a drawing gently erased by wind"
+    ],
+    "voicePatterns": [
+      "describes a route as a sequence of turns and returns",
+      "teaches by asking a listener to retrace a pattern"
+    ],
+    "storyEngines": [
+      "an apprentice discovers a missing turn changes a message",
+      "a community chooses which drawings may be shared publicly",
+      "a washed-away drawing survives through a student's memory"
+    ],
+    "evolutionTriggers": [
+      "asks permission before adapting inherited symbols",
+      "learns to explain the story behind a pattern",
+      "passes a technique on without claiming ownership"
+    ],
+    "tags": [
+      "Vanuatu",
+      "Melanesia",
+      "sand-drawing",
+      "single-line-geometry",
+      "oral-knowledge",
+      "gesture",
+      "transmission"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/gadaa-system-01164
+  {
+    "id": "oromo-gadaa-rotational-governance",
+    "name": "Oromo Gadaa Rotational Governance",
+    "era": "movement",
+    "domain": "leadership",
+    "sourceType": "tradition",
+    "essence": "An Oromo system of age-grade civic responsibility, deliberation and rotating leadership that joins law, social cohesion and education.",
+    "strengths": [
+      "long-horizon civic planning",
+      "conflict mediation",
+      "preparing successors for responsibility"
+    ],
+    "shadows": [
+      "formal grades can exclude voices from authority",
+      "ritualized procedure can delay urgent action"
+    ],
+    "contradiction": "Protects continuity by regularly transferring power rather than keeping it.",
+    "visualMotifs": [
+      "a council gathered beneath a broad sycamore",
+      "successive circles of learners and elders",
+      "a staff handed between leaders"
+    ],
+    "voicePatterns": [
+      "asks who must be consulted before a decision",
+      "frames a dispute in terms of repair and future obligations"
+    ],
+    "storyEngines": [
+      "a leader must relinquish office during a crisis",
+      "a younger generation challenges an inherited rule",
+      "a mediation restores trust without erasing harm"
+    ],
+    "evolutionTriggers": [
+      "widens participation beyond established gatekeepers",
+      "trains a successor who disagrees",
+      "chooses repair over prestige"
+    ],
+    "tags": [
+      "Ethiopia",
+      "Oromo",
+      "Gadaa",
+      "Gada",
+      "governance",
+      "rotation",
+      "mediation",
+      "civic-education"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/ca-tru-singing-00309
+  {
+    "id": "vietnamese-ca-tru-sung-poetry",
+    "name": "Vietnamese Ca Trù Sung Poetry",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Northern Vietnamese sung poetry built around ornamented vocal lines, rhythmic clappers, lute accompaniment and a responsive praise drum.",
+    "strengths": [
+      "precise poetic timing",
+      "attentive trio collaboration",
+      "vocal ornament with expressive restraint"
+    ],
+    "shadows": [
+      "technical perfection can overshadow the poem",
+      "a fragile chain of teaching can narrow experimentation"
+    ],
+    "contradiction": "A highly disciplined form leaves room for subtle, individual emotional inflection.",
+    "visualMotifs": [
+      "wooden clappers resting beside a poem",
+      "a three-stringed lute in a small chamber",
+      "a drum marking an approving accent"
+    ],
+    "voicePatterns": [
+      "places a long pause before a crucial word",
+      "uses small rhythmic shifts rather than grand declarations"
+    ],
+    "storyEngines": [
+      "a young singer restores a forgotten verse with an elder",
+      "an accompanist's unexpected beat changes the room",
+      "a contest tests whether virtuosity serves meaning"
+    ],
+    "evolutionTriggers": [
+      "listens as closely as they sing",
+      "learns an older melody before reshaping it",
+      "values the ensemble over personal applause"
+    ],
+    "tags": [
+      "Viet-Nam",
+      "Vietnam",
+      "ca-tru",
+      "sung-poetry",
+      "lute",
+      "clappers",
+      "ensemble",
+      "oral-transmission"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/lakalaka-dances-and-sung-speeches-of-tonga-00072
+  {
+    "id": "tongan-lakalaka-sung-oratory",
+    "name": "Tongan Lakalaka Sung Oratory",
+    "era": "19th-century",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Tongan communal performance uniting choreographed gesture, sung speeches and polyphony under a poet-composer-choreographer.",
+    "strengths": [
+      "large-ensemble coordination",
+      "poetry shaped for public memory",
+      "renewing repertoire for communal occasions"
+    ],
+    "shadows": [
+      "ceremonial expectations can limit experimentation",
+      "a director may overlook quieter contributors"
+    ],
+    "contradiction": "Hundreds move together while every gesture must still communicate meaning.",
+    "visualMotifs": [
+      "long aligned rows of performers",
+      "precise hands rising in parallel",
+      "a chorus supporting measured steps"
+    ],
+    "voicePatterns": [
+      "weaves public history into rhythmic address",
+      "builds a phrase for a chorus rather than a solo"
+    ],
+    "storyEngines": [
+      "a new punake must compose for a divided community",
+      "a missed gesture reveals an unspoken disagreement",
+      "a celebration becomes an opportunity to reinterpret history"
+    ],
+    "evolutionTriggers": [
+      "invites younger performers to shape a verse",
+      "makes room for dissent within ceremony",
+      "chooses a meaningful new composition over a safe repeat"
+    ],
+    "tags": [
+      "Tonga",
+      "Pacific",
+      "lakalaka",
+      "punake",
+      "polyphony",
+      "choreography",
+      "oratory",
+      "community"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/kankurang-manding-initiatory-rite-00143
+  {
+    "id": "manding-kankurang-community-guardianship",
+    "name": "Manding Kankurang Community Guardianship",
+    "era": "movement",
+    "domain": "myth-folklore",
+    "sourceType": "tradition",
+    "essence": "A Senegalese and Gambian Manding initiatory tradition in which communal procession, teaching and a masked guardian express responsibilities of order and protection.",
+    "strengths": [
+      "collective accountability",
+      "intergenerational teaching",
+      "careful stewardship of communal boundaries"
+    ],
+    "shadows": [
+      "authority can harden into intimidation",
+      "outsiders may reduce a living rite to spectacle"
+    ],
+    "contradiction": "A figure associated with fear and discipline also represents community protection and learning.",
+    "visualMotifs": [
+      "red plant fibres moving in procession",
+      "a forest path leading toward a gathering",
+      "drum rhythms heard beyond a village square"
+    ],
+    "voicePatterns": [
+      "speaks about duty through communal rather than individual stakes",
+      "lets silence and collective response carry authority"
+    ],
+    "storyEngines": [
+      "a guardian must decide when tradition protects and when it excludes",
+      "urban change threatens a teaching place",
+      "an apprentice learns that power demands restraint"
+    ],
+    "evolutionTriggers": [
+      "respects knowledge not meant for public retelling",
+      "protects people without relying on fear",
+      "finds a community-approved way to transmit values"
+    ],
+    "tags": [
+      "Senegal",
+      "Gambia",
+      "Manding",
+      "Kankurang",
+      "initiation",
+      "community-guardianship",
+      "ritual",
+      "intergenerational-learning"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/hiragasy-a-performing-art-of-the-central-highlands-of-madagascar-01740
+  {
+    "id": "malagasy-hiragasy-public-theatre",
+    "name": "Malagasy Hiragasy Public Theatre",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Central Highland Malagasy public performance of speeches, songs, dance and storytelling in which troupes share civic lessons and social critique.",
+    "strengths": [
+      "public-facing storytelling",
+      "collaborative improvisation",
+      "turning social tensions into accessible theatre"
+    ],
+    "shadows": [
+      "competition between troupes can overshadow shared purpose",
+      "a moral message can become preachy"
+    ],
+    "contradiction": "Uses entertaining spectacle to invite serious reflection on everyday obligations.",
+    "visualMotifs": [
+      "two troupes facing a circle of listeners",
+      "drummers opening an outdoor performance",
+      "bright costumes crossing a village square"
+    ],
+    "voicePatterns": [
+      "alternates greeting, story and direct civic address",
+      "makes a difficult truth approachable through a staged example"
+    ],
+    "storyEngines": [
+      "rival troupes must perform together after a disaster",
+      "a comic scene exposes a local injustice",
+      "a touring child must choose between inheritance and a new path"
+    ],
+    "evolutionTriggers": [
+      "allows the audience to challenge the lesson",
+      "reconciles competing performers",
+      "reshapes a story around a community's actual needs"
+    ],
+    "tags": [
+      "Madagascar",
+      "Central-Highlands",
+      "Hiragasy",
+      "public-theatre",
+      "civic-storytelling",
+      "troupe",
+      "song",
+      "dance"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/tahtib-01189
+  {
+    "id": "egyptian-tahteeb-noncontact-duel",
+    "name": "Egyptian Tahteeb Non-Contact Stick Game",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "An Upper Egyptian festive stick game descended from martial practice, emphasizing controlled non-contact exchange, respect and public composure.",
+    "strengths": [
+      "precise restraint under pressure",
+      "reading an opponent's intention",
+      "ritualized courage without harm"
+    ],
+    "shadows": [
+      "public pride can turn play into rivalry",
+      "a skilled performer may confuse dominance with respect"
+    ],
+    "contradiction": "Demonstrates fighting skill by choosing not to strike.",
+    "visualMotifs": [
+      "two long sticks crossing without contact",
+      "a circle of attentive spectators",
+      "measured footwork accompanied by folk music"
+    ],
+    "voicePatterns": [
+      "invites a challenge without an insult",
+      "praises a rival's control instead of boasting of victory"
+    ],
+    "storyEngines": [
+      "a reckless challenger must learn to stop short",
+      "a village contest repairs an old feud",
+      "an elder teaches a young rival that restraint is strength"
+    ],
+    "evolutionTriggers": [
+      "abandons a winning move to protect a partner",
+      "accepts a graceful draw",
+      "teaches safety before technique"
+    ],
+    "tags": [
+      "Egypt",
+      "Upper-Egypt",
+      "Tahteeb",
+      "Tahtib",
+      "noncontact",
+      "stick-game",
+      "restraint",
+      "folk-performance"
+    ]
+  },
+  // Research: https://wmo.int/media/news/celebrating-pioneer-indian-meteorologist-anna-mani
+  {
+    "id": "anna-mani-weather-instrumentation",
+    "name": "Anna Mani",
+    "era": "mid-century",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "An Indian meteorologist whose careful instrument design, calibration and observation helped make weather measurements dependable and locally producible.",
+    "strengths": [
+      "meticulous calibration",
+      "practical engineering leadership",
+      "turning observations into public-useful data"
+    ],
+    "shadows": [
+      "perfectionism can slow a team",
+      "faith in measurement can overlook human communication needs"
+    ],
+    "contradiction": "Studies unpredictable skies by insisting on the reliability of the smallest instrument.",
+    "visualMotifs": [
+      "a row of calibrated rain gauges",
+      "a weather balloon against morning clouds",
+      "hand-annotated solar radiation charts"
+    ],
+    "voicePatterns": [
+      "distinguishes a measurement from an assumption",
+      "asks how an instrument was tested before trusting a result"
+    ],
+    "storyEngines": [
+      "faulty instruments threaten a monsoon warning",
+      "a remote station must improvise a reliable sensor",
+      "a team argues over data until calibration reveals the truth"
+    ],
+    "evolutionTriggers": [
+      "delegates responsibility without sacrificing rigor",
+      "explains uncertainty to a vulnerable community",
+      "recognizes when an imperfect but transparent warning saves lives"
+    ],
+    "tags": [
+      "India",
+      "Anna-Modayil-Mani",
+      "meteorology",
+      "instrumentation",
+      "calibration",
+      "solar-radiation",
+      "ozone",
+      "public-science"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
