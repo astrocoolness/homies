@@ -3,7 +3,7 @@ import type { CustomProfile, Stage } from "./types";
 import { STAGES } from "./types";
 import { DESCRIPTORS, cleanName, clip, sheetFromModel, templateSheet, type MintFacts } from "./sheet";
 
-export type MintResult =
+export type MintResult |
   | { ok: true; profile: CustomProfile }
   | { ok: false; error: string };
 
@@ -18,7 +18,7 @@ function factsFrom(input: {
   stage: Stage;
   neighbors: string[];
 }): MintFacts {
-  const allowed = new Set<string>(DESCRIPTORS);
+  const allowed = new Set<string>(DESCRIPORS);
   return {
     name: cleanName(input.name),
     descriptors: input.descriptors.filter((item) => allowed.has(item)).slice(0, 5),
@@ -91,11 +91,16 @@ Use the name ${facts.name}. Keep every line under 140 characters.`,
         ],
       }),
     });
-    if (!res.ok) return fallback;
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      console.error("writeSheet failed", res.status, detail.slice(0, 500));
+      return fallback;
+    }
     const body = (await res.json()) as { choices?: { message?: { content?: string } }[] };
     const text = body.choices?.[0]?.message?.content ?? "";
     return sheetFromModel(extractJson(text), facts);
-  } catch {
+  } catch (err) {
+    console.error("writeSheet", err instanceof Error ? err.message : "failed");
     return fallback;
   }
 }
@@ -112,21 +117,6 @@ function imagePrompt(facts: MintFacts) {
             ? "an older vinyl toy"
             : "an adult vinyl toy";
   return `One cute ${age}, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Outfit hints at this life: ${facts.days}. Personality: ${facts.descriptors.join(", ")}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
-}
-
-async function drawPortraitFree(facts: MintFacts): Promise<string | null> {
-  const prompt = encodeURIComponent(imagePrompt(facts));
-  const seed = Math.floor(Math.random() * 100000);
-  const url = `https://image.pollinations.ai/prompt/${prompt}?width=768&height=768&nologo=true&seed=${seed}`;
-  try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(40_000) });
-    if (!res.ok) return null;
-    const type = (res.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
-    const bytes = new Uint8Array(await res.arrayBuffer());
-    return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
-  } catch {
-    return null;
-  }
 }
 
 async function drawPortraitKeyed(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
@@ -147,33 +137,40 @@ async function drawPortraitKeyed(apiKey: string, facts: MintFacts, imageDataUrl:
       body.image = { url: imageDataUrl, type: "image_url" };
     }
 
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      signal: AbortSignal.timeout(70_000),
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) {
-      if (res.status === 400 || res.status === 404) continue;
-      return null;
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        signal: AbortSignal.timeout(70_000),
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const detail = await res.text().catch(() => "");
+        console.error("drawPortraitKeyed failed", model, res.status, detail.slice(0, 500));
+        if (res.status === 400 || res.status === 404) continue;
+        return null;
+      }
+      const data = (await res.json()) as {
+        data?: { b64_json?: string; url?: string }[];
+        url?: string;
+        b64_json?: string;
+      };
+      const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
+      if (b64) return `data:image/png;base64,${b64}`;
+      const url = data.data?.[0]?.url ?? data.url;
+      if (!url) continue;
+      const img = await fetch(url, { signal: AbortSignal.timeout(20_000) });
+      if (!img.ok) return null;
+      const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
+      const bytes = new Uint8Array(await img.arrayBuffer());
+      return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
+    } catch (err) {
+      console.error("drawPortraitKeyed", model, err instanceof Error ? err.message : "failed");
+      continue;
     }
-    const data = (await res.json()) as {
-      data?: { b64_json?: string; url?: string }[];
-      url?: string;
-      b64_json?: string;
-    };
-    const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
-    if (b64) return `data:image/png;base64,${b64}`;
-    const url = data.data?.[0]?.url ?? data.url;
-    if (!url) continue;
-    const img = await fetch(url, { signal: AbortSignal.timeout(20_000) });
-    if (!img.ok) return null;
-    const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
-    const bytes = new Uint8Array(await img.arrayBuffer());
-    return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
   }
   return null;
 }
@@ -206,7 +203,7 @@ export const mintHomie = createServerFn({ method: "POST" })
       imageDataUrl,
     };
   })
-  .handler(async ({ data }): Promise<MintResult> => {
+  .handler(async ({ data}): Promise<MintResult> => {
     const facts = factsFrom(data);
     if (facts.name.length < 2) return { ok: false, error: "Give them a name." };
     if (facts.descriptors.length < 2) return { ok: false, error: "Pick at least two traits." };
@@ -214,10 +211,10 @@ export const mintHomie = createServerFn({ method: "POST" })
       return { ok: false, error: "Tell me where they live, how they spend the day, and one habit." };
     }
     const apiKey = process.env.XAI_API_KEY;
+    if (!apiKey) return { ok: false, error: "Portrait generation isn't available right now." };
     try {
       const sheet = await writeSheet(apiKey, facts);
-      let portrait = apiKey ? await drawPortraitKeyed(apiKey, facts, data.imageDataUrl) : null;
-      if (!portrait) portrait = await drawPortraitFree(facts);
+      const portrait = await drawPortraitKeyed(apiKey, facts, data.imageDataUrl);
       if (!portrait) return { ok: false, error: "The portrait didn't come through. Try the photo again." };
       sheet.portrait = portrait;
       sheet.name = facts.name;
