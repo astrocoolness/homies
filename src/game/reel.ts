@@ -22,14 +22,18 @@ async function sceneUrl(apiKey: string, portrait: string, setting: string): Prom
   const res = await fetch("https://api.x.ai/v1/images/edits", {
     method: "POST",
     headers: authHeaders(apiKey),
-    signal: AbortSignal.timeout(45_000),
+    signal: AbortSignal.timeout(90_000),
     body: JSON.stringify({
       model: "grok-imagine-image-2.0",
       prompt: `Place this exact vinyl-toy character inside their home, same face and outfit, full scene, one character only. Setting: ${setting}. Warm toy-like room, no text, no watermark, no extra people.`,
       image: { url: portrait, type: "image_url" },
     }),
   });
-  if (!res.ok) return null;
+  if (!res.ok) {
+    const detail = await res.text().catch(() => "");
+    console.error("sceneUrl failed", res.status, detail.slice(0, 500));
+    return null;
+  }
   const body = (await res.json()) as { data?: { url?: string; b64_json?: string }[]; url?: string; b64_json?: string };
   const url = body.data?.[0]?.url ?? body.url;
   if (url) return url;
@@ -89,7 +93,7 @@ export const startReel = createServerFn({ method: "POST" })
       setting: clip(row.setting, 240),
     };
   })
-  .handler(async ({ data }): Promise<StartReelResult> => {
+  .handler(async ({ data}): Promise<StartReelResult> => {
     const apiKey = process.env.XAI_API_KEY;
     if (!apiKey) return { ok: false, error: "Filming isn't available right now." };
     if (data.setting.length < 2) return { ok: false, error: "They need a home before a scene." };
@@ -107,7 +111,11 @@ export const startReel = createServerFn({ method: "POST" })
           prompt: `${data.name || "The homie"} lives a few quiet seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
         }),
       });
-      if (!res.ok) return { ok: false, error: "The camera didn't start. Try once more." };
+      if (!res.ok) {
+        const detail = await res.text().catch(() => "");
+        console.error("startReel video failed", res.status, detail.slice(0, 500));
+        return { ok: false, error: "The camera didn't start. Try once more." };
+      }
       const body = (await res.json()) as { request_id?: string; id?: string };
       const requestId = body.request_id ?? body.id ?? "";
       if (!/^[A-Za-z0-9-]{8,80}$/.test(requestId)) return { ok: false, error: "The camera didn't start. Try once more." };
@@ -132,7 +140,11 @@ export const pullReel = createServerFn({ method: "POST" })
         headers: { Authorization: `Bearer ${apiKey}` },
         signal: AbortSignal.timeout(20_000),
       });
-      if (!res.ok) return { ok: false, error: "Lost the camera. Try once more." };
+      if (!res.ok) {
+        const detail = await res.text().catch(() => "");
+        console.error("pullReel failed", res.status, detail.slice(0, 500));
+        return { ok: false, error: "Lost the camera. Try once more." };
+      }
       const body = (await res.json()) as { status?: string; video?: { url?: string } };
       const status = (body.status ?? "").toLowerCase();
       if (status === "failed" || status === "expired") return { ok: false, error: "That take didn't come out. Try once more." };
