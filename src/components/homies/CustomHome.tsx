@@ -38,7 +38,7 @@ function parseFrames(media: string): string[] {
     const b64 = media.split(",")[1] ?? "";
     const json = atob(b64);
     const arr = JSON.parse(json);
-    return Array.isArray(arr) ? arr.filter((x): x is string => typeof x === "string") : [];
+    return Array.isArray(arr) ? arr.filter((x): x is string => typeof x === "string" && x.startsWith("data:image/")) : [];
   } catch {
     return [];
   }
@@ -53,7 +53,7 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
   const [phase, setPhase] = useState<"idle" | "room" | "film">("idle");
   const [error, setError] = useState<string | null>(null);
   const [frameIdx, setFrameIdx] = useState(0);
-  const [currentFrameUrl, setCurrentFrameUrl] = useState<string | null>(null);
+  const [frames, setFrames] = useState<string[]>([]);
   const token = useRef(0);
 
   useEffect(() => {
@@ -88,34 +88,40 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
   const featuredUrl = featured ? urls[featured.id] : null;
   const isFrames = featured?.mime === "application/x-homie-frames";
 
+  // Load frames for flipbook
   useEffect(() => {
     if (!isFrames || !featuredUrl) {
-      setCurrentFrameUrl(null);
+      setFrames([]);
       setFrameIdx(0);
       return;
     }
     let cancelled = false;
-    let frames: string[] = [];
     void fetch(featuredUrl)
       .then((r) => r.text())
       .then((text) => {
         if (cancelled) return;
-        frames = parseFrames(text);
-        setCurrentFrameUrl(frames[0] ?? null);
+        const parsed = parseFrames(text);
+        setFrames(parsed);
+        setFrameIdx(0);
       })
-      .catch(() => {});
-    const timer = window.setInterval(() => {
-      setFrameIdx((i) => {
-        const next = frames.length ? (i + 1) % frames.length : 0;
-        setCurrentFrameUrl(frames[next] ?? frames[0] ?? null);
-        return next;
+      .catch(() => {
+        if (!cancelled) setFrames([]);
       });
-    }, 320);
     return () => {
       cancelled = true;
-      window.clearInterval(timer);
     };
   }, [isFrames, featuredUrl]);
+
+  // Cycle frames
+  useEffect(() => {
+    if (!isFrames || frames.length < 2) return;
+    const timer = window.setInterval(() => {
+      setFrameIdx((i) => (i + 1) % frames.length);
+    }, 280);
+    return () => window.clearInterval(timer);
+  }, [isFrames, frames]);
+
+  const currentFrameUrl = isFrames && frames.length > 0 ? frames[frameIdx % frames.length] : null;
 
   if (!profile || !homie || homie.hatchedAt == null) return null;
   const sheet = profile;
@@ -302,13 +308,15 @@ export function CustomHome({ id, dirt }: { id: string; dirt: number }) {
       </div>
       <style>{`
         @keyframes homie-moment-cinema {
-          0% { transform: scale(1.04) translate(0.6%, 0.4%); }
-          50% { transform: scale(1.09) translate(-0.8%, -1%); }
-          100% { transform: scale(1.04) translate(-0.4%, 0.6%); }
+          0% { transform: scale(1.02) translateY(0px) rotate(0deg); }
+          25% { transform: scale(1.06) translateY(-6px) rotate(-0.4deg); }
+          50% { transform: scale(1.08) translateY(-3px) rotate(0.3deg); }
+          75% { transform: scale(1.05) translateY(-8px) rotate(-0.2deg); }
+          100% { transform: scale(1.02) translateY(0px) rotate(0deg); }
         }
         .homie-moment-still {
-          animation: homie-moment-cinema 16s ease-in-out infinite alternate;
-          transform-origin: center;
+          animation: homie-moment-cinema 4.5s ease-in-out infinite;
+          transform-origin: center bottom;
           will-change: transform;
         }
         @media (prefers-reduced-motion: reduce) {
