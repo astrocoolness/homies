@@ -69,7 +69,40 @@ async function freeFrame(prompt: string, seed: number): Promise<Buffer | null> {
     // continue
   }
 
-  // 2. AI Horde anonymous (slow but free, no key)
+  // 2. Craiyon unofficial (v3, free, no key — returns multiple images)
+  try {
+    const res = await fetch("https://api.craiyon.com/v3", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://www.craiyon.com",
+        Referer: "https://www.craiyon.com/",
+      },
+      signal: AbortSignal.timeout(25_000),
+      body: JSON.stringify({
+        prompt,
+        negative_prompt: "",
+        model: "none",
+        version: "c4ue22fb7kb6wlac",
+      }),
+    });
+    if (res.ok) {
+      const body = (await res.json()) as { images?: string[] };
+      const first = body.images?.[0];
+      if (first) {
+        const imgUrl = first.startsWith("http") ? first : `https://img.craiyon.com/${first}`;
+        const imgRes = await fetch(imgUrl, { signal: AbortSignal.timeout(12_000) });
+        if (imgRes.ok) {
+          const buf = Buffer.from(await imgRes.arrayBuffer());
+          if (buf.length > 800) return buf;
+        }
+      }
+    }
+  } catch {
+    // skip
+  }
+
+  // 3. AI Horde anonymous (slow but free, no key)
   try {
     const res = await fetch("https://stablehorde.net/api/v2/generate/async", {
       method: "POST",
@@ -330,7 +363,7 @@ export const startReel = createServerFn({ method: "POST" })
       }
     }
 
-    // 3. Free multi-frame (Pollinations + AI Horde, GIF or flipbook)
+    // 3. Free multi-frame (Pollinations + Craiyon + AI Horde, GIF or flipbook)
     const freeMedia = await freeAnimated(name, data.setting);
     if (freeMedia) return { ok: true, requestId: freeMedia };
 
