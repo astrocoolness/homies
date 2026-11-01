@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { requestReelScene, requestReelVideo } from "./reel-provider";
 
 const MAX_IMAGE = 900_000;
 
@@ -12,34 +13,6 @@ export type PullReelResult =
 function clip(value: unknown, max: number) {
   if (typeof value !== "string") return "";
   return value.replace(/\s+/g, " ").trim().slice(0, max);
-}
-
-function authHeaders(apiKey: string) {
-  return { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` };
-}
-
-async function sceneUrl(apiKey: string, portrait: string, setting: string): Promise<string | null> {
-  const res = await fetch("https://api.x.ai/v1/images/edits", {
-    method: "POST",
-    headers: authHeaders(apiKey),
-    signal: AbortSignal.timeout(90_000),
-    body: JSON.stringify({
-      model: "grok-imagine-image-2.0",
-      prompt: `Place this exact vinyl-toy character inside their home, same face and outfit, full scene, one character only. Setting: ${setting}. Warm toy-like room, no text, no watermark, no extra people.`,
-      image: { url: portrait, type: "image_url" },
-    }),
-  });
-  if (!res.ok) {
-    const detail = await res.text().catch(() => "");
-    console.error("sceneUrl failed", res.status, detail.slice(0, 500));
-    return null;
-  }
-  const body = (await res.json()) as { data?: { url?: string; b64_json?: string }[]; url?: string; b64_json?: string };
-  const url = body.data?.[0]?.url ?? body.url;
-  if (url) return url;
-  const b64 = body.data?.[0]?.b64_json ?? body.b64_json;
-  if (!b64) return null;
-  return `data:image/png;base64,${b64}`;
 }
 
 async function toGif(mp4: Uint8Array): Promise<{ mime: string; bytes: Buffer } | null> {
@@ -98,28 +71,11 @@ export const startReel = createServerFn({ method: "POST" })
     if (!apiKey) return { ok: false, error: "Filming isn't available right now." };
     if (data.setting.length < 2) return { ok: false, error: "They need a home before a scene." };
     try {
-      const still = await sceneUrl(apiKey, data.portrait, data.setting);
-      if (!still) return { ok: false, error: "The room didn't come through. Try once more." };
-      const res = await fetch("https://api.x.ai/v1/videos/generations", {
-        method: "POST",
-        headers: authHeaders(apiKey),
-        signal: AbortSignal.timeout(30_000),
-        body: JSON.stringify({
-          model: "grok-imagine-video-1.5",
-          duration: 6,
-          image: { url: still },
-          prompt: `${data.name || "The homie"} lives a few quiet seconds in this room. Small motion only: a glance, a shift, their habit. Camera holds. No new people. No text.`,
-        }),
-      });
-      if (!res.ok) {
-        const detail = await res.text().catch(() => "");
-        console.error("startReel video failed", res.status, detail.slice(0, 500));
-        return { ok: false, error: "The camera didn't start. Try once more." };
-      }
-      const body = (await res.json()) as { request_id?: string; id?: string };
-      const requestId = body.request_id ?? body.id ?? "";
-      if (!/^[A-Za-z0-9-]{8,80}$/.test(requestId)) return { ok: false, error: "The camera didn't start. Try once more." };
-      return { ok: true, requestId };
+      const scene = await requestReelScene(apiKey, data.portrait, data.setting);
+      if (!scene.ok) return { ok: false, error: scene.error };
+      const video = await requestReelVideo(apiKey, scene.url, data.name);
+      if (!video.ok) return { ok: false, error: video.error };
+      return { ok: true, requestId: video.requestId };
     } catch (err) {
       console.error("startReel", err instanceof Error ? err.message : "failed");
       return { ok: false, error: "That didn't work. Try once more." };
@@ -128,7 +84,7 @@ export const startReel = createServerFn({ method: "POST" })
 
 export const pullReel = createServerFn({ method: "POST" })
   .validator((input: unknown) => {
-    const requestId = typeof (input as { requestId?: unknown })?.requestId === "string" ? (input as { requestId: string }) : "";
+    const requestId = typeof (input as { requestId?: unknown })?.requestId === "string" ? (input as { requestId: string }).requestId : "";
     if (!/^[A-Za-z0-9-]{8,80}$/.test(requestId)) throw new Error("Missing take.");
     return { requestId };
   })
