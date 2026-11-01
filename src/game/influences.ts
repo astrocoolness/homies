@@ -3968,6 +3968,391 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "public-science"
     ]
   },
+  // Research: https://ich.unesco.org/en/RL/oral-and-graphic-expressions-of-the-wajapi-00049
+  {
+    "id": "wajapi-kusiwa-oral-graphic-expressions",
+    "name": "Wajãpi Kusiwa Oral and Graphic Expressions",
+    "era": "movement",
+    "domain": "visual-art",
+    "sourceType": "tradition",
+    "essence": "An Amazonian Wajãpi system joining geometric body and object designs with oral knowledge, practiced through patient skill and community transmission.",
+    "strengths": [
+      "connects visible patterns to shared knowledge",
+      "patient apprenticeship and material precision",
+      "sees design as communication rather than ornament alone"
+    ],
+    "shadows": [
+      "a fictional keeper may guard knowledge too tightly",
+      "the pressure to preserve a form can make experimentation feel risky"
+    ],
+    "contradiction": "A mark can communicate across a community yet cannot carry its full meaning without the people who explain it.",
+    "visualMotifs": [
+      "red roucou pigment and prepared resin",
+      "interlocking geometric lines on crafted surfaces",
+      "a hand tracing a pattern before speaking"
+    ],
+    "voicePatterns": [
+      "asks who taught a mark and what context gives it meaning",
+      "pairs a short visual description with a longer oral explanation"
+    ],
+    "storyEngines": [
+      "an apprentice must learn why a pattern cannot be detached from its story",
+      "a commercial imitation forces a community to decide what to share",
+      "an elder and a younger maker negotiate the terms of transmission"
+    ],
+    "evolutionTriggers": [
+      "chooses consent and context over public acclaim",
+      "learns to explain a boundary without closing every door",
+      "recognizes a new apprentice as a responsible steward"
+    ],
+    "tags": [
+      "Brazil",
+      "Amapa",
+      "Wajapi",
+      "Wajãpi",
+      "Kusiwa",
+      "Amazonia",
+      "graphic-oral-knowledge",
+      "body-painting",
+      "community-authorship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/mask-dance-of-the-drums-from-drametse-00161
+  {
+    "id": "bhutan-drametse-ngacham-mask-drums",
+    "name": "Drametse Ngacham Mask Dance and Drums",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Bhutanese monastery-rooted masked drum dance moving between contemplative and forceful energies in a collective sacred performance.",
+    "strengths": [
+      "precise ensemble timing",
+      "embodied transitions between stillness and intensity",
+      "disciplined preparation for a shared performance"
+    ],
+    "shadows": [
+      "a fictional performer may mistake rigid perfection for devotion",
+      "public acclaim may distract from communal purpose"
+    ],
+    "contradiction": "A powerful masked figure must cultivate quiet attentiveness before the drumbeat accelerates.",
+    "visualMotifs": [
+      "wooden animal and mythical masks",
+      "bright layered dance costumes",
+      "hand drums in a monastery courtyard"
+    ],
+    "voicePatterns": [
+      "speaks in measured beats and deliberate pauses",
+      "distinguishes spectacle from the meaning of a ritual"
+    ],
+    "storyEngines": [
+      "a young drummer inherits a demanding role at short notice",
+      "a troupe must preserve rehearsal time against competing demands",
+      "an outsider learns to ask before treating a sacred dance as entertainment"
+    ],
+    "evolutionTriggers": [
+      "relinquishes the need to be the most visible performer",
+      "balances technique with responsibility to the community",
+      "mentors someone who approaches the dance differently"
+    ],
+    "tags": [
+      "Bhutan",
+      "Drametse",
+      "Ngacham",
+      "mask-dance",
+      "drums",
+      "sacred-performance",
+      "ensemble",
+      "apprenticeship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/polyphonic-singing-of-the-aka-pygmies-of-central-africa-00082
+  {
+    "id": "aka-central-african-polyphonic-singing",
+    "name": "Aka Polyphonic Singing of Central Africa",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "A Central African Aka oral singing tradition of interlocking vocal lines and collective participation, entwined with community life and knowledge.",
+    "strengths": [
+      "hears several independent parts at once",
+      "responsive collaboration without a single dominant voice",
+      "transmits memory through participation"
+    ],
+    "shadows": [
+      "a fictional ensemble leader may resist necessary change",
+      "group harmony can mask unresolved individual needs"
+    ],
+    "contradiction": "Distinct voices become stronger through mutual listening rather than being made identical.",
+    "visualMotifs": [
+      "overlapping sound-wave ribbons",
+      "clapping hands in a communal circle",
+      "multiple paths converging without merging"
+    ],
+    "voicePatterns": [
+      "answers a statement by adding a complementary line",
+      "invites participation instead of giving a solo lecture"
+    ],
+    "storyEngines": [
+      "a disrupted gathering must rebuild its interlocking parts",
+      "a child hears a missing melody that changes an elder's memory",
+      "an ensemble navigates pressure to perform out of context"
+    ],
+    "evolutionTriggers": [
+      "protects communal consent in a public performance",
+      "makes room for a new voice without erasing older knowledge",
+      "learns when silence is as important as joining in"
+    ],
+    "tags": [
+      "Central-African-Republic",
+      "Aka",
+      "BaAka",
+      "polyphony",
+      "oral-transmission",
+      "ensemble-listening",
+      "community-music"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/cultural-space-of-sosso-bala-00009
+  {
+    "id": "guinea-sosso-bala-cultural-space",
+    "name": "Sosso-Bala Cultural Space of Niagassola",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "A Guinean Manding heritage centered on a guarded balafon, ceremonial performance, lineage memory, and intergenerational teaching.",
+    "strengths": [
+      "treats stewardship as a responsibility",
+      "maintains precision in instrument craft and performance",
+      "connects music with historical continuity"
+    ],
+    "shadows": [
+      "a fictional custodian may confuse protection with ownership",
+      "a succession dispute can turn reverence into suspicion"
+    ],
+    "contradiction": "A sound held in trust for generations must still find a path to the next learner.",
+    "visualMotifs": [
+      "wooden balafon keys over gourd resonators",
+      "a shaded courtyard near an earthen building",
+      "carefully wrapped instrument and ceremonial cloth"
+    ],
+    "voicePatterns": [
+      "asks what obligations come with access",
+      "speaks in remembered episodes rather than grand claims"
+    ],
+    "storyEngines": [
+      "a custodian must choose how to teach when apprentices leave",
+      "a disputed inheritance tests who can safeguard an instrument",
+      "a ceremony requires reconciliation between generations"
+    ],
+    "evolutionTriggers": [
+      "shares technique without surrendering community authority",
+      "learns to separate personal pride from custodianship",
+      "finds a successor through trust rather than status"
+    ],
+    "tags": [
+      "Guinea",
+      "Niagassola",
+      "Nyagassola",
+      "Sosso-Bala",
+      "Sosso-Bala-balafon",
+      "Manding",
+      "Kouyate",
+      "heritage-stewardship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/chapei-dang-veng-01165
+  {
+    "id": "cambodia-chapei-dang-veng",
+    "name": "Cambodian Chapei Dang Veng Story-Song",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Cambodian lute-accompanied sung storytelling combining improvised wit, social commentary, moral reflection, and oral teaching.",
+    "strengths": [
+      "quick improvisation grounded in listening",
+      "communicates criticism through playful storytelling",
+      "bridges generations with memorable narratives"
+    ],
+    "shadows": [
+      "a fictional satirist may hide a personal apology behind cleverness",
+      "the urge to win an audience can overwhelm the lesson"
+    ],
+    "contradiction": "A light, witty performance can carry the weight of difficult collective memory.",
+    "visualMotifs": [
+      "long-necked chapei lute",
+      "a single seated performer facing a circle",
+      "handwritten story fragments beside instrument strings"
+    ],
+    "voicePatterns": [
+      "sets up a moral dilemma before delivering a wry turn",
+      "asks listeners to complete a story's implication"
+    ],
+    "storyEngines": [
+      "a young apprentice must improvise when a teacher cannot perform",
+      "a satirical verse sparks a dispute that demands tact",
+      "an archive of songs becomes a bridge after interrupted transmission"
+    ],
+    "evolutionTriggers": [
+      "uses wit to invite dialogue rather than humiliate",
+      "passes a difficult repertoire to a younger performer",
+      "admits that the audience knows something the singer missed"
+    ],
+    "tags": [
+      "Cambodia",
+      "Khmer",
+      "Chapei-Dang-Veng",
+      "Chapei",
+      "Chapei-Dang-Veng-lute",
+      "story-song",
+      "improvisation",
+      "social-commentary"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/moutya-01690
+  {
+    "id": "seychelles-moutya-dance",
+    "name": "Seychellois Moutya Dance and Call-Response",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Seychellois dance and drumming tradition rooted in enslaved Africans' resistance and solidarity, sustained through social gathering and call-and-response.",
+    "strengths": [
+      "turns shared hardship into collective expression",
+      "responds rapidly to changing group rhythms",
+      "builds courage through social participation"
+    ],
+    "shadows": [
+      "a fictional organizer may make every gathering carry a political burden",
+      "performance energy may postpone necessary private grief"
+    ],
+    "contradiction": "A dance that brings people joy also holds a history of coercion and resistance.",
+    "visualMotifs": [
+      "drum warmed beside a bonfire",
+      "shuffling steps across earth",
+      "paired dancers approaching without touching"
+    ],
+    "voicePatterns": [
+      "trades observations in short call-and-response phrases",
+      "uses grounded humor to raise a difficult communal issue"
+    ],
+    "storyEngines": [
+      "a community debates how to present a tradition to visitors",
+      "a dance gathering surfaces a long-suppressed family history",
+      "a younger drummer learns why the fire matters"
+    ],
+    "evolutionTriggers": [
+      "honors historical context while welcoming new participants",
+      "lets someone grieve without requiring performance",
+      "builds a gathering shaped by community choice"
+    ],
+    "tags": [
+      "Seychelles",
+      "Seychellois",
+      "Moutya",
+      "Afro-Seychellois",
+      "call-and-response",
+      "dance",
+      "drumming",
+      "resistance-memory"
+    ]
+  },
+  // Research: https://www.treccani.it/enciclopedia/abu-r-raihan-muhammad-ibn-ahmad-al-biruni_%28Enciclopedia-Italiana%29/
+  {
+    "id": "al-biruni-cross-cultural-science",
+    "name": "Al-Biruni",
+    "era": "medieval",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A Khwarazmian polymath who combined mathematical observation, geography, astronomy, and sustained study of other intellectual traditions.",
+    "strengths": [
+      "tests claims against observation",
+      "learns across linguistic and cultural boundaries",
+      "joins mathematical precision to broad curiosity"
+    ],
+    "shadows": [
+      "a fictional researcher may prize exhaustive comparison over urgent action",
+      "intellectual distance can be mistaken for indifference"
+    ],
+    "contradiction": "Measures the world with exacting tools while recognizing that another culture cannot be reduced to numbers.",
+    "visualMotifs": [
+      "astronomical measuring rings",
+      "geographic diagrams and annotated manuscripts",
+      "a horizon traced against a star chart"
+    ],
+    "voicePatterns": [
+      "distinguishes firsthand observation from received reports",
+      "compares competing explanations before declaring a conclusion"
+    ],
+    "storyEngines": [
+      "a disputed map reveals a flawed assumption",
+      "a translator and astronomer challenge each other's categories",
+      "a court patron demands certainty where the evidence remains incomplete"
+    ],
+    "evolutionTriggers": [
+      "lets local expertise overturn a favored model",
+      "publishes an uncertainty instead of a convenient answer",
+      "chooses patient collaboration over solitary authority"
+    ],
+    "tags": [
+      "Al-Biruni",
+      "Abu-Rayhan-al-Biruni",
+      "Khwarazm",
+      "Central-Asia",
+      "astronomy",
+      "geography",
+      "comparative-scholarship",
+      "mathematics"
+    ]
+  },
+  // Research: https://plato.stanford.edu/entries/han-dynasty/
+  {
+    "id": "ban-zhao-han-historian",
+    "name": "Ban Zhao",
+    "era": "classical",
+    "domain": "literature",
+    "sourceType": "historical-person",
+    "essence": "A Han-dynasty Chinese historian, writer, and court educator who helped complete a dynastic history while navigating the expectations of her time.",
+    "strengths": [
+      "careful archival synthesis",
+      "teaches difficult material with patience",
+      "understands the consequences of how history is recorded"
+    ],
+    "shadows": [
+      "a fictional chronicler may internalize restrictive social norms",
+      "loyalty to an institution can limit candid critique"
+    ],
+    "contradiction": "A woman who gained unusual scholarly authority also articulated norms that constrained women's roles.",
+    "visualMotifs": [
+      "bamboo slips and carefully ordered records",
+      "inked genealogical tables",
+      "a lamp illuminating an unfinished chronicle"
+    ],
+    "voicePatterns": [
+      "distinguishes a documented event from a courtly interpretation",
+      "poses questions about whose account survives"
+    ],
+    "storyEngines": [
+      "an unfinished history must be completed after a political purge",
+      "a court pupil discovers conflicting archival accounts",
+      "a teacher weighs candor against institutional risk"
+    ],
+    "evolutionTriggers": [
+      "acknowledges whose testimony the official record omits",
+      "teaches a student to question an inherited rule",
+      "preserves evidence even when it complicates a patron's story"
+    ],
+    "tags": [
+      "China",
+      "Han-dynasty",
+      "Ban-Zhao",
+      "Pan-Chao",
+      "Cao-Dagu",
+      "Han-Shu",
+      "historian",
+      "court-education",
+      "archival-memory"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
