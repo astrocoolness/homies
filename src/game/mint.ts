@@ -3,7 +3,7 @@ import type { CustomProfile, Stage } from "./types";
 import { STAGES } from "./types";
 import { DESCRIPTORS, cleanName, clip, sheetFromModel, templateSheet, type MintFacts } from "./sheet";
 
-export type MintResult |
+export type MintResult =
   | { ok: true; profile: CustomProfile }
   | { ok: false; error: string };
 
@@ -18,7 +18,7 @@ function factsFrom(input: {
   stage: Stage;
   neighbors: string[];
 }): MintFacts {
-  const allowed = new Set<string>(DESCRIPORS);
+  const allowed = new Set<string>(DESCRIPTORS);
   return {
     name: cleanName(input.name),
     descriptors: input.descriptors.filter((item) => allowed.has(item)).slice(0, 5),
@@ -39,6 +39,16 @@ function extractJson(text: string): unknown {
   } catch {
     return null;
   }
+}
+
+function classifyError(status: number, detail: string): string {
+  const lower = detail.toLowerCase();
+  if (status === 401 || status === 403) return "Portrait generation is unavailable: the image service could not authenticate. Check the API key.";
+  if (status === 402 || /credit|quota|spend|billing/.test(lower)) return "Portrait generation is unavailable: the image service has no credits or reached its limit.";
+  if (status === 429) return "The image service is busy. Wait a moment and try again.";
+  if (/content.?policy|moderation|safety|nsfw/.test(lower)) return "The image service could not use this photo. Try a different picture.";
+  if (status >= 500) return "The image service is temporarily unavailable. Try again later.";
+  return "The portrait didn't come through. Try the photo again.";
 }
 
 async function writeSheet(apiKey: string | undefined, facts: MintFacts): Promise<CustomProfile> {
@@ -67,26 +77,7 @@ async function writeSheet(apiKey: string | undefined, facts: MintFacts): Promise
           },
           {
             role: "user",
-            content: `Character facts:
-Name: ${facts.name}
-Personality: ${facts.descriptors.join(", ") || "even-tempered"}
-Home: ${facts.home}
-Days: ${facts.days}
-Habit only they have: ${facts.habit}
-Starting age: ${facts.stage}
-Other homies who may cameo: ${facts.neighbors.join(", ") || "none"}
-
-Return JSON with keys:
-bio (one sentence), homeTitle (2-4 words), homeLine, messy, tidy, job (short), pace ("slow"|"steady"|"wired"),
-schedule {bed, wake, work:[startHour,endHour]} using 0-23,
-foods: exactly 3 objects {name, blurb, kind:"fav"|"meal"|"junk", icon:"cake"|"utensils"|"pizza"|"soup"|"star"|"battery"|"zap"} one of each kind,
-hatch, sleep, nap, collapse, slip, sick, well, wakeEarly, wakeOk, work, medicine,
-quips: 6 status lines, beats: 8 episode lines about their actual life, talk: 5 first-person lines, talkAsleep, play, clean,
-feed (must include the token {food}),
-needs: {hunger, rest, cleanliness, fun, energy, affection},
-stages: {baby:"", kid, teen, adult, elder} one sentence each except baby stays empty,
-milestones: 3 objects {title, minHours} with minHours 8, 36, and 90.
-Use the name ${facts.name}. Keep every line under 140 characters.`,
+            content: `Character facts:\nName: ${facts.name}\nPersonality: ${facts.descriptors.join(", ") || "even-tempered"}\nHome: ${facts.home}\nDays: ${facts.days}\nHabit only they have: ${facts.habit}\nStarting age: ${facts.stage}\nOther homies who may cameo: ${facts.neighbors.join(", ") || "none"}\n\nReturn JSON with keys:\nbio (one sentence), homeTitle (2-4 words), homeLine, messy, tidy, job (short), pace (\"slow\"|\"steady\"|\"wired\"),\nschedule {bed, wake, work:[startHour,endHour]} using 0-23,\nfoods: exactly 3 objects {name, blurb, kind:\"fav\"|\"meal\"|\"junk\", icon:\"cake\"|\"utensils\"|\"pizza\"|\"soup\"|\"star\"|\"battery\"|\"zap\"} one of each kind,\nhatch, sleep, nap, collapse, slip, sick, well, wakeEarly, wakeOk, work, medicine,\nquips: 6 status lines, beats: 8 episode lines about their actual life, talk: 5 first-person lines, talkAsleep, play, clean,\nfeed (must include the token {food}),\nneeds: {hunger, rest, cleanliness, fun, energy, affection},\nstages: {baby:\"\", kid, teen, adult, elder} one sentence each except baby stays empty,\nmilestones: 3 objects {title, minHours} with minHours 8, 36, and 90.\nUse the name ${facts.name}. Keep every line under 140 characters.`,
           },
         ],
       }),
@@ -119,12 +110,14 @@ function imagePrompt(facts: MintFacts) {
   return `One cute ${age}, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Outfit hints at this life: ${facts.days}. Personality: ${facts.descriptors.join(", ")}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
-async function drawPortraitKeyed(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<string | null> {
+async function drawPortraitKeyed(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<{ ok: true; portrait: string } | { ok: false; error: string }> {
   const isOr = apiKey.startsWith("sk-or-");
   const endpoint = isOr ? "https://openrouter.ai/api/v1/images" : "https://api.x.ai/v1/images/edits";
   const models = isOr
     ? ["x-ai/grok-imagine-image-2.0", "x-ai/grok-imagine-image-quality"]
     : ["grok-imagine-image-2.0", "grok-imagine-image"];
+
+  let lastError = "The portrait didn't come through. Try the photo again.";
 
   for (const model of models) {
     const body: Record<string, unknown> = {
@@ -150,8 +143,9 @@ async function drawPortraitKeyed(apiKey: string, facts: MintFacts, imageDataUrl:
       if (!res.ok) {
         const detail = await res.text().catch(() => "");
         console.error("drawPortraitKeyed failed", model, res.status, detail.slice(0, 500));
+        lastError = classifyError(res.status, detail);
         if (res.status === 400 || res.status === 404) continue;
-        return null;
+        return { ok: false, error: lastError };
       }
       const data = (await res.json()) as {
         data?: { b64_json?: string; url?: string }[];
@@ -159,20 +153,55 @@ async function drawPortraitKeyed(apiKey: string, facts: MintFacts, imageDataUrl:
         b64_json?: string;
       };
       const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
-      if (b64) return `data:image/png;base64,${b64}`;
+      if (b64) return { ok: true, portrait: `data:image/png;base64,${b64}` };
       const url = data.data?.[0]?.url ?? data.url;
       if (!url) continue;
       const img = await fetch(url, { signal: AbortSignal.timeout(20_000) });
-      if (!img.ok) return null;
+      if (!img.ok) continue;
       const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
       const bytes = new Uint8Array(await img.arrayBuffer());
-      return `data:${type};base64,${Buffer.from(bytes).toString("base64")}`;
+      return { ok: true, portrait: `data:${type};base64,${Buffer.from(bytes).toString("base64")}` };
     } catch (err) {
       console.error("drawPortraitKeyed", model, err instanceof Error ? err.message : "failed");
+      lastError = "The image service took too long. Try again.";
       continue;
     }
   }
-  return null;
+
+  // Fallback to pure generation if edits fail
+  for (const model of models) {
+    try {
+      const genEndpoint = isOr ? "https://openrouter.ai/api/v1/images" : "https://api.x.ai/v1/images/generations";
+      const res = await fetch(genEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        signal: AbortSignal.timeout(40_000),
+        body: JSON.stringify({
+          model,
+          prompt: imagePrompt(facts),
+          n: 1,
+        }),
+      });
+      if (!res.ok) continue;
+      const data = (await res.json()) as { data?: { b64_json?: string; url?: string }[]; url?: string; b64_json?: string };
+      const b64 = data.data?.[0]?.b64_json ?? data.b64_json;
+      if (b64) return { ok: true, portrait: `data:image/png;base64,${b64}` };
+      const url = data.data?.[0]?.url ?? data.url;
+      if (!url) continue;
+      const img = await fetch(url, { signal: AbortSignal.timeout(20_000) });
+      if (!img.ok) continue;
+      const type = (img.headers.get("content-type") ?? "image/jpeg").split(";")[0].trim() || "image/jpeg";
+      const bytes = new Uint8Array(await img.arrayBuffer());
+      return { ok: true, portrait: `data:${type};base64,${Buffer.from(bytes).toString("base64")}` };
+    } catch {
+      continue;
+    }
+  }
+
+  return { ok: false, error: lastError };
 }
 
 export const mintHomie = createServerFn({ method: "POST" })
@@ -214,9 +243,9 @@ export const mintHomie = createServerFn({ method: "POST" })
     if (!apiKey) return { ok: false, error: "Portrait generation isn't available right now." };
     try {
       const sheet = await writeSheet(apiKey, facts);
-      const portrait = await drawPortraitKeyed(apiKey, facts, data.imageDataUrl);
-      if (!portrait) return { ok: false, error: "The portrait didn't come through. Try the photo again." };
-      sheet.portrait = portrait;
+      const portraitResult = await drawPortraitKeyed(apiKey, facts, data.imageDataUrl);
+      if (!portraitResult.ok) return { ok: false, error: portraitResult.error };
+      sheet.portrait = portraitResult.portrait;
       sheet.name = facts.name;
       return { ok: true, profile: sheet };
     } catch (err) {
