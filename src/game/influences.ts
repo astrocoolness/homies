@@ -4353,6 +4353,440 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "archival-memory"
     ]
   },
+  // Research: https://ich.unesco.org/en/USL/naqqli-iranian-dramatic-story-telling-00535
+  {
+    "id": "iran-naqqali-dramatic-storytelling",
+    "name": "Naqqāli Iranian Dramatic Storytelling",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Iranian dramatic narration of epics and folk histories through remembered verse, gesture, improvisation, and sometimes painted scrolls.",
+    "strengths": [
+      "sustains a long narrative through memory and improvisation",
+      "translates conflict into vivid gesture",
+      "adapts a story to different audiences"
+    ],
+    "shadows": [
+      "a fictional narrator may mistake theatrical certainty for historical truth",
+      "fear of losing an audience can turn grief into spectacle"
+    ],
+    "contradiction": "A keeper of collective memory must reinvent each telling without claiming ownership of the past.",
+    "visualMotifs": [
+      "painted epic scroll beside a tea-house wall",
+      "a plain robe with a single theatrical helmet",
+      "an outstretched hand freezing a battle scene"
+    ],
+    "voicePatterns": [
+      "shifts between narrator and character without impersonating real performers",
+      "uses a measured pause before revealing the stakes"
+    ],
+    "storyEngines": [
+      "a storyteller must reconcile rival accounts of an old battle",
+      "an apprentice inherits a repertoire without its missing ending",
+      "a performance exposes a local injustice while preserving audience trust"
+    ],
+    "evolutionTriggers": [
+      "credits the people whose accounts were omitted",
+      "teaches an apprentice to question the heroic version",
+      "lets silence carry a loss instead of dramatizing it"
+    ],
+    "tags": [
+      "Iran",
+      "Persia",
+      "Naqqali",
+      "Naqqāl",
+      "Naghali",
+      "dramatic-storytelling",
+      "epic-memory",
+      "improvisation"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/al-taghrooda-traditional-bedouin-chanted-poetry-in-the-united-arab-emirates-and-the-sultanate-of-oman-00744
+  {
+    "id": "oman-uae-al-taghrooda-chanted-poetry",
+    "name": "Al-Taghrooda Bedouin Chanted Poetry",
+    "era": "movement",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "Short, often antiphonal Bedouin verses from Oman and the UAE, used for social connection, travel, remembrance, and dispute resolution.",
+    "strengths": [
+      "communicates meaning in compressed verse",
+      "builds trust through responsive exchange",
+      "finds common ground during a journey"
+    ],
+    "shadows": [
+      "a fictional mediator may reduce a complex disagreement to a neat rhyme",
+      "group loyalty may silence an unpopular voice"
+    ],
+    "contradiction": "Brief lines exchanged in motion can carry obligations that last for generations.",
+    "visualMotifs": [
+      "two travelling groups separated by desert light",
+      "a circle beside a night campfire",
+      "a rhythm marked by steady footsteps"
+    ],
+    "voicePatterns": [
+      "offers a concise verse and waits for an answer",
+      "frames a disagreement through a shared image rather than accusation"
+    ],
+    "storyEngines": [
+      "two caravans trade verses to resolve a contested route",
+      "a message to an absent relative changes meaning in transit",
+      "a young poet must answer a verse that nobody expects"
+    ],
+    "evolutionTriggers": [
+      "invites a rival to compose the response",
+      "abandons a clever line to preserve a friendship",
+      "learns when a conflict requires action beyond words"
+    ],
+    "tags": [
+      "Oman",
+      "United-Arab-Emirates",
+      "Bedouin",
+      "Al-Taghrooda",
+      "Al-Taghruda",
+      "antiphonal-poetry",
+      "oral-diplomacy",
+      "desert-travel"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/maloya-00249
+  {
+    "id": "reunion-maloya-music",
+    "name": "Réunion Maloya Music and Dance",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Réunion Island call-and-response music and dance with roots in enslaved Malagasy and African communities, carrying remembrance, protest, and evolving fusion.",
+    "strengths": [
+      "turns individual feeling into communal response",
+      "integrates old and new instruments thoughtfully",
+      "sustains belonging through participatory rhythm"
+    ],
+    "shadows": [
+      "a fictional bandleader may market collective memory as novelty",
+      "public defiance can conceal private exhaustion"
+    ],
+    "contradiction": "A form shaped by oppression now carries celebration and experimentation without losing its history.",
+    "visualMotifs": [
+      "hand percussion arranged before a gathering",
+      "sugarcane shadows beside a performance space",
+      "a chorus joining a lone singer"
+    ],
+    "voicePatterns": [
+      "leaves room for a communal refrain",
+      "alternates a personal observation with a collective reply"
+    ],
+    "storyEngines": [
+      "a festival ensemble debates a new electronic arrangement",
+      "a family archive complicates a celebratory performance",
+      "a young singer must credit the elders who kept a repertoire alive"
+    ],
+    "evolutionTriggers": [
+      "shares authorship with the chorus",
+      "preserves context while embracing a new sound",
+      "listens to a dissenting elder without abandoning experimentation"
+    ],
+    "tags": [
+      "Reunion",
+      "Réunion",
+      "Indian-Ocean",
+      "Maloya",
+      "Malagasy-diaspora",
+      "call-and-response",
+      "percussion",
+      "resistance-memory"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/bakhshi-art-01706
+  {
+    "id": "uzbek-karakalpak-bakhshi-epic-art",
+    "name": "Uzbek and Karakalpak Bakhshi Epic Art",
+    "era": "movement",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "Epic storytelling of Uzbek and Karakalpak dostons, performed from memory with instruments and inventive verbal play.",
+    "strengths": [
+      "holds elaborate story arcs in memory",
+      "improvises language while respecting inherited narratives",
+      "welcomes guests through shared performance"
+    ],
+    "shadows": [
+      "a fictional virtuoso may prioritize applause over fidelity to context",
+      "mastery can become gatekeeping of younger performers"
+    ],
+    "contradiction": "An inherited epic survives because each generation changes how it is heard.",
+    "visualMotifs": [
+      "dombra strings beside a folded story cloth",
+      "a courtyard gathering of listeners",
+      "an apprentice marking narrative turns on paper"
+    ],
+    "voicePatterns": [
+      "layers proverb and playful word choice into a scene",
+      "checks whether listeners follow before raising the stakes"
+    ],
+    "storyEngines": [
+      "a singer must rebuild a missing section of a family epic",
+      "two apprentices dispute the moral of a familiar hero",
+      "a new audience asks for a story that the master refuses to change"
+    ],
+    "evolutionTriggers": [
+      "lets an apprentice challenge an interpretation",
+      "distinguishes creative improvisation from fabricated heritage",
+      "uses a famous hero's failure to teach humility"
+    ],
+    "tags": [
+      "Uzbekistan",
+      "Karakalpak",
+      "Uzbek",
+      "Bakhshi",
+      "Baxshi",
+      "Doston",
+      "Dastan",
+      "epic-performance",
+      "dombra",
+      "kobuz"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/jultagi-tightrope-walking-00448
+  {
+    "id": "korea-jultagi-tightrope-dialogue",
+    "name": "Korean Jultagi Tightrope Dialogue",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Korean tightrope performance joining acrobatics, live music, mimicry, and humorous dialogue between a walker and ground-level partner.",
+    "strengths": [
+      "maintains balance while adapting to an audience",
+      "turns tension into laughter without losing precision",
+      "collaborates across very different roles"
+    ],
+    "shadows": [
+      "a fictional performer may take dangerous risks for applause",
+      "jokes can become a shield against admitting fear"
+    ],
+    "contradiction": "The star stands alone above the ground but cannot make the act work without those below.",
+    "visualMotifs": [
+      "taut rope above an outdoor crowd",
+      "a clown looking upward mid-reply",
+      "musicians cueing a difficult step"
+    ],
+    "voicePatterns": [
+      "answers a risky claim with a grounded joke",
+      "turns a physical misstep into a shared question"
+    ],
+    "storyEngines": [
+      "a walker and partner must rebuild trust after a near fall",
+      "a festival demands a harder finale than the troupe can safely perform",
+      "an apprentice discovers the musicians control the pace"
+    ],
+    "evolutionTriggers": [
+      "chooses safety over a spectacular trick",
+      "publicly credits the ground partner",
+      "asks for help before balance becomes impossible"
+    ],
+    "tags": [
+      "Korea",
+      "Republic-of-Korea",
+      "Jultagi",
+      "Jul-tagi",
+      "tightrope",
+      "acrobatics",
+      "comic-dialogue",
+      "ensemble-trust"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/buklog-thanksgiving-ritual-system-of-the-subanen-01495
+  {
+    "id": "subanen-buklog-thanksgiving",
+    "name": "Subanen Buklog Thanksgiving System",
+    "era": "movement",
+    "domain": "spirituality",
+    "sourceType": "tradition",
+    "essence": "A Subanen community thanksgiving system in the southern Philippines linking kinship, ecological respect, ritual leadership, and a resonant communal platform.",
+    "strengths": [
+      "organizes complex cooperation across households",
+      "treats land and community relationships as reciprocal",
+      "builds continuity through careful participation"
+    ],
+    "shadows": [
+      "a fictional organizer may burden others with an ideal of perfect harmony",
+      "public responsibility can overshadow personal consent"
+    ],
+    "contradiction": "A collective celebration can only endure when its custodians adapt without treating sacred knowledge as public property.",
+    "visualMotifs": [
+      "raised wooden platform above the gathering",
+      "forest materials collected with care",
+      "shared food before a communal dance"
+    ],
+    "voicePatterns": [
+      "asks who has given permission before making plans",
+      "speaks of responsibility in terms of relationships, not ownership"
+    ],
+    "storyEngines": [
+      "a host must organize a gathering despite a damaged meeting place",
+      "a family dispute threatens the cooperation needed for a ceremony",
+      "an outsider offers funding with conditions the community must weigh"
+    ],
+    "evolutionTriggers": [
+      "defers decisions to legitimate community custodians",
+      "protects sacred boundaries while explaining public responsibilities",
+      "finds a way for divided households to cooperate voluntarily"
+    ],
+    "tags": [
+      "Philippines",
+      "Mindanao",
+      "Subanen",
+      "Subanon",
+      "Buklog",
+      "thanksgiving-system",
+      "ecological-reciprocity",
+      "community-stewardship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/isukuti-dance-of-isukha-and-idakho-communities-of-western-kenya-00981
+  {
+    "id": "kenya-isukuti-dance",
+    "name": "Isukha and Idakho Isukuti Dance",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Fast, communal Kenyan drumming, singing, and dance marking life transitions and sustaining ties among Isukha and Idakho communities.",
+    "strengths": [
+      "coordinates layered rhythms across a group",
+      "makes space for collective participation",
+      "adapts a performance to occasions of joy or mourning"
+    ],
+    "shadows": [
+      "a fictional leader may demand energy when people need quiet",
+      "competition for attention can weaken ensemble listening"
+    ],
+    "contradiction": "An exhilarating public rhythm must be responsive to very different private emotions.",
+    "visualMotifs": [
+      "three differently sized drums",
+      "a horn sounding above the drum pulse",
+      "two rows of dancers meeting in a courtyard"
+    ],
+    "voicePatterns": [
+      "calls a theme and listens for the rhythmic answer",
+      "uses direct encouragement rather than ornate commands"
+    ],
+    "storyEngines": [
+      "an aging drummer searches for a successor before a major gathering",
+      "a community must improvise when instruments cannot be repaired",
+      "a celebration is interrupted by news that changes the song's meaning"
+    ],
+    "evolutionTriggers": [
+      "slows the rhythm for someone who needs care",
+      "teaches a learner without humiliating mistakes",
+      "prioritizes shared timing over solo virtuosity"
+    ],
+    "tags": [
+      "Kenya",
+      "Isukha",
+      "Idakho",
+      "Luhya",
+      "Isukuti",
+      "three-drums",
+      "community-dance",
+      "intergenerational-transmission"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/fichee-chambalaalla-new-year-festival-of-the-sidama-people-01054
+  {
+    "id": "sidama-fichee-chambalaalla-new-year",
+    "name": "Sidama Fichee-Chambalaalla New Year",
+    "era": "movement",
+    "domain": "leadership",
+    "sourceType": "tradition",
+    "essence": "Sidama Ethiopian New Year observances emphasizing kinship visits, shared food, social reconciliation, ecological duties, and intergenerational teaching.",
+    "strengths": [
+      "organizes hospitality across generations",
+      "turns annual renewal into concrete obligations",
+      "links community ethics to environmental care"
+    ],
+    "shadows": [
+      "a fictional elder may confuse consensus with unquestioning obedience",
+      "ceremonial goodwill can conceal unresolved grievances"
+    ],
+    "contradiction": "A festival of renewal is meaningful only when relationships change after the songs end.",
+    "visualMotifs": [
+      "buurisame shared among neighbors",
+      "children greeting doorways at the new year",
+      "indigenous trees beyond a crowded gathering"
+    ],
+    "voicePatterns": [
+      "begins a disagreement with a greeting and shared memory",
+      "turns a moral principle into a practical promise"
+    ],
+    "storyEngines": [
+      "a returned relative must make peace before the festival",
+      "a village debate over tree cutting tests public commitments",
+      "a younger organizer rethinks who receives the first invitation"
+    ],
+    "evolutionTriggers": [
+      "makes restitution rather than offering only festive words",
+      "welcomes a previously excluded neighbor",
+      "keeps an ecological promise after the celebration"
+    ],
+    "tags": [
+      "Ethiopia",
+      "Sidama",
+      "Fichee",
+      "Chambalaalla",
+      "Fichee-Chambalaalla",
+      "new-year",
+      "hospitality",
+      "ecological-ethics"
+    ]
+  },
+  // Research: https://www.nobelprize.org/prizes/physics/1979/salam/facts/
+  {
+    "id": "abdus-salam-electroweak-physics",
+    "name": "Abdus Salam",
+    "era": "mid-century",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "Pakistani theoretical physicist and 1979 Nobel laureate whose work helped unify the electromagnetic and weak interactions and who supported international scientific cooperation.",
+    "strengths": [
+      "seeks elegant connections between apparently separate phenomena",
+      "builds institutions for scientific exchange",
+      "persists through abstract problems with long horizons"
+    ],
+    "shadows": [
+      "a fictional theorist may overvalue elegance before evidence",
+      "ambition for unification may obscure a colleague's distinct contribution"
+    ],
+    "contradiction": "A search for universal laws unfolds amid unequal access to the institutions that study them.",
+    "visualMotifs": [
+      "intersecting particle-interaction diagrams",
+      "chalk equations spanning two blackboards",
+      "an international seminar table"
+    ],
+    "voicePatterns": [
+      "asks whether two explanations can be tested under one model",
+      "credits collaborators when describing a breakthrough"
+    ],
+    "storyEngines": [
+      "a theory predicts an effect that the laboratory cannot yet detect",
+      "a young scientist is denied access to a crucial research network",
+      "two rivals must agree on an experiment that could disprove both"
+    ],
+    "evolutionTriggers": [
+      "revises a beautiful model when evidence disagrees",
+      "opens a lab's resources to an overlooked student",
+      "publicly recognizes a collaborator's independent insight"
+    ],
+    "tags": [
+      "Pakistan",
+      "Abdus-Salam",
+      "Mohammad-Abdus-Salam",
+      "electroweak",
+      "theoretical-physics",
+      "Nobel-1979",
+      "science-cooperation",
+      "unification"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
