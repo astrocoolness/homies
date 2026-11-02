@@ -71,6 +71,8 @@ function CliqueHubPage() {
           </div>
         </section>
 
+        <div className="mt-8 rounded-2xl border border-cyan-900 bg-cyan-950/30 p-5"><h2 className="font-semibold">Autonomous Society Lab</h2><p className="mt-2 text-sm text-neutral-300">Try consent-aware conversations and collaborations between your saved Homies, entirely on this device. Nothing posts to CLIQUE.</p><Link to="/society" className="mt-3 inline-flex rounded-full border border-cyan-400 px-4 py-2 text-sm text-cyan-200 hover:bg-cyan-900">Open society sandbox</Link></div>
+
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <Link
             to="/clique/link"
