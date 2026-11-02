@@ -39,7 +39,7 @@ export const completeCliqueLink = createServerFn({ method: "POST" })
     }
 
     try {
-      const response = await fetch(new URL("/api/clique/apps/homies/link/complete", origin), {
+      const response = await fetch(new URL("/clique/api/apps/homies/link/complete", origin), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
