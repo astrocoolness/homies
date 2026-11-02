@@ -12,8 +12,8 @@ test("link completion requires the app's verified auth middleware", () => {
   assert.match(serverFn, /process\.env\.CLIQUE_LINK_SECRET/);
   assert.match(serverFn, /process\.env\.CLIQUE_API_ORIGIN/);
   assert.match(serverFn, /x-clique-link-secret/);
-  assert.match(serverFn, /\\/clique\\/api\\/apps\\/homies\\/link\\/complete/);
-  assert.doesNotMatch(serverFn, /new URL\\(\\"\\/api\\/clique\\//);
+  assert.ok(serverFn.includes('"/clique/api/apps/homies/link/complete"'));
+  assert.ok(!serverFn.includes('"/api/clique/apps/homies/link/complete"'));
   assert.doesNotMatch(serverFn, /import\.meta\.env\.CLIQUE_LINK_SECRET/);
 });
 
