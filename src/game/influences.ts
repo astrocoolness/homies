@@ -4787,7 +4787,7 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "unification"
     ]
   },
-  // Research: undefined
+  // Research: https://ich.unesco.org/en/RL/ak-kalpak-craftsmanship-traditional-knowledge-and-skills-in-making-and-wearing-kyrgyz-men-s-headwear-01496
   {
     id: "ak-kalpak-craft", name: "Ak-kalpak Felt Headwear Craft", era: "movement", domain: "design", sourceType: "tradition",
     essence: "Kyrgyz felt hat-making unites skilled pattern work, apprenticeship, and symbols of lineage.",
@@ -4796,7 +4796,7 @@ export const INFLUENCE_ATLAS: Influence[] = [
     visualMotifs: ["white felt peaks","dark stitched borders","four-part silhouette"], voicePatterns: ["explains patterns as stories","offers careful practical instruction"],
     storyEngines: ["a disputed pattern reveals a family secret","an apprentice invents a controversial variation"], evolutionTriggers: ["invites a newcomer to learn","accepts a motif with an unexpected meaning"], tags: ["Kyrgyzstan","felt","headwear","craft","lineage"]
   },
-  // Research: undefined
+  // Research: https://ich.unesco.org/en/USL/ala-kiyiz-and-shyrdak-art-of-kyrgyz-traditional-felt-carpets-00693
   {
     id: "ala-kiyiz-shyrdak", name: "Ala-kiyiz and Shyrdak Felt Carpets", era: "movement", domain: "visual-art", sourceType: "tradition",
     essence: "Kyrgyz felt-carpet making turns collective labor and patterned wool into portable memory.",
@@ -4805,7 +4805,7 @@ export const INFLUENCE_ATLAS: Influence[] = [
     visualMotifs: ["contrasting felt spirals","layered wool","floor-wide geometric fields"], voicePatterns: ["thinks in paired shapes","speaks through process and texture"],
     storyEngines: ["a lost design must be reconstructed","a community divides over a modern commission"], evolutionTriggers: ["shares tools with an outsider","adapts a pattern without erasing its origin"], tags: ["Kyrgyzstan","felt","carpet","craft","heritage"]
   },
-  // Research: undefined
+  // Research: https://ich.unesco.org/en/RL/askiya-the-art-of-wit-00971
   {
     id: "uzbek-askiya", name: "Uzbek Askiya Verbal Wit", era: "movement", domain: "comedy", sourceType: "tradition",
     essence: "Fast improvised verbal exchanges use humor to reveal daily contradictions and social tensions.",
@@ -4814,7 +4814,7 @@ export const INFLUENCE_ATLAS: Influence[] = [
     visualMotifs: ["market gatherings","paired speakers","raised eyebrows"], voicePatterns: ["playful rebuttals","unexpected double meanings"],
     storyEngines: ["a public joke reveals a hidden abuse","rivals must collaborate on a shared performance"], evolutionTriggers: ["chooses kindness over the sharpest joke","lets a novice deliver the final line"], tags: ["Uzbekistan","wit","dialogue","improvisation","satire"]
   },
-  // Research: undefined
+  // Research: https://ich.unesco.org/en/RL/aitysh-aitys-art-of-improvisation-00997
   {
     id: "aitysh-aitys", name: "Aitysh/Aitys Improvised Poetry Contest", era: "movement", domain: "music", sourceType: "tradition",
     essence: "Kazakh and Kyrgyz improvised verse duels combine instrumental rhythm, topical debate, and philosophical wit.",
@@ -4823,7 +4823,7 @@ export const INFLUENCE_ATLAS: Influence[] = [
     visualMotifs: ["dombra strings","komuz wood","facing performers"], voicePatterns: ["rhythmic retorts","questions shaped as sung verses"],
     storyEngines: ["an audience assigns a dangerous topic","a public contest becomes an unlikely alliance"], evolutionTriggers: ["praises an opponent sincerely","uses a verse to repair harm"], tags: ["Kazakhstan","Kyrgyzstan","poetry","music","debate"]
   },
-  // Research: undefined
+  // Research: https://ich.unesco.org/en/RL/elechek-kyrgyz-female-headwear-traditional-knowledge-and-rituals-01985
   {
     id: "elechek-headwear", name: "Kyrgyz Elechek Wrapping Knowledge", era: "movement", domain: "design", sourceType: "tradition",
     essence: "Elechek wrapping and adornment connect women's intergenerational teaching, life transitions, and community belonging.",
