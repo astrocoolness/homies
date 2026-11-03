@@ -4787,6 +4787,51 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "unification"
     ]
   },
+  // Research: undefined
+  {
+    id: "ak-kalpak-craft", name: "Ak-kalpak Felt Headwear Craft", era: "movement", domain: "design", sourceType: "tradition",
+    essence: "Kyrgyz felt hat-making unites skilled pattern work, apprenticeship, and symbols of lineage.",
+    strengths: ["precise handwork","symbolic design","patient teaching"], shadows: ["protective traditionalism","mistakes ornament for belonging"],
+    contradiction: "A maker preserves inherited forms while wanting each wearer to choose a new meaning.",
+    visualMotifs: ["white felt peaks","dark stitched borders","four-part silhouette"], voicePatterns: ["explains patterns as stories","offers careful practical instruction"],
+    storyEngines: ["a disputed pattern reveals a family secret","an apprentice invents a controversial variation"], evolutionTriggers: ["invites a newcomer to learn","accepts a motif with an unexpected meaning"], tags: ["Kyrgyzstan","felt","headwear","craft","lineage"]
+  },
+  // Research: undefined
+  {
+    id: "ala-kiyiz-shyrdak", name: "Ala-kiyiz and Shyrdak Felt Carpets", era: "movement", domain: "visual-art", sourceType: "tradition",
+    essence: "Kyrgyz felt-carpet making turns collective labor and patterned wool into portable memory.",
+    strengths: ["collaborative making","material ingenuity","pattern fluency"], shadows: ["fears losing expertise","can reject useful change"],
+    contradiction: "A guardian of fragile knowledge must teach beyond familiar circles to keep it alive.",
+    visualMotifs: ["contrasting felt spirals","layered wool","floor-wide geometric fields"], voicePatterns: ["thinks in paired shapes","speaks through process and texture"],
+    storyEngines: ["a lost design must be reconstructed","a community divides over a modern commission"], evolutionTriggers: ["shares tools with an outsider","adapts a pattern without erasing its origin"], tags: ["Kyrgyzstan","felt","carpet","craft","heritage"]
+  },
+  // Research: undefined
+  {
+    id: "uzbek-askiya", name: "Uzbek Askiya Verbal Wit", era: "movement", domain: "comedy", sourceType: "tradition",
+    essence: "Fast improvised verbal exchanges use humor to reveal daily contradictions and social tensions.",
+    strengths: ["verbal agility","social observation","quick reasoning"], shadows: ["can embarrass the vulnerable","turns every concern into a contest"],
+    contradiction: "A comic who exposes injustice must learn when listening matters more than winning.",
+    visualMotifs: ["market gatherings","paired speakers","raised eyebrows"], voicePatterns: ["playful rebuttals","unexpected double meanings"],
+    storyEngines: ["a public joke reveals a hidden abuse","rivals must collaborate on a shared performance"], evolutionTriggers: ["chooses kindness over the sharpest joke","lets a novice deliver the final line"], tags: ["Uzbekistan","wit","dialogue","improvisation","satire"]
+  },
+  // Research: undefined
+  {
+    id: "aitysh-aitys", name: "Aitysh/Aitys Improvised Poetry Contest", era: "movement", domain: "music", sourceType: "tradition",
+    essence: "Kazakh and Kyrgyz improvised verse duels combine instrumental rhythm, topical debate, and philosophical wit.",
+    strengths: ["musical listening","instant composition","civic courage"], shadows: ["pride in victory","confuses applause with truth"],
+    contradiction: "A rival poet can hear another person's pain clearly yet struggles to concede a point.",
+    visualMotifs: ["dombra strings","komuz wood","facing performers"], voicePatterns: ["rhythmic retorts","questions shaped as sung verses"],
+    storyEngines: ["an audience assigns a dangerous topic","a public contest becomes an unlikely alliance"], evolutionTriggers: ["praises an opponent sincerely","uses a verse to repair harm"], tags: ["Kazakhstan","Kyrgyzstan","poetry","music","debate"]
+  },
+  // Research: undefined
+  {
+    id: "elechek-headwear", name: "Kyrgyz Elechek Wrapping Knowledge", era: "movement", domain: "design", sourceType: "tradition",
+    essence: "Elechek wrapping and adornment connect women's intergenerational teaching, life transitions, and community belonging.",
+    strengths: ["careful mentorship","ceremonial artistry","social memory"], shadows: ["may police belonging","fears unfamiliar rites"],
+    contradiction: "A skilled elder honors continuity while a younger wearer asks to define her own transition.",
+    visualMotifs: ["long white cloth folds","ribbons","embroidered details"], voicePatterns: ["offers blessings","teaches by demonstrating each fold"],
+    storyEngines: ["a missing ceremonial cloth tests solidarity","a new wrapping workshop bridges generations"], evolutionTriggers: ["welcomes a different life path","shares knowledge outside the family"], tags: ["Kyrgyzstan","women","headwear","ceremony","mentorship"]
+  }
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
