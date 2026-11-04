@@ -4832,6 +4832,56 @@ export const INFLUENCE_ATLAS: Influence[] = [
     visualMotifs: ["long white cloth folds","ribbons","embroidered details"], voicePatterns: ["offers blessings","teaches by demonstrating each fold"],
     storyEngines: ["a missing ceremonial cloth tests solidarity","a new wrapping workshop bridges generations"], evolutionTriggers: ["welcomes a different life path","shares knowledge outside the family"], tags: ["Kyrgyzstan","women","headwear","ceremony","mentorship"]
   }
+  // Research: https://ich.unesco.org/en/RL/language-dance-and-music-of-the-garifuna-00001
+  {
+    id: "garifuna-language-dance-music", name: "Garifuna Language, Dance and Music", era: "movement", domain: "music", sourceType: "tradition",
+    essence: "Across Central America's Caribbean coast, Garifuna song, dance, and oral narrative sustain shared memory through displacement and change.",
+    strengths: ["cross-generational storytelling","rhythmic cooperation","linguistic resilience"], shadows: ["may overburden elders as custodians","can mistake preservation for immobility"],
+    contradiction: "A guardian of communal memory must let a younger generation remake the gathering without losing its roots.",
+    visualMotifs: ["coastal canoe silhouettes","hand drums","cassava gardens"], voicePatterns: ["call-and-response","stories that connect everyday work to history"],
+    storyEngines: ["a lost family song reconnects distant communities","a festival organizer must reconcile tradition with migration"], evolutionTriggers: ["invites a new language learner to lead","accepts a changed performance as living heritage"],
+    tags: ["Garifuna","Belize","Honduras","Guatemala","Nicaragua","language","dance","diaspora"]
+  },
+  // Research: https://ich.unesco.org/en/RL/xoan-singing-of-phu-tho-province-viet-nam-01260
+  {
+    id: "vietnamese-xoan-singing", name: "Xoan Singing of Phú Thọ", era: "movement", domain: "music", sourceType: "tradition",
+    essence: "Vietnamese guild-based ceremonial singing weaves percussion, dance, ancestor remembrance, and community teaching into shared performance.",
+    strengths: ["ensemble discipline","intergenerational teaching","ritual coordination"], shadows: ["can become rigid about repertoire","may confuse seniority with listening"],
+    contradiction: "A guild leader safeguards old songs while discovering that their survival depends on new voices.",
+    visualMotifs: ["wooden clappers","communal-house courtyards","paired dancers"], voicePatterns: ["measured alternation between singers","gentle instruction through repeated phrases"],
+    storyEngines: ["a young singer restores a neglected guild","a ceremonial performance becomes a bridge between estranged neighbors"], evolutionTriggers: ["mentors someone outside the expected circle","learns a new arrangement from an apprentice"],
+    tags: ["Vietnam","Phu Tho","Xoan","guild","ancestor-memory","singing"]
+  },
+  // Research: https://ich.unesco.org/en/RL/buddhist-chanting-of-ladakh-recitation-of-sacred-buddhist-texts-in-the-trans-himalayan-ladakh-region-jammu-and-kashmir-india-00839
+  {
+    id: "ladakh-buddhist-chanting", name: "Ladakh Buddhist Chanting Traditions", era: "movement", domain: "spirituality", sourceType: "tradition",
+    essence: "Collective recitation, ritual gesture, and disciplined apprenticeship connect Himalayan monastic learning with communal reflection.",
+    strengths: ["patient memorization","attentive group timing","contemplative focus"], shadows: ["can hide uncertainty behind ritual precision","may resist unfamiliar interpretations"],
+    contradiction: "A meticulous chanter seeks inner stillness yet must remain responsive to a changing community.",
+    visualMotifs: ["mountain monastery courtyards","hand bells","cymbals","ritual hand gestures"], voicePatterns: ["deliberate cadence","brief pauses before counsel"],
+    storyEngines: ["an apprentice finds an error in a cherished recitation","a festival requires reconciliation between rival teachers"], evolutionTriggers: ["welcomes a difficult question","turns solitary discipline into practical care"],
+    tags: ["Ladakh","India","Himalaya","chant","apprenticeship","contemplation"]
+  },
+  // Research: https://ich.unesco.org/en/state/india-IN
+  {
+    id: "thathera-metalcraft-punjab", name: "Thathera Brass and Copper Utensil Craft", era: "movement", domain: "design", sourceType: "tradition",
+    essence: "Punjab's Thathera metalworkers shape functional brass and copper utensils through practiced handwork and inherited workshop knowledge.",
+    strengths: ["material sensitivity","patient craftsmanship","functional design"], shadows: ["can prize inherited methods over usability","may measure worth by flawless objects"],
+    contradiction: "A maker of durable everyday vessels must adapt when the community's daily needs change.",
+    visualMotifs: ["hammered copper sheen","nested bowls","workshop anvils"], voicePatterns: ["explains ideas through weight and resonance","practical workshop comparisons"],
+    storyEngines: ["a damaged heirloom vessel carries a hidden message","a craft workshop survives through an unexpected partnership"], evolutionTriggers: ["teaches an unconventional apprentice","redesigns an heirloom for a new use"],
+    tags: ["Punjab","India","Thathera","metalwork","brass","copper","craft"]
+  },
+  // Research: https://ich.unesco.org/fr/RL/le-mugham-azerbaidjanais-00039
+  {
+    id: "azerbaijani-mugham", name: "Azerbaijani Mugham Improvisation", era: "movement", domain: "music", sourceType: "tradition",
+    essence: "Azerbaijani modal performance combines learned structures with improvisatory dialogue among singer and instrumentalists.",
+    strengths: ["responsive improvisation","nuanced listening","technical patience"], shadows: ["can become possessive of virtuosity","may mistake complexity for emotional depth"],
+    contradiction: "A virtuoso masters demanding forms only to discover that the best moment cannot be planned.",
+    visualMotifs: ["tar lute neck","kamancha bow","intimate performance circle"], voicePatterns: ["returns to a theme with subtle changes","lets silence answer a challenge"],
+    storyEngines: ["a soloist must follow an unfamiliar ensemble","a forgotten melody becomes a path toward reconciliation"], evolutionTriggers: ["leaves room for a novice's phrase","chooses emotional honesty over display"],
+    tags: ["Azerbaijan","mugham","modal-music","improvisation","ensemble","oral-transmission"]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
