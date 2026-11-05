@@ -4882,6 +4882,226 @@ export const INFLUENCE_ATLAS: Influence[] = [
     storyEngines: ["a soloist must follow an unfamiliar ensemble","a forgotten melody becomes a path toward reconciliation"], evolutionTriggers: ["leaves room for a novice's phrase","chooses emotional honesty over display"],
     tags: ["Azerbaijan","mugham","modal-music","improvisation","ensemble","oral-transmission"]
   },
+  // Research: https://ich.unesco.org/en/USL/suri-jagek-observing-the-sun-traditional-meteorological-and-astronomical-practice-based-on-the-observation-of-the-sun-moon-and-stars-in-reference-to-the-local-topography-01381
+  {
+    "id": "kalasha-suri-jagek",
+    "name": "Kalasha Suri Jagek Sky Observation",
+    "era": "movement",
+    "domain": "science",
+    "sourceType": "tradition",
+    "essence": "Observation of sun, moon, stars and mountain shadows guides seasonal decisions and preserves locally grounded knowledge.",
+    "strengths": [
+      "patient field observation",
+      "seasonal foresight",
+      "teaching through stories"
+    ],
+    "shadows": [
+      "may distrust unfamiliar instruments",
+      "can hoard hard-won knowledge"
+    ],
+    "contradiction": "A careful observer must choose between a trusted ancestral signal and a new measurement.",
+    "visualMotifs": [
+      "mountain shadow lines",
+      "horizon stones",
+      "dawn notebooks"
+    ],
+    "voicePatterns": [
+      "compares evidence to landscape",
+      "teaches with seasonal proverbs"
+    ],
+    "storyEngines": [
+      "a festival date depends on a disputed shadow",
+      "an apprentice discovers a changing horizon"
+    ],
+    "evolutionTriggers": [
+      "tests a new tool without abandoning fieldwork",
+      "shares observations with a skeptical younger learner"
+    ],
+    "tags": [
+      "Kalasha",
+      "Pakistan",
+      "Hindu Kush",
+      "astronomy",
+      "meteorology",
+      "seasonal-knowledge"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/kok-boru-traditional-horse-game-01294
+  {
+    "id": "kyrgyz-kok-boru",
+    "name": "Kyrgyz Kok Boru Equestrian Team Game",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Competitive horseback teamwork combines practiced coordination, responsibility, and community rules.",
+    "strengths": [
+      "team coordination",
+      "courage under pressure",
+      "respect for horses"
+    ],
+    "shadows": [
+      "can confuse winning with honor",
+      "may overlook quieter teammates"
+    ],
+    "contradiction": "A daring rider learns that fair play requires restraint as well as speed.",
+    "visualMotifs": [
+      "hoofprints in dust",
+      "team sashes",
+      "goal circle"
+    ],
+    "voicePatterns": [
+      "calls concise tactical cues",
+      "praises the horse before the victory"
+    ],
+    "storyEngines": [
+      "a disputed score threatens a village alliance",
+      "a veteran referee mentors a reckless rider"
+    ],
+    "evolutionTriggers": [
+      "accepts a fair loss",
+      "protects a rival rider in a tense match"
+    ],
+    "tags": [
+      "Kyrgyzstan",
+      "kok-boru",
+      "equestrian",
+      "sport",
+      "teamwork",
+      "fair-play"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/raiho-shin-ritual-visits-of-deities-in-masks-and-costumes-01271
+  {
+    "id": "japanese-raiho-shin",
+    "name": "Japanese Raiho-shin Visiting Deity Rituals",
+    "era": "movement",
+    "domain": "myth-folklore",
+    "sourceType": "tradition",
+    "essence": "Seasonal masked visits turn a community's anxieties, hopes, and shared responsibilities into dramatic encounters.",
+    "strengths": [
+      "communal preparation",
+      "symbolic theatre",
+      "intergenerational continuity"
+    ],
+    "shadows": [
+      "can intimidate outsiders",
+      "may mistake conformity for care"
+    ],
+    "contradiction": "A fearsome visitor performs a role meant to bring blessing and belonging.",
+    "visualMotifs": [
+      "straw cloaks",
+      "carved masks",
+      "winter doorways"
+    ],
+    "voicePatterns": [
+      "uses ritual questions",
+      "shifts from booming warning to gentle reassurance"
+    ],
+    "storyEngines": [
+      "a newcomer must decide whether to join the preparations",
+      "a child recognizes a masked visitor's kindness"
+    ],
+    "evolutionTriggers": [
+      "welcomes a different family tradition",
+      "learns to teach without frightening"
+    ],
+    "tags": [
+      "Japan",
+      "Raiho-shin",
+      "masked-ritual",
+      "seasonal",
+      "folklore",
+      "community"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/pinisi-art-of-boatbuilding-in-south-sulawesi-01197
+  {
+    "id": "south-sulawesi-pinisi",
+    "name": "South Sulawesi Pinisi Boatbuilding",
+    "era": "movement",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Shipwrights coordinate maritime craft, practical geometry, and intergenerational learning through shared labor.",
+    "strengths": [
+      "spatial reasoning",
+      "craft mentorship",
+      "collaborative planning"
+    ],
+    "shadows": [
+      "can overvalue proven designs",
+      "may resist an apprentice's improvement"
+    ],
+    "contradiction": "A master of reliable vessels must learn to trust an untested builder.",
+    "visualMotifs": [
+      "curved timber ribs",
+      "rigging lines",
+      "shoreline workshops"
+    ],
+    "voicePatterns": [
+      "describes problems through balance and grain",
+      "asks apprentices to demonstrate rather than boast"
+    ],
+    "storyEngines": [
+      "a launch deadline exposes a hidden defect",
+      "an outsider apprentice earns a place on the crew"
+    ],
+    "evolutionTriggers": [
+      "adopts a safer joint after testing",
+      "shares credit with the entire workshop"
+    ],
+    "tags": [
+      "Indonesia",
+      "Sulawesi",
+      "pinisi",
+      "shipbuilding",
+      "maritime",
+      "craft"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/decisions/16.COM/8.B.41
+  {
+    "id": "tajik-falak-music",
+    "name": "Tajik Falak Mountain Song",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Mountain singing channels longing, separation, and hope through expressive solo and ensemble performance.",
+    "strengths": [
+      "emotional courage",
+      "melodic storytelling",
+      "responsive accompaniment"
+    ],
+    "shadows": [
+      "may dwell in nostalgia",
+      "can turn vulnerability into a contest"
+    ],
+    "contradiction": "A singer of separation finds connection by letting another voice answer.",
+    "visualMotifs": [
+      "high valley paths",
+      "string instruments",
+      "distant ridgelines"
+    ],
+    "voicePatterns": [
+      "uses expansive imagery",
+      "lets a held phrase resolve into plain speech"
+    ],
+    "storyEngines": [
+      "two singers dispute the meaning of a farewell song",
+      "an apprentice carries a melody across a mountain pass"
+    ],
+    "evolutionTriggers": [
+      "welcomes an unfamiliar harmony",
+      "sings of reunion rather than only loss"
+    ],
+    "tags": [
+      "Tajikistan",
+      "falak",
+      "mountain-music",
+      "song",
+      "oral-transmission",
+      "longing"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
