@@ -5102,6 +5102,229 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "longing"
     ]
   },
+  // Research: https://ich.unesco.org/en/RL/mwinoghe-joyous-dance-01293
+  {
+    "id": "malawi-mwinoghe",
+    "name": "Mwinoghe Joyous Dance of Northern Malawi",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Sukwa, Ndali and Bandya performers use intricate footwork, drums, whistle and leader cues to turn public celebration into shared belonging.",
+    "strengths": [
+      "rhythmic coordination",
+      "joyful social inclusion",
+      "learning through participation"
+    ],
+    "shadows": [
+      "may hide disagreements behind festive unity",
+      "can mistake synchronized movement for shared consent"
+    ],
+    "contradiction": "A celebration leader keeps everyone in step while learning that belonging also makes room for different rhythms.",
+    "visualMotifs": [
+      "facing dance lines",
+      "three drums",
+      "dust traced by quick feet"
+    ],
+    "voicePatterns": [
+      "short rhythmic cues",
+      "invites rather than commands when tensions rise"
+    ],
+    "storyEngines": [
+      "a festival troupe must welcome an inexperienced newcomer",
+      "two communities reconcile while preparing a shared performance"
+    ],
+    "evolutionTriggers": [
+      "changes choreography to include an injured dancer",
+      "lets an apprentice lead the final sequence"
+    ],
+    "tags": [
+      "Malawi",
+      "Sukwa",
+      "Ndali",
+      "Bandya",
+      "Mwinoghe",
+      "dance",
+      "community"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/tsiattista-poetic-duelling-00536
+  {
+    "id": "cyprus-tsiattista",
+    "name": "Cypriot Tsiattista Poetic Duelling",
+    "era": "movement",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "Improvised rhyming poetic contests reward quick wit, attentive listening and communal participation at celebrations.",
+    "strengths": [
+      "improvised verbal agility",
+      "deep vocabulary",
+      "responsive listening"
+    ],
+    "shadows": [
+      "can mistake humiliation for victory",
+      "may cling to rigid conventions"
+    ],
+    "contradiction": "A champion of spontaneous verse learns that the bravest reply sometimes protects an opponent's dignity.",
+    "visualMotifs": [
+      "violin and lute beside a crowd",
+      "wedding courtyard",
+      "verses scribbled on scraps"
+    ],
+    "voicePatterns": [
+      "rhymed challenge and answer",
+      "unexpected compassionate punchline"
+    ],
+    "storyEngines": [
+      "a young challenger overturns a biased contest",
+      "two rivals improvise a poem to settle a family quarrel"
+    ],
+    "evolutionTriggers": [
+      "concedes a clever point gracefully",
+      "creates room for a previously excluded performer"
+    ],
+    "tags": [
+      "Cyprus",
+      "Tsiattista",
+      "oral-poetry",
+      "improvisation",
+      "verbal-duel",
+      "celebration"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/sanke-mon-collective-fishing-rite-of-the-sanke-00289
+  {
+    "id": "mali-sanke-mon",
+    "name": "Sanké Mon Collective Fishing Rite",
+    "era": "movement",
+    "domain": "myth-folklore",
+    "sourceType": "tradition",
+    "essence": "The San community in Mali joins collective fishing, water stewardship and masked performance in a rite tied to local memory.",
+    "strengths": [
+      "coordinated collective action",
+      "ecological attentiveness",
+      "shared ritual responsibility"
+    ],
+    "shadows": [
+      "may romanticize a threatened ecosystem",
+      "can overlook safety amid communal pressure"
+    ],
+    "contradiction": "A guardian of inherited festivities must change the celebration to safeguard the water that sustains it.",
+    "visualMotifs": [
+      "fishing nets over a pond",
+      "cowrie-decorated masks",
+      "drumlit public square"
+    ],
+    "voicePatterns": [
+      "measured communal appeals",
+      "describes disputes through water and seasons"
+    ],
+    "storyEngines": [
+      "drought threatens the annual gathering",
+      "a young organizer negotiates safer fishing practices"
+    ],
+    "evolutionTriggers": [
+      "puts lake restoration ahead of spectacle",
+      "invites neighboring villages into joint stewardship"
+    ],
+    "tags": [
+      "Mali",
+      "San",
+      "Sanke-mon",
+      "collective-fishing",
+      "water",
+      "ritual",
+      "stewardship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/mongolian-traditional-art-of-khoomei-00396
+  {
+    "id": "mongolian-khoomei",
+    "name": "Mongolian Khöömei Overtone Singing",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Altai-region vocal practice layers a sustained drone with harmonics and attentive listening to natural soundscapes.",
+    "strengths": [
+      "patient breath and resonance control",
+      "environmental listening",
+      "mentor-apprentice discipline"
+    ],
+    "shadows": [
+      "may retreat into technical virtuosity",
+      "can resist unfamiliar interpretations"
+    ],
+    "contradiction": "A singer seeking two simultaneous tones must learn to hear the quieter voices of companions.",
+    "visualMotifs": [
+      "Altai mountain horizon",
+      "felt dwelling interior",
+      "wind across grassland"
+    ],
+    "voicePatterns": [
+      "spacious pauses",
+      "describes emotion as overlapping resonances"
+    ],
+    "storyEngines": [
+      "an apprentice hears a new overtone during a storm",
+      "a performer must teach without treating a pupil as an echo"
+    ],
+    "evolutionTriggers": [
+      "listens before demonstrating mastery",
+      "welcomes a student's unexpected phrasing"
+    ],
+    "tags": [
+      "Mongolia",
+      "Altai",
+      "Khoomei",
+      "overtone-singing",
+      "harmonics",
+      "oral-transmission"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/lefkara-laces-or-lefkaritika-00255
+  {
+    "id": "cyprus-lefkara-lace",
+    "name": "Lefkara Lace Craft (Lefkaritika)",
+    "era": "movement",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Cypriot needlework traditions use intricate geometric embroidery and patient hand skill to pass craft knowledge between generations.",
+    "strengths": [
+      "pattern reasoning",
+      "precise handwork",
+      "intergenerational mentorship"
+    ],
+    "shadows": [
+      "perfectionism can exhaust apprentices",
+      "may guard craft boundaries too tightly"
+    ],
+    "contradiction": "A keeper of exacting patterns discovers that living tradition requires new hands and new uses.",
+    "visualMotifs": [
+      "white linen on a wooden table",
+      "counted geometric stitches",
+      "sunlit village doorway"
+    ],
+    "voicePatterns": [
+      "teaches through pattern sequences",
+      "compares choices to threads and knots"
+    ],
+    "storyEngines": [
+      "a damaged lace heirloom reveals a family history",
+      "an apprentice designs a practical object from an old pattern"
+    ],
+    "evolutionTriggers": [
+      "shares a guarded technique freely",
+      "accepts a respectful variation on a classic design"
+    ],
+    "tags": [
+      "Cyprus",
+      "Lefkara",
+      "Lefkaritika",
+      "lace",
+      "embroidery",
+      "geometry",
+      "craft"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
