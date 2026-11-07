@@ -5325,6 +5325,366 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "craft"
     ]
   },
+  // Research: https://ich.unesco.org/en/RL/traditional-art-of-shital-pati-weaving-of-sylhet-01112
+  {
+    "id": "sylhet-shital-pati",
+    "name": "Shital Pati Murta-Cane Weaving of Sylhet",
+    "era": "movement",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Bangladeshi artisans transform murta cane into cool, intricately woven mats, linking household utility with family knowledge and livelihoods.",
+    "strengths": [
+      "patient material preparation",
+      "geometric pattern fluency",
+      "cooperative apprenticeship"
+    ],
+    "shadows": [
+      "may treat experimentation as disloyalty",
+      "can overwork to meet a patron's demands"
+    ],
+    "contradiction": "A weaver committed to inherited patterns must invent a way for the craft to sustain the next generation.",
+    "visualMotifs": [
+      "pale cane strips",
+      "interlocking mat geometry",
+      "riverplain workshop shade"
+    ],
+    "voicePatterns": [
+      "explains choices through weave tension and spacing",
+      "offers patient corrections rather than grand speeches"
+    ],
+    "storyEngines": [
+      "a flood damages the family's stored cane before a festival",
+      "a cooperative debates fair payment for apprentices"
+    ],
+    "evolutionTriggers": [
+      "credits an apprentice's new pattern",
+      "organizes a fairer shared workshop"
+    ],
+    "tags": [
+      "Bangladesh",
+      "Sylhet",
+      "Shital-Pati",
+      "murta",
+      "cane-weaving",
+      "craft",
+      "cooperative"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/mangal-shobhajatra-on-pahela-baishakh-01091
+  {
+    "id": "bangladesh-mangal-shobhajatra",
+    "name": "Mangal Shobhajatra New Year Procession",
+    "era": "contemporary",
+    "domain": "visual-art",
+    "sourceType": "tradition",
+    "essence": "Dhaka's collaborative New Year procession turns handmade masks and floats into public images of courage, peace, and collective hope.",
+    "strengths": [
+      "collective visual storytelling",
+      "public-spirited courage",
+      "resourceful festival design"
+    ],
+    "shadows": [
+      "can mistake a striking symbol for lasting change",
+      "may silence quieter collaborators in the rush to finish"
+    ],
+    "contradiction": "A maker of giant public symbols discovers that hope also depends on small, unglamorous acts.",
+    "visualMotifs": [
+      "oversized animal masks",
+      "painted procession floats",
+      "dawn workshop floors"
+    ],
+    "voicePatterns": [
+      "frames arguments in accessible symbols",
+      "rallies teams with brief inclusive invitations"
+    ],
+    "storyEngines": [
+      "a procession float must be rebuilt after a storm",
+      "rival student teams disagree over what courage should look like"
+    ],
+    "evolutionTriggers": [
+      "lets an overlooked helper design the central image",
+      "follows a celebratory promise with year-round action"
+    ],
+    "tags": [
+      "Bangladesh",
+      "Dhaka",
+      "Mangal-Shobhajatra",
+      "Pahela-Baishakh",
+      "procession",
+      "public-art",
+      "solidarity"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/namsadang-nori-00184
+  {
+    "id": "korean-namsadang-nori",
+    "name": "Korean Namsadang Nori Traveling Theatre",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Itinerant ensemble theatre combines percussion, masked satire, tightrope dialogue, puppetry, and acrobatics to entertain while questioning hierarchy.",
+    "strengths": [
+      "ensemble improvisation",
+      "satirical social observation",
+      "physical and verbal timing"
+    ],
+    "shadows": [
+      "a sharp joke can wound allies",
+      "may hide fear behind constant spectacle"
+    ],
+    "contradiction": "A performer who mocks authority must learn to wield influence responsibly when the audience starts listening.",
+    "visualMotifs": [
+      "open-air rope stage",
+      "gongs and drums",
+      "puppet screens and masks"
+    ],
+    "voicePatterns": [
+      "rapid comic exchanges",
+      "switches from teasing banter to pointed social questions"
+    ],
+    "storyEngines": [
+      "a troupe is invited to perform for the official it satirizes",
+      "a puppeteer smuggles a village grievance into a comic scene"
+    ],
+    "evolutionTriggers": [
+      "turns a cruel joke into a shared reckoning",
+      "gives the newest troupe member the closing scene"
+    ],
+    "tags": [
+      "Korea",
+      "Namsadang-Nori",
+      "itinerant-theatre",
+      "puppetry",
+      "tightrope",
+      "satire",
+      "ensemble"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/projects/action-plan-for-the-safeguarding-of-la-tumba-francesa-00023
+  {
+    "id": "cuban-tumba-francesa",
+    "name": "Cuban La Tumba Francesa Dance and Drumming",
+    "era": "19th-century",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Afro-Haitian heritage in eastern Cuba lives through ceremonial dance, song, and drumming shaped by historical encounters between West African and French-derived forms.",
+    "strengths": [
+      "rhythmic dialogue",
+      "intergenerational memory",
+      "ceremonial ensemble discipline"
+    ],
+    "shadows": [
+      "can turn guardianship into gatekeeping",
+      "may value flawless presentation over newcomers' learning"
+    ],
+    "contradiction": "A keeper of old dances must make room for new participants without erasing the history the dances carry.",
+    "visualMotifs": [
+      "drum circles",
+      "formal dance formations",
+      "embroidered ceremonial dress"
+    ],
+    "voicePatterns": [
+      "answers with call-and-response rhythms",
+      "links present choices to remembered journeys"
+    ],
+    "storyEngines": [
+      "a youth troupe discovers a forgotten elder's dance sequence",
+      "two performers disagree about changing a festival program"
+    ],
+    "evolutionTriggers": [
+      "records an elder's account with permission",
+      "shares leadership with a younger drummer"
+    ],
+    "tags": [
+      "Cuba",
+      "Afro-Haitian",
+      "Tumba-Francesa",
+      "drumming",
+      "dance",
+      "diaspora",
+      "heritage"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/Decisions/20.COM/7.b.31
+  {
+    "id": "malagasy-tsapiky",
+    "name": "Southwestern Malagasy Tsapiky Music",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Southwestern Madagascar's fast-moving Tsapiky music combines electric guitars and percussion with local instruments in celebrations and social life.",
+    "strengths": [
+      "rhythmic adaptability",
+      "collective energy",
+      "creative fusion across instruments"
+    ],
+    "shadows": [
+      "can chase excitement at the expense of rest",
+      "may confuse volume with being heard"
+    ],
+    "contradiction": "A musician who can energize any gathering must learn to hear the grief beneath its celebration.",
+    "visualMotifs": [
+      "electric guitar cables",
+      "dusty outdoor dance floor",
+      "marovany strings"
+    ],
+    "voicePatterns": [
+      "quick rhythmic interjections",
+      "shifts from exuberant jokes to attentive listening"
+    ],
+    "storyEngines": [
+      "a band reunites for a village celebration after a feud",
+      "a young musician tries to balance inherited repertoire with new sounds"
+    ],
+    "evolutionTriggers": [
+      "slows the performance to honor a listener's story",
+      "shares composition credit across the ensemble"
+    ],
+    "tags": [
+      "Madagascar",
+      "Tsapiky",
+      "Southwest-Madagascar",
+      "guitar",
+      "percussion",
+      "fusion",
+      "dance"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/traditions-and-practices-associated-with-the-kayas-in-the-sacred-forests-of-the-mijikenda-00313
+  {
+    "id": "mijikenda-kaya-stewardship",
+    "name": "Mijikenda Kaya Forest Stewardship",
+    "era": "movement",
+    "domain": "leadership",
+    "sourceType": "tradition",
+    "essence": "Coastal Kenyan Mijikenda communities connect sacred forest spaces with customary governance, reconciliation, biodiversity care, and intergenerational continuity.",
+    "strengths": [
+      "ecological stewardship",
+      "patient mediation",
+      "community memory"
+    ],
+    "shadows": [
+      "may exclude unfamiliar voices from decisions",
+      "can delay urgent change through deference to custom"
+    ],
+    "contradiction": "A guardian of protected forest traditions must adapt to protect both living communities and threatened habitats.",
+    "visualMotifs": [
+      "forest pathways",
+      "council meeting circle",
+      "seedlings beside old trees"
+    ],
+    "voicePatterns": [
+      "asks how choices affect descendants",
+      "uses deliberate consensus-building questions"
+    ],
+    "storyEngines": [
+      "a development proposal divides elders and younger residents",
+      "a forest custodian must negotiate a new conservation partnership"
+    ],
+    "evolutionTriggers": [
+      "invites youth into stewardship decisions",
+      "pairs a traditional rule with transparent ecological evidence"
+    ],
+    "tags": [
+      "Kenya",
+      "Mijikenda",
+      "Kaya",
+      "sacred-forests",
+      "governance",
+      "biodiversity",
+      "reconciliation"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/bistritsa-babi-archaic-polyphony-dances-and-rituals-from-the-shoplouk-region-00095
+  {
+    "id": "bulgarian-bistritsa-babi",
+    "name": "Bistritsa Babi Shoplouk Polyphony",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Bulgarian women's interlocking Shoplouk voices, chain dances, and seasonal rituals carry communal knowledge through precise group listening.",
+    "strengths": [
+      "vocal cooperation",
+      "oral transmission",
+      "rhythmic group trust"
+    ],
+    "shadows": [
+      "can narrow the repertoire to crowd favorites",
+      "may dismiss unfamiliar younger voices"
+    ],
+    "contradiction": "An elder who preserves a shared sound discovers that survival requires teaching singers who hear the world differently.",
+    "visualMotifs": [
+      "linked dance circle",
+      "embroidered village dress",
+      "mountain village gathering"
+    ],
+    "voicePatterns": [
+      "short leading calls against a sustained group response",
+      "speaks of disagreement as voices finding a common drone"
+    ],
+    "storyEngines": [
+      "a village choir must choose between a touring showcase and local teaching",
+      "a returning singer offers an unexpected harmony"
+    ],
+    "evolutionTriggers": [
+      "teaches an obscure song to newcomers",
+      "welcomes a variation without abandoning the shared structure"
+    ],
+    "tags": [
+      "Bulgaria",
+      "Bistritsa-Babi",
+      "Shoplouk",
+      "polyphony",
+      "women-singers",
+      "horo",
+      "oral-tradition"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/rickshaws-and-rickshaw-painting-in-dhaka-01589
+  {
+    "id": "dhaka-rickshaw-painting",
+    "name": "Dhaka Rickshaw Painting and Ornament",
+    "era": "contemporary",
+    "domain": "visual-art",
+    "sourceType": "tradition",
+    "essence": "Bangladeshi workshop painters turn everyday three-wheeled transport into moving galleries of color, stories, lettering, and urban memory.",
+    "strengths": [
+      "accessible public art",
+      "improvised visual composition",
+      "craft apprenticeship"
+    ],
+    "shadows": [
+      "may prioritize spectacle over durability",
+      "can lose sight of the rider's practical needs"
+    ],
+    "contradiction": "An artist who paints for the whole street must balance a dazzling image with the person who pedals it.",
+    "visualMotifs": [
+      "painted birds and flowers",
+      "bright rear panels",
+      "tinsel along moving wheels"
+    ],
+    "voicePatterns": [
+      "compares everyday people to images in motion",
+      "negotiates commissions through concrete visual examples"
+    ],
+    "storyEngines": [
+      "a beloved old rickshaw is commissioned for restoration",
+      "a painter and a driver clash over the meaning of a mural"
+    ],
+    "evolutionTriggers": [
+      "collaborates with the driver on a functional design",
+      "mentors an apprentice with a different visual vocabulary"
+    ],
+    "tags": [
+      "Bangladesh",
+      "Dhaka",
+      "rickshaw-art",
+      "urban-folk-art",
+      "painted-vehicles",
+      "workshop",
+      "public-art"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
