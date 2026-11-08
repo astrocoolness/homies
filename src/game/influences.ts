@@ -6014,6 +6014,408 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "kindness"
     ]
   },
+  // Research: https://library.ltikorea.or.kr/writer/202194
+  {
+    "id": "heo-nanseolheon-joseon-poetry",
+    "name": "Heo Nanseolheon (Heo Cho-hui)",
+    "era": "early-modern",
+    "domain": "literature",
+    "sourceType": "historical-person",
+    "essence": "A Joseon-era poet whose imaginative worlds, sorrow, and sharp social awareness reveal the distance between creative freedom and constrained public life.",
+    "strengths": [
+      "symbolic imagination",
+      "lyrical precision",
+      "attention to overlooked suffering"
+    ],
+    "shadows": [
+      "retreats into imagined escape",
+      "can turn grief into isolation"
+    ],
+    "contradiction": "A writer whose imagined worlds seem boundless while the rules of her society narrow the paths available to her.",
+    "visualMotifs": [
+      "ink-dark mountain silhouettes",
+      "paper cranes over a courtyard",
+      "a half-filled poetry folio",
+      "a moon behind a lattice window"
+    ],
+    "voicePatterns": [
+      "links a concrete image to an unspoken feeling",
+      "lets a quiet observation carry social criticism",
+      "alternates earthly detail with impossible vistas"
+    ],
+    "storyEngines": [
+      "a recovered manuscript changes the reputation of its author",
+      "a gifted student must choose between secrecy and publication",
+      "a dreamlike poem exposes a real injustice"
+    ],
+    "evolutionTriggers": [
+      "shares an unfinished work with a trusted peer",
+      "turns private grief into public solidarity",
+      "accepts that imagination can inspire action"
+    ],
+    "tags": [
+      "Korea",
+      "Joseon",
+      "Heo-Cho-hui",
+      "Nanseolheon",
+      "poetry",
+      "women-writers",
+      "imagination",
+      "social-critique"
+    ]
+  },
+  // Research: https://www.nationalgallery.sg/sg/en/about/media-centre/a-journey-between-the-worlds-of-southeast-asia-and-europe-the-extraordinary-lives-and-works-of-raden-saleh-and-juan-luna.html
+  {
+    "id": "raden-saleh-indonesian-painting",
+    "name": "Raden Saleh",
+    "era": "19th-century",
+    "domain": "visual-art",
+    "sourceType": "historical-person",
+    "essence": "An Indonesian painter who navigated European academic art circles and dramatic pictorial storytelling across colonial-era cultural boundaries.",
+    "strengths": [
+      "large-scale composition",
+      "cross-cultural fluency",
+      "visual drama"
+    ],
+    "shadows": [
+      "can become captive to patrons' expectations",
+      "may favor spectacle over intimate truth"
+    ],
+    "contradiction": "An artist seeks recognition in powerful institutions while questioning whose stories those institutions choose to celebrate.",
+    "visualMotifs": [
+      "storm-lit landscapes",
+      "restless animal silhouettes",
+      "vast canvases in a crowded studio",
+      "travel-worn sketchbooks"
+    ],
+    "voicePatterns": [
+      "frames disagreements as competing viewpoints",
+      "notices posture and atmosphere before words",
+      "speaks of commissions as both opportunity and compromise"
+    ],
+    "storyEngines": [
+      "a prestigious commission clashes with the painter's loyalties",
+      "a painting is interpreted differently in two cities",
+      "a patron demands the removal of a troubling detail"
+    ],
+    "evolutionTriggers": [
+      "chooses a difficult subject without a guaranteed audience",
+      "invites a collaborator to challenge a composition",
+      "separates personal worth from elite approval"
+    ],
+    "tags": [
+      "Indonesia",
+      "Java",
+      "Raden-Saleh",
+      "painting",
+      "colonial-era",
+      "cross-cultural-art",
+      "patronage",
+      "visual-drama"
+    ]
+  },
+  // Research: https://collections.tepapa.govt.nz/topic/10675
+  {
+    "id": "tupaia-polynesian-navigator",
+    "name": "Tupaia of Ra'iatea",
+    "era": "enlightenment",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A Ra'iatean priest, navigator, interpreter, and observer whose Pacific knowledge enabled encounters across islands and languages.",
+    "strengths": [
+      "wayfinding",
+      "intercultural mediation",
+      "observational memory"
+    ],
+    "shadows": [
+      "can carry too much responsibility for others' misunderstandings",
+      "may assume shared knowledge where none exists"
+    ],
+    "contradiction": "A guide who understands connected island worlds must explain them to travelers who mistake their own maps for the whole world.",
+    "visualMotifs": [
+      "ocean swells under stars",
+      "island bearings sketched in a notebook",
+      "a canoe wake",
+      "a meeting on a shore"
+    ],
+    "voicePatterns": [
+      "explains routes through relationships between places",
+      "asks who knows the water before giving directions",
+      "translates intent rather than only words"
+    ],
+    "storyEngines": [
+      "a crew distrusts a route that local experts know",
+      "an interpreter must reconcile conflicting accounts of a landing",
+      "a journey reveals two incompatible ideas of discovery"
+    ],
+    "evolutionTriggers": [
+      "refuses to let an outsider erase local expertise",
+      "teaches another navigator to question a chart",
+      "builds trust without surrendering authority"
+    ],
+    "tags": [
+      "Ra'iatea",
+      "Tahiti",
+      "Polynesia",
+      "Tupaia",
+      "navigation",
+      "interpreter",
+      "Pacific",
+      "wayfinding",
+      "cross-cultural-knowledge"
+    ]
+  },
+  // Research: https://www.nps.gov/people/dr-chienshiung-wu.htm
+  {
+    "id": "chien-shiung-wu-experimental-physics",
+    "name": "Chien-Shiung Wu",
+    "era": "mid-century",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A Chinese American experimental physicist whose exacting work on beta decay and parity showed how careful evidence can overturn an accepted assumption.",
+    "strengths": [
+      "experimental rigor",
+      "technical ingenuity",
+      "intellectual persistence"
+    ],
+    "shadows": [
+      "can demand impossible precision from herself",
+      "may distrust elegant theories before testing them"
+    ],
+    "contradiction": "The person who supplies decisive evidence can remain less celebrated than the theorists whose ideas the experiment tests.",
+    "visualMotifs": [
+      "cryogenic laboratory apparatus",
+      "handwritten measurement tables",
+      "particle-track diagrams",
+      "a clock above a night-shift bench"
+    ],
+    "voicePatterns": [
+      "asks what result would falsify the claim",
+      "separates measurement from interpretation",
+      "offers concise corrections without theatricality"
+    ],
+    "storyEngines": [
+      "a small anomaly challenges an entire discipline",
+      "an overlooked technician identifies a fatal flaw",
+      "a laboratory breakthrough sparks a fight over recognition"
+    ],
+    "evolutionTriggers": [
+      "makes room for an unconventional collaborator",
+      "insists that credit follows contribution",
+      "lets a surprising result reshape a cherished hypothesis"
+    ],
+    "tags": [
+      "China",
+      "Chinese-American",
+      "Chien-Shiung-Wu",
+      "Wu-Jianxiong",
+      "physics",
+      "parity",
+      "experiments",
+      "women-in-science"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/pahlevani-and-zoorkhanei-rituals-00378
+  {
+    "id": "iran-pahlevani-zoorkhanei-ethics",
+    "name": "Pahlevani and Zoorkhanei Rituals",
+    "era": "movement",
+    "domain": "spirituality",
+    "sourceType": "tradition",
+    "essence": "An Iranian practice linking strength training, rhythmic recitation, community service, and ethical ideals of the champion.",
+    "strengths": [
+      "disciplined training",
+      "service-minded leadership",
+      "rhythmic coordination"
+    ],
+    "shadows": [
+      "can confuse status with virtue",
+      "may hide weakness behind an ideal of toughness"
+    ],
+    "contradiction": "The strongest champion is expected to demonstrate humility and responsibility rather than dominance.",
+    "visualMotifs": [
+      "domed training hall",
+      "octagonal sunken arena",
+      "wooden exercise clubs",
+      "drum beside a reciter"
+    ],
+    "voicePatterns": [
+      "pairs physical advice with ethical questions",
+      "praises effort more than victory",
+      "keeps cadence when tension rises"
+    ],
+    "storyEngines": [
+      "a celebrated athlete must protect a rival",
+      "a novice questions whether a title can be earned without kindness",
+      "a training hall becomes a refuge during a crisis"
+    ],
+    "evolutionTriggers": [
+      "uses reputation to serve someone with no influence",
+      "acknowledges an opponent's courage",
+      "chooses restraint when applause rewards force"
+    ],
+    "tags": [
+      "Iran",
+      "Pahlevani",
+      "Zoorkhanei",
+      "zurkhaneh",
+      "martial-ethics",
+      "community-service",
+      "ritual-training",
+      "humility"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/cocolo-dance-drama-tradition-00104
+  {
+    "id": "dominican-cocolo-dance-drama",
+    "name": "Cocolo Dance Drama Tradition",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Dominican Caribbean performance heritage combining African-derived music and dance with theatrical narratives shaped by British Caribbean migration.",
+    "strengths": [
+      "ensemble storytelling",
+      "cultural adaptation",
+      "community solidarity"
+    ],
+    "shadows": [
+      "knowledge can become fragile when troupes disperse",
+      "spectacle can obscure the people sustaining it"
+    ],
+    "contradiction": "A performance keeps a community's history visible even as the community's everyday language and institutions change.",
+    "visualMotifs": [
+      "masquerade procession",
+      "portable band instruments",
+      "festival stage cloth",
+      "hand-painted rehearsal signs"
+    ],
+    "voicePatterns": [
+      "moves between narration and collective response",
+      "builds dialogue around contrasting roles",
+      "invites a chorus to answer a difficult question"
+    ],
+    "storyEngines": [
+      "a dwindling troupe recruits unexpected apprentices",
+      "a forgotten costume leads to a family story",
+      "a performance must adapt to a new neighborhood without losing its memory"
+    ],
+    "evolutionTriggers": [
+      "passes a role to a younger performer",
+      "documents a veteran's account with consent",
+      "finds new audiences through community partnership"
+    ],
+    "tags": [
+      "Dominican-Republic",
+      "Cocolo",
+      "British-Caribbean-diaspora",
+      "dance-drama",
+      "masquerade",
+      "migration",
+      "ensemble",
+      "heritage"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/morna-musical-practice-of-cabo-verde-01469
+  {
+    "id": "cabo-verde-morna-song",
+    "name": "Morna Musical Practice of Cabo Verde",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "A Cape Verdean musical and poetic practice that carries longing, departure, reunion, and island belonging through song and instrumental dialogue.",
+    "strengths": [
+      "emotional nuance",
+      "poetic storytelling",
+      "musical listening"
+    ],
+    "shadows": [
+      "can romanticize separation",
+      "may hold on to nostalgia at the expense of change"
+    ],
+    "contradiction": "A song of distance can make far-flung people feel present together.",
+    "visualMotifs": [
+      "stringed instruments at dusk",
+      "harbor lights",
+      "folded travel letters",
+      "chairs arranged for a family gathering"
+    ],
+    "voicePatterns": [
+      "leaves room for a gentle response",
+      "uses places and departures to express feeling",
+      "lets repetition change emotional meaning"
+    ],
+    "storyEngines": [
+      "a homecoming reveals the person everyone imagined has changed",
+      "a forgotten melody reunites relatives",
+      "two musicians disagree about how to honor a shared memory"
+    ],
+    "evolutionTriggers": [
+      "welcomes a new interpretation of an old song",
+      "stops idealizing a place they have never revisited",
+      "makes space for a younger singer's story"
+    ],
+    "tags": [
+      "Cabo-Verde",
+      "Cape-Verde",
+      "Morna",
+      "Creole-poetry",
+      "diaspora",
+      "longing",
+      "reunion",
+      "string-music"
+    ]
+  },
+  // Research: https://kachchh.nic.in/handicraft/
+  {
+    "id": "kutch-rogan-castor-oil-painting",
+    "name": "Kutch Rogan Fabric Painting",
+    "era": "movement",
+    "domain": "visual-art",
+    "sourceType": "tradition",
+    "essence": "A Kachchh textile-painting craft that draws thick castor-oil pigment into intricate motifs and transfers a mirrored design by folding fabric.",
+    "strengths": [
+      "patient hand control",
+      "material experimentation",
+      "geometric balance"
+    ],
+    "shadows": [
+      "can become trapped by flawless symmetry",
+      "specialized skills may be difficult to pass on"
+    ],
+    "contradiction": "A painter makes one side by hand and trusts a fold to create its partner.",
+    "visualMotifs": [
+      "fine metal stylus",
+      "castor-oil pigment threads",
+      "folded fabric revealing mirror patterns",
+      "workshop dye pots"
+    ],
+    "voicePatterns": [
+      "describes choices through balance and reflection",
+      "teaches by showing a small gesture repeatedly",
+      "asks what should be preserved when a design changes"
+    ],
+    "storyEngines": [
+      "a flawed fold becomes a breakthrough pattern",
+      "an apprentice proposes a motif the master distrusts",
+      "a fragile commission must survive a long journey"
+    ],
+    "evolutionTriggers": [
+      "accepts a deliberate asymmetry",
+      "teaches the craft beyond the family workshop",
+      "balances innovation with credit to teachers"
+    ],
+    "tags": [
+      "India",
+      "Gujarat",
+      "Kutch",
+      "Kachchh",
+      "Rogan",
+      "castor-oil-paint",
+      "textile-art",
+      "mirrored-design",
+      "craft"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
