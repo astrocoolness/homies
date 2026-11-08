@@ -5685,6 +5685,335 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "public-art"
     ]
   },
+  // Original character archetypes: occupation, temperament, relationships and evolution diversity.
+  {
+    "id": "night-market-medic",
+    "name": "Night-Market Medic",
+    "era": "late-20th-century",
+    "domain": "science",
+    "sourceType": "fictional-character",
+    "essence": "A street healer who trades practical care for stories, but fears needing help.",
+    "strengths": [
+      "improvisation",
+      "empathy",
+      "resourcefulness"
+    ],
+    "shadows": [
+      "overextends",
+      "hides exhaustion"
+    ],
+    "contradiction": "Treats everyone but refuses treatment.",
+    "visualMotifs": [
+      "patched satchel",
+      "portable lantern",
+      "colorful bandages"
+    ],
+    "voicePatterns": [
+      "asks practical questions",
+      "soft jokes under pressure"
+    ],
+    "storyEngines": [
+      "a missing remedy threatens a festival",
+      "a rival offers an uneasy alliance"
+    ],
+    "evolutionTriggers": [
+      "accepts care",
+      "builds a shared clinic"
+    ],
+    "tags": [
+      "medic",
+      "street-life",
+      "care",
+      "improviser"
+    ]
+  },
+  {
+    "id": "retired-storm-chaser",
+    "name": "Retired Storm Chaser",
+    "era": "timeless-fiction",
+    "domain": "fiction",
+    "sourceType": "fictional-character",
+    "essence": "A former danger-seeker who now notices tiny changes in ordinary weather.",
+    "strengths": [
+      "pattern reading",
+      "bravery",
+      "patience"
+    ],
+    "shadows": [
+      "restlessness",
+      "risk addiction"
+    ],
+    "contradiction": "Craves peace but keeps scanning the horizon.",
+    "visualMotifs": [
+      "weathered coat",
+      "pocket barometer",
+      "cloud sketches"
+    ],
+    "voicePatterns": [
+      "speaks in forecasts",
+      "understates danger"
+    ],
+    "storyEngines": [
+      "a strange calm precedes disaster",
+      "a student challenges an old warning"
+    ],
+    "evolutionTriggers": [
+      "chooses prevention over spectacle",
+      "trusts a younger scout"
+    ],
+    "tags": [
+      "elder",
+      "weather",
+      "adventure",
+      "mentor"
+    ]
+  },
+  {
+    "id": "subway-ghost-cartographer",
+    "name": "Subway Ghost Cartographer",
+    "era": "timeless-fiction",
+    "domain": "fiction",
+    "sourceType": "fictional-character",
+    "essence": "An urban mapmaker documenting forgotten routes and the lives around them.",
+    "strengths": [
+      "curiosity",
+      "spatial memory",
+      "quiet loyalty"
+    ],
+    "shadows": [
+      "obsession",
+      "avoids sunlight"
+    ],
+    "contradiction": "Knows every hidden passage but cannot find a way home.",
+    "visualMotifs": [
+      "layered transit maps",
+      "reflective vest",
+      "chalk symbols"
+    ],
+    "voicePatterns": [
+      "gives directions as riddles",
+      "remembers strangers' details"
+    ],
+    "storyEngines": [
+      "a station vanishes from maps",
+      "two neighborhoods claim the same tunnel"
+    ],
+    "evolutionTriggers": [
+      "asks for directions",
+      "maps relationships instead of tunnels"
+    ],
+    "tags": [
+      "urban-fantasy",
+      "cartographer",
+      "loner",
+      "mystery"
+    ]
+  },
+  {
+    "id": "rooftop-gardener-diplomat",
+    "name": "Rooftop Gardener Diplomat",
+    "era": "contemporary",
+    "domain": "leadership",
+    "sourceType": "fictional-character",
+    "essence": "A practical negotiator who settles feuds by getting rivals to grow something together.",
+    "strengths": [
+      "mediation",
+      "patience",
+      "systems thinking"
+    ],
+    "shadows": [
+      "conflict avoidance",
+      "secret competitiveness"
+    ],
+    "contradiction": "Makes peace publicly while privately keeping score.",
+    "visualMotifs": [
+      "seed tins",
+      "patched gloves",
+      "roofline trellises"
+    ],
+    "voicePatterns": [
+      "uses plant metaphors",
+      "asks both sides for concrete needs"
+    ],
+    "storyEngines": [
+      "a water shortage divides a block",
+      "an heirloom seed sparks a dispute"
+    ],
+    "evolutionTriggers": [
+      "admits resentment",
+      "shares credit"
+    ],
+    "tags": [
+      "gardener",
+      "mediator",
+      "community",
+      "ecology"
+    ]
+  },
+  {
+    "id": "disgraced-parade-engineer",
+    "name": "Disgraced Parade Engineer",
+    "era": "contemporary",
+    "domain": "design",
+    "sourceType": "fictional-character",
+    "essence": "A flamboyant builder of impossible public spectacles seeking redemption after a disastrous debut.",
+    "strengths": [
+      "mechanical imagination",
+      "showmanship",
+      "collaboration"
+    ],
+    "shadows": [
+      "vanity",
+      "cuts corners"
+    ],
+    "contradiction": "Wants applause but must learn invisible reliability.",
+    "visualMotifs": [
+      "folding floats",
+      "confetti-stained blueprints",
+      "tiny motors"
+    ],
+    "voicePatterns": [
+      "speaks in dramatic reveals",
+      "hides worries in technical jargon"
+    ],
+    "storyEngines": [
+      "a parade float becomes a rescue vehicle",
+      "a former critic joins the workshop"
+    ],
+    "evolutionTriggers": [
+      "prioritizes safety",
+      "lets an apprentice lead"
+    ],
+    "tags": [
+      "engineer",
+      "festival",
+      "redemption",
+      "maker"
+    ]
+  },
+  {
+    "id": "interstellar-lost-and-found-clerk",
+    "name": "Interstellar Lost-and-Found Clerk",
+    "era": "timeless-fiction",
+    "domain": "fiction",
+    "sourceType": "fictional-character",
+    "essence": "A meticulous keeper of abandoned objects who can infer whole lives from small clues.",
+    "strengths": [
+      "observation",
+      "fairness",
+      "memory"
+    ],
+    "shadows": [
+      "hoarding",
+      "judges too quickly"
+    ],
+    "contradiction": "Returns everything except the keepsake tied to their own past.",
+    "visualMotifs": [
+      "numbered drawers",
+      "mismatched keys",
+      "glowing claim tickets"
+    ],
+    "voicePatterns": [
+      "asks oddly specific questions",
+      "lists details before feelings"
+    ],
+    "storyEngines": [
+      "an owner claims an impossible object",
+      "two people remember the same item"
+    ],
+    "evolutionTriggers": [
+      "lets go of a relic",
+      "believes an unlikely claimant"
+    ],
+    "tags": [
+      "space-opera",
+      "clerk",
+      "detective",
+      "collector"
+    ]
+  },
+  {
+    "id": "midnight-radio-archivist",
+    "name": "Midnight Radio Archivist",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "fictional-character",
+    "essence": "A nocturnal broadcaster who preserves unheard voices and secretly fears being recognized.",
+    "strengths": [
+      "listening",
+      "sound collage",
+      "community memory"
+    ],
+    "shadows": [
+      "isolation",
+      "selective honesty"
+    ],
+    "contradiction": "Gives everyone a voice but edits their own story.",
+    "visualMotifs": [
+      "cassette towers",
+      "signal meters",
+      "amber studio lights"
+    ],
+    "voicePatterns": [
+      "speaks in intimate introductions",
+      "leaves thoughtful silences"
+    ],
+    "storyEngines": [
+      "a mysterious broadcast predicts a reunion",
+      "an erased interview resurfaces"
+    ],
+    "evolutionTriggers": [
+      "broadcasts a confession",
+      "invites a co-host"
+    ],
+    "tags": [
+      "radio",
+      "archivist",
+      "nocturnal",
+      "storyteller"
+    ]
+  },
+  {
+    "id": "gentle-giant-repairer",
+    "name": "Gentle Giant Repairer",
+    "era": "timeless-fiction",
+    "domain": "fiction",
+    "sourceType": "fictional-character",
+    "essence": "An enormous, soft-spoken repairer of tiny fragile machines who is mistaken for a threat.",
+    "strengths": [
+      "fine motor care",
+      "steadiness",
+      "protectiveness"
+    ],
+    "shadows": [
+      "self-doubt",
+      "overapologizes"
+    ],
+    "contradiction": "Can lift a bridge but trembles before a broken music box.",
+    "visualMotifs": [
+      "oversized apron",
+      "miniature screwdrivers",
+      "delicate spectacles"
+    ],
+    "voicePatterns": [
+      "whispers precise instructions",
+      "apologizes before speaking"
+    ],
+    "storyEngines": [
+      "a town trusts the wrong strongman",
+      "a miniature mechanism holds a city together"
+    ],
+    "evolutionTriggers": [
+      "sets a boundary",
+      "shows strength without apology"
+    ],
+    "tags": [
+      "gentle-giant",
+      "craft",
+      "outsider",
+      "kindness"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
