@@ -67,13 +67,16 @@ export const startReel = createServerFn({ method: "POST" })
     };
   })
   .handler(async ({ data}): Promise<StartReelResult> => {
-    const apiKey = process.env.XAI_API_KEY;
-    if (!apiKey) return { ok: false, error: "Filming isn't available right now." };
+    const xaiKey = process.env.XAI_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (!xaiKey && !geminiKey) return { ok: false, error: "Filming isn't available right now." };
     if (data.setting.length < 2) return { ok: false, error: "They need a home before a scene." };
     try {
-      const scene = await requestReelScene(apiKey, data.portrait, data.setting);
+      const scene = await requestReelScene(xaiKey ?? "", data.portrait, data.setting);
       if (!scene.ok) return { ok: false, error: scene.error };
-      const video = await requestReelVideo(apiKey, scene.url, data.name);
+      // Video generation is still xAI-only (async requestId + poll).
+      if (!xaiKey) return { ok: false, error: "Video filming needs the xAI key. Scene images can still use Gemini." };
+      const video = await requestReelVideo(xaiKey, scene.url, data.name);
       if (!video.ok) return { ok: false, error: video.error };
       return { ok: true, requestId: video.requestId };
     } catch (err) {
