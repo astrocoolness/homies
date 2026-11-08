@@ -122,7 +122,10 @@ export async function requestReelScene(apiKey: string, portrait: string, setting
   if (geminiKey) {
     const gemini = await requestReelSceneGemini(geminiKey, portrait, setting);
     if (gemini.ok) return gemini;
+    // Only hard-fail on auth/credits from Gemini if no xAI key is available to fall back to.
+    // Otherwise continue to xAI.
   }
+  if (!apiKey) return failure("room", 0, "auth");
   const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
   for (const [index, model] of models.entries()) {
     const result = await request(apiKey, "room", "images/edits", {
@@ -154,39 +157,11 @@ export async function requestReelScene(apiKey: string, portrait: string, setting
 }
 
 export async function requestReelVideo(apiKey: string, image: string, name: string): Promise<{ ok: true; requestId: string } | Failure> {
-  // Prefer Gemini Omni if available for video (returns data directly; caller can adapt if needed)
-  const geminiKey = process.env.GEMINI_API_KEY;
-  if (geminiKey) {
-    const parsed = parseDataUrl(image);
-    if (parsed) {
-      try {
-        const res = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-goog-api-key": geminiKey,
-          },
-          signal: AbortSignal.timeout(60_000),
-          body: JSON.stringify({
-            model: "gemini-omni-1.2-flash",
-            input: [
-              { type: "text", text: `${name || "The homie"} lives for ten seconds in this room. Small natural motion: a glance, a shift, their habit. Camera holds steady. High quality, smooth, no new people, no text.` },
-              { type: "image", mime_type: parsed.mime, data: parsed.data },
-            ],
-          }),
-        });
-        if (res.ok) {
-          const data = (await res.json()) as { output_video?: { data?: string } };
-          if (data.output_video?.data) {
-            // Return a synthetic requestId that pullReel can treat as immediate (or extend later)
-            return { ok: true, requestId: `gemini:${Buffer.from(data.output_video.data.slice(0, 32)).toString("hex")}` };
-          }
-        }
-      } catch {
-        // fall through to xAI
-      }
-    }
-  }
+  // Video stays on xAI for now. Gemini Omni Interactions returns data synchronously,
+  // which does not fit the existing startReel → poll requestId contract without
+  // storing the bytes. Falling through cleanly avoids returning a requestId that
+  // pullReel cannot resolve.
+  if (!apiKey) return failure("film", 0, "auth");
   const models = ["grok-imagine-video-1.5", "grok-imagine-video"];
   for (const [index, model] of models.entries()) {
     const result = await request(apiKey, "film", "videos/generations", {
