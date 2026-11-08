@@ -64,67 +64,7 @@ function extractImage(body: JsonObject): string | null {
   return null;
 }
 
-function parseDataUrl(dataUrl: string): { mime: string; data: string } | null {
-  const match = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
-  if (!match) return null;
-  return { mime: match[1], data: match[2] };
-}
-
-async function requestReelSceneGemini(key: string, portrait: string, setting: string): Promise<{ ok: true; url: string } | Failure> {
-  const parsed = parseDataUrl(portrait);
-  if (!parsed) return failure("room", 400, "request");
-  try {
-    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": key,
-      },
-      signal: AbortSignal.timeout(40_000),
-      body: JSON.stringify({
-        model: "gemini-nano-banana-2.1",
-        input: [
-          { type: "text", text: `Place this exact vinyl-toy character inside their home, same face and outfit, full scene, one character only. Setting: ${setting}. Warm toy-like room, no text, no watermark, no extra people.` },
-          { type: "image", mime_type: parsed.mime, data: parsed.data },
-        ],
-        response_format: { type: "image" },
-      }),
-    });
-    if (!res.ok) {
-      const body = record(await res.json().catch(() => null));
-      return failure("room", res.status, classify(res.status, body));
-    }
-    const data = (await res.json()) as {
-      steps?: { content?: { type?: string; data?: string; mime_type?: string }[] }[];
-      output_image?: { data?: string; mime_type?: string };
-    };
-    for (const step of data.steps ?? []) {
-      for (const block of step.content ?? []) {
-        if (block.type === "image" && block.data) {
-          const mime = block.mime_type || "image/png";
-          return { ok: true, url: `data:${mime};base64,${block.data}` };
-        }
-      }
-    }
-    if (data.output_image?.data) {
-      const mime = data.output_image.mime_type || "image/png";
-      return { ok: true, url: `data:${mime};base64,${data.output_image.data}` };
-    }
-    return failure("room", 200, "response");
-  } catch (error) {
-    const timedOut = error instanceof Error && (error.name === "TimeoutError" || error.name === "AbortError");
-    return failure("room", 0, timedOut ? "timeout" : "unavailable");
-  }
-}
-
 export async function requestReelScene(apiKey: string, portrait: string, setting: string): Promise<{ ok: true; url: string } | Failure> {
-  const geminiKey = process.env.GEMINI_API_KEY;
-  if (geminiKey) {
-    const gemini = await requestReelSceneGemini(geminiKey, portrait, setting);
-    if (gemini.ok) return gemini;
-    // Only hard-fail on auth/credits from Gemini if no xAI key is available to fall back to.
-    // Otherwise continue to xAI.
-  }
   if (!apiKey) return failure("room", 0, "auth");
   const models = ["grok-imagine-image-2.0", "grok-imagine-image"];
   for (const [index, model] of models.entries()) {
@@ -157,10 +97,6 @@ export async function requestReelScene(apiKey: string, portrait: string, setting
 }
 
 export async function requestReelVideo(apiKey: string, image: string, name: string): Promise<{ ok: true; requestId: string } | Failure> {
-  // Video stays on xAI for now. Gemini Omni Interactions returns data synchronously,
-  // which does not fit the existing startReel → poll requestId contract without
-  // storing the bytes. Falling through cleanly avoids returning a requestId that
-  // pullReel cannot resolve.
   if (!apiKey) return failure("film", 0, "auth");
   const models = ["grok-imagine-video-1.5", "grok-imagine-video"];
   for (const [index, model] of models.entries()) {
