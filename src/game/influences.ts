@@ -6416,6 +6416,359 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "craft"
     ]
   },
+  // Research: https://ich.unesco.org/en/Decisions/18.COM/8.b.33
+  {
+    "id": "indonesian-jamu-wellness-culture",
+    "name": "Indonesian Jamu Wellness Culture",
+    "era": "movement",
+    "domain": "science",
+    "sourceType": "tradition",
+    "essence": "An Indonesian heritage of preparing and sharing botanical mixtures, with knowledge passed through families and communities; its cultural significance is distinct from proof of medical effectiveness.",
+    "strengths": [
+      "attentive listening to neighbors",
+      "botanical craft knowledge",
+      "reciprocal trust"
+    ],
+    "shadows": [
+      "may guard inherited recipes too tightly",
+      "can confuse customary authority with evidence"
+    ],
+    "contradiction": "A keeper of familiar remedies must respect tradition while admitting when a question needs new evidence.",
+    "visualMotifs": [
+      "bundles of ginger and turmeric",
+      "handwritten preparation notebooks",
+      "market baskets of herbs"
+    ],
+    "voicePatterns": [
+      "asks about a person's daily routines before offering an opinion",
+      "explains choices through ingredients and relationships, without promising cures"
+    ],
+    "storyEngines": [
+      "a young maker must decide how to share a family practice responsibly",
+      "a neighborhood workshop faces a commercial offer that could erase its local ties"
+    ],
+    "evolutionTriggers": [
+      "documents the difference between inherited belief and tested knowledge",
+      "teaches a newcomer without demanding unquestioning obedience"
+    ],
+    "tags": [
+      "Indonesia",
+      "Jamu",
+      "herbal-heritage",
+      "intergenerational-knowledge",
+      "community-trust",
+      "botanical-craft"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/katta-ashula-00288
+  {
+    "id": "ferghana-katta-ashula-song",
+    "name": "Katta Ashula of the Ferghana Valley",
+    "era": "movement",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "A demanding, orally transmitted vocal art of the Ferghana Valley, joining multiple singers, philosophical poetry and carefully negotiated improvisation.",
+    "strengths": [
+      "deep listening",
+      "collaborative musical discipline",
+      "poetic improvisation"
+    ],
+    "shadows": [
+      "may prize mastery over welcome",
+      "can mistake seniority for insight"
+    ],
+    "contradiction": "A voice can sound singular only because several performers learn to leave room for one another.",
+    "visualMotifs": [
+      "singers facing in a small arc",
+      "handwritten poetry leaves",
+      "sunlit courtyard rehearsals"
+    ],
+    "voicePatterns": [
+      "answers an abstract question with an image from nature",
+      "waits for another voice before finishing a thought"
+    ],
+    "storyEngines": [
+      "two apprentices disagree over the meaning of a verse before a festival",
+      "a master must choose whether to encourage a surprising new interpretation"
+    ],
+    "evolutionTriggers": [
+      "invites a quieter performer to lead",
+      "learns that improvisation can protect rather than weaken a tradition"
+    ],
+    "tags": [
+      "Uzbekistan",
+      "Ferghana-Valley",
+      "Katta-Ashula",
+      "ensemble-singing",
+      "oral-poetry",
+      "apprenticeship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/mongolian-calligraphy-00873
+  {
+    "id": "mongolian-vertical-script-calligraphy",
+    "name": "Mongolian Vertical-Script Calligraphy",
+    "era": "movement",
+    "domain": "visual-art",
+    "sourceType": "tradition",
+    "essence": "The patient art of writing Classical Mongolian script in connected vertical strokes, sustained through close mentor-apprentice relationships.",
+    "strengths": [
+      "precision of gesture",
+      "patient teaching",
+      "visual rhythm"
+    ],
+    "shadows": [
+      "may become overly protective of correct forms",
+      "can hide uncertainty behind immaculate presentation"
+    ],
+    "contradiction": "A guardian of continuity must sometimes change the way a craft is taught to keep it alive.",
+    "visualMotifs": [
+      "descending ink columns",
+      "brush and paper beside a window",
+      "folded-script seals"
+    ],
+    "voicePatterns": [
+      "notices the shape and pacing of words",
+      "offers careful corrections without raising their voice"
+    ],
+    "storyEngines": [
+      "an apprentice designs a new public sign without losing script integrity",
+      "a mentor must decide how to preserve a fragile archive"
+    ],
+    "evolutionTriggers": [
+      "shares expertise beyond a tiny inner circle",
+      "welcomes a practical new teaching medium"
+    ],
+    "tags": [
+      "Mongolia",
+      "vertical-script",
+      "calligraphy",
+      "craft-preservation",
+      "mentorship",
+      "letterforms"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/decisions/18.COM/8.B.32
+  {
+    "id": "gujarat-garba-community-dance",
+    "name": "Garba of Gujarat",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A participatory Gujarati devotional dance associated with Navaratri, gathering people in accelerating circles around a shared sacred center.",
+    "strengths": [
+      "inclusive coordination",
+      "rhythmic endurance",
+      "community hospitality"
+    ],
+    "shadows": [
+      "can let festival logistics eclipse quieter participants",
+      "may confuse visible enthusiasm with belonging"
+    ],
+    "contradiction": "A joyful circle becomes meaningful only when its center and its margins both receive care.",
+    "visualMotifs": [
+      "circling dancers",
+      "clapping hands",
+      "a glowing earthen lamp"
+    ],
+    "voicePatterns": [
+      "invites participation with clear, welcoming cues",
+      "speaks of rhythm as shared responsibility"
+    ],
+    "storyEngines": [
+      "a festival organizer must make space for an overlooked neighbor",
+      "a costume designer and musician reconcile competing visions of a celebration"
+    ],
+    "evolutionTriggers": [
+      "makes accessibility part of the design",
+      "learns the devotional context before introducing changes"
+    ],
+    "tags": [
+      "India",
+      "Gujarat",
+      "Garba",
+      "Navaratri",
+      "community-dance",
+      "participation"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/cultural-complex-of-bumba-meu-boi-from-maranho-01510
+  {
+    "id": "maranhao-bumba-meu-boi-complex",
+    "name": "Bumba-meu-boi of Maranhão",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Brazilian festival complex combining music, theatre, costume-making and an ox-centered cycle of loss, renewal and communal reinvention.",
+    "strengths": [
+      "ensemble invention",
+      "ceremonial storytelling",
+      "craft collaboration"
+    ],
+    "shadows": [
+      "may turn artistic rivalry into factional pride",
+      "can prioritize spectacle over the people sustaining it"
+    ],
+    "contradiction": "A celebration of renewal must preserve its inherited meanings while inventing new performances each year.",
+    "visualMotifs": [
+      "embroidered ox figure",
+      "layered festival costumes",
+      "drums at a twilight rehearsal"
+    ],
+    "voicePatterns": [
+      "moves between comic banter and solemn reflection",
+      "uses the seasons of a festival to organize memories"
+    ],
+    "storyEngines": [
+      "two performance groups share a damaged ceremonial costume",
+      "an apprentice proposes a new scene that unsettles an elder"
+    ],
+    "evolutionTriggers": [
+      "credits the behind-the-scenes makers",
+      "reconciles a rival troupe without flattening their differences"
+    ],
+    "tags": [
+      "Brazil",
+      "Maranhao",
+      "Bumba-meu-boi",
+      "festival-theatre",
+      "ox-symbolism",
+      "renewal"
+    ]
+  },
+  // Research: https://pubmed.ncbi.nlm.nih.gov/18481505/
+  {
+    "id": "ibn-al-nafis-pulmonary-inquiry",
+    "name": "Ibn al-Nafis",
+    "era": "medieval",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A thirteenth-century physician whose account of pulmonary circulation challenged inherited anatomical authority through careful reasoning.",
+    "strengths": [
+      "critical reading",
+      "medical observation",
+      "courage to revise doctrine"
+    ],
+    "shadows": [
+      "fictional tension: may become impatient with untested assertions",
+      "fictional tension: risks valuing a correct argument over a worried patient"
+    ],
+    "contradiction": "A scholar trained inside a tradition finds its deepest promise in questioning one of its foundations.",
+    "visualMotifs": [
+      "annotated medical manuscripts",
+      "inked diagrams of lungs",
+      "a quiet study lamp"
+    ],
+    "voicePatterns": [
+      "distinguishes a respected claim from a demonstrated one",
+      "reasons patiently through anatomical consequences"
+    ],
+    "storyEngines": [
+      "a student discovers a contradiction in a famous text",
+      "a hospital debate tests whether status or evidence carries the day"
+    ],
+    "evolutionTriggers": [
+      "listens to a novice's observation",
+      "turns a critique into a clearer teaching method"
+    ],
+    "tags": [
+      "medieval",
+      "Ibn-al-Nafis",
+      "medicine-history",
+      "pulmonary-circulation",
+      "critical-inquiry",
+      "scholarship"
+    ]
+  },
+  // Research: https://www.gutenberg.net.au/ebooks10/1000871h.html
+  {
+    "id": "kartini-javanese-education-letters",
+    "name": "Raden Ajeng Kartini",
+    "era": "19th-century",
+    "domain": "leadership",
+    "sourceType": "historical-person",
+    "essence": "A Javanese writer and advocate for girls' education whose correspondence connected personal restrictions with wider questions of learning and social change.",
+    "strengths": [
+      "persuasive correspondence",
+      "educational vision",
+      "solidarity across distance"
+    ],
+    "shadows": [
+      "fictional tension: takes too much responsibility for reform",
+      "fictional tension: can sacrifice private hopes to public expectations"
+    ],
+    "contradiction": "A voice confined by social rules can travel far enough to help others imagine open doors.",
+    "visualMotifs": [
+      "carefully folded letters",
+      "schoolroom windows",
+      "a desk shared with sisters"
+    ],
+    "voicePatterns": [
+      "makes a personal anecdote reveal an institutional problem",
+      "pairs warmth with precise demands"
+    ],
+    "storyEngines": [
+      "a circle of correspondents creates an informal school",
+      "an unexpected patron offers help at the price of compromise"
+    ],
+    "evolutionTriggers": [
+      "trusts others to carry the work forward",
+      "builds a learning space that survives its founder"
+    ],
+    "tags": [
+      "Indonesia",
+      "Java",
+      "Kartini",
+      "education",
+      "letters",
+      "women-advocacy",
+      "colonial-era"
+    ]
+  },
+  // Research: https://physicstoday.aip.org/news/jagadish-chandra-bose
+  {
+    "id": "jagadish-chandra-bose-plant-physics",
+    "name": "Jagadish Chandra Bose",
+    "era": "early-modern",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A physicist and plant researcher who connected experimental instrumentation, wireless-wave studies and questions about living responses.",
+    "strengths": [
+      "inventive measurement",
+      "cross-disciplinary curiosity",
+      "public demonstration"
+    ],
+    "shadows": [
+      "fictional tension: pursues a beautiful experiment past its practical limits",
+      "fictional tension: resists useful collaboration when recognition is unequal"
+    ],
+    "contradiction": "An investigator of invisible signals must make the smallest responses visible to skeptical audiences.",
+    "visualMotifs": [
+      "delicate crescograph apparatus",
+      "laboratory glass and metal",
+      "plant stems beside signal instruments"
+    ],
+    "voicePatterns": [
+      "explains abstractions through demonstrations",
+      "asks what a sensitive instrument might reveal"
+    ],
+    "storyEngines": [
+      "a neglected laboratory builds an instrument no patron believes in",
+      "an experiment forces rival disciplines to share a vocabulary"
+    ],
+    "evolutionTriggers": [
+      "opens the laboratory to new collaborators",
+      "revises a favored hypothesis after better measurements"
+    ],
+    "tags": [
+      "India",
+      "Bengal",
+      "Jagadish-Chandra-Bose",
+      "plant-physiology",
+      "radio-research",
+      "instrumentation"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
