@@ -6769,6 +6769,409 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "instrumentation"
     ]
   },
+  // Research: https://ich.unesco.org/en/RL/rukada-natya-traditional-string-puppet-drama-in-sri-lanka-01370
+  // Character traits, flaws and plot hooks are fictional extrapolations, not biographical claims.
+  {
+    "id": "sri-lankan-rukada-natya",
+    "name": "Sri Lankan Rūkada Nātya String-Puppet Drama",
+    "era": "contemporary",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Family-based Sri Lankan string-puppet theatre brings carved figures, handmade scripts, music, humor, and moral debate into shared public performances.",
+    "strengths": [
+      "nimble collaborative staging",
+      "accessible moral storytelling",
+      "inventive puppet craftsmanship"
+    ],
+    "shadows": [
+      "a neat lesson can flatten a complicated person",
+      "a family troupe may resist unfamiliar interpretations"
+    ],
+    "contradiction": "The puppeteer can make a figure move perfectly yet must learn when to surrender control of the story.",
+    "visualMotifs": [
+      "carved wooden figures suspended on strings",
+      "painted portable stage",
+      "handwritten dialogue sheets",
+      "lamplit puppet shadows"
+    ],
+    "voicePatterns": [
+      "switches between contrasting character registers",
+      "uses a comic aside to reveal a serious dilemma",
+      "lets a chorus challenge a narrator"
+    ],
+    "storyEngines": [
+      "a puppet begins telling a different ending than its maker planned",
+      "two generations disagree over which village story belongs onstage",
+      "a festival performance turns into a public reconciliation"
+    ],
+    "evolutionTriggers": [
+      "invites a newcomer to co-write a scene",
+      "accepts an ending without a tidy moral",
+      "shares the craft rather than guarding every string"
+    ],
+    "tags": [
+      "Sri Lanka",
+      "Rukada Natya",
+      "string-puppetry",
+      "community-theatre",
+      "craft",
+      "humor",
+      "intergenerational"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/pirekua-traditional-song-of-the-purhepecha-00398
+  // Character traits, flaws and plot hooks are fictional extrapolations, not biographical claims.
+  {
+    "id": "purhepecha-pirekua",
+    "name": "P’urhépecha Pirekua Song and Social Mediation",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "P’urhépecha song practice in Michoacán connects intimate lyrics, community memory, stylistic variation, and the work of communicating across households.",
+    "strengths": [
+      "tactful emotional translation",
+      "symbolic lyric invention",
+      "careful listening across generations"
+    ],
+    "shadows": [
+      "may speak through songs rather than directly",
+      "can become trapped in an idealized memory"
+    ],
+    "contradiction": "A singer trusted to voice everyone's feelings struggles to say what they personally need.",
+    "visualMotifs": [
+      "handwritten verses folded into a pocket",
+      "small ensemble in a courtyard",
+      "string instruments beside a doorway",
+      "market-day gathering"
+    ],
+    "voicePatterns": [
+      "begins with a modest image before revealing its meaning",
+      "shifts from intimate confession to communal address",
+      "uses refrains as invitations rather than commands"
+    ],
+    "storyEngines": [
+      "a disputed family history is carried in two versions of one song",
+      "an old refrain becomes a message between estranged neighbors",
+      "a new singer challenges the rule of who may tell a story"
+    ],
+    "evolutionTriggers": [
+      "speaks plainly when music is insufficient",
+      "learns a rival community's variation respectfully",
+      "allows a younger voice to change the refrain"
+    ],
+    "tags": [
+      "Mexico",
+      "Michoacan",
+      "P'urhepecha",
+      "Pirekua",
+      "oral-song",
+      "social-mediation",
+      "lyric-memory"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/indonesian-angklung-00393
+  // Character traits, flaws and plot hooks are fictional extrapolations, not biographical claims.
+  {
+    "id": "indonesian-angklung-ensemble",
+    "name": "Indonesian Angklung Ensemble Craft",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Bamboo instruments tuned to individual pitches make a melody possible only when many players coordinate, listen, and share responsibility.",
+    "strengths": [
+      "collective timing",
+      "material ingenuity",
+      "patient group teaching"
+    ],
+    "shadows": [
+      "fears disrupting the ensemble",
+      "can mistake harmony for unquestioning agreement"
+    ],
+    "contradiction": "A musician who holds only one note must learn that a small contribution can still be indispensable.",
+    "visualMotifs": [
+      "suspended bamboo tubes",
+      "rattan bindings",
+      "hands poised to shake frames",
+      "a circle of differently sized instruments"
+    ],
+    "voicePatterns": [
+      "counts entrances gently",
+      "asks who has not been heard",
+      "explains teamwork through short musical phrases"
+    ],
+    "storyEngines": [
+      "one missing instrument changes a whole festival arrangement",
+      "an impatient soloist must teach a group to listen",
+      "a damaged bamboo frame inspires a new collaboration"
+    ],
+    "evolutionTriggers": [
+      "takes responsibility for an imperfect entrance",
+      "lets an unconventional rhythm join the ensemble",
+      "recognizes the value of a quiet player"
+    ],
+    "tags": [
+      "Indonesia",
+      "angklung",
+      "bamboo-music",
+      "ensemble",
+      "cooperation",
+      "craft",
+      "rhythm"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/chidaoba-wrestling-in-georgia-01371
+  // Character traits, flaws and plot hooks are fictional extrapolations, not biographical claims.
+  {
+    "id": "georgian-chidaoba-wrestling",
+    "name": "Georgian Chidaoba Wrestling and Fair Contest",
+    "era": "contemporary",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Georgian wrestling combines athletic technique, ceremonial music, movement, and a code of respectful contest in a public arena.",
+    "strengths": [
+      "adaptive physical strategy",
+      "discipline under pressure",
+      "respect for a worthy opponent"
+    ],
+    "shadows": [
+      "may confuse public victory with personal worth",
+      "struggles to withdraw from a challenge"
+    ],
+    "contradiction": "A fierce competitor discovers that honoring a rival can matter more than the final hold.",
+    "visualMotifs": [
+      "open-air wrestling ring",
+      "chokha-inspired ceremonial garment details",
+      "zurna and doli instruments",
+      "dust lifted by quick footwork"
+    ],
+    "voicePatterns": [
+      "short respectful challenges",
+      "praises a rival's technique before debating it",
+      "turns physical setbacks into practical lessons"
+    ],
+    "storyEngines": [
+      "a tournament rival becomes an emergency ally",
+      "a veteran is asked to judge a match involving a friend",
+      "a dancer and wrestler exchange skills for a festival"
+    ],
+    "evolutionTriggers": [
+      "chooses fairness over applause",
+      "learns to lose without humiliation",
+      "protects a novice's dignity"
+    ],
+    "tags": [
+      "Georgia",
+      "Chidaoba",
+      "wrestling",
+      "fair-play",
+      "martial-performance",
+      "dance",
+      "sportsmanship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/traditional-weaving-of-al-sadu-02158
+  // Character traits, flaws and plot hooks are fictional extrapolations, not biographical claims.
+  {
+    "id": "al-sadu-desert-weaving",
+    "name": "Al Sadu Bedouin Weaving Knowledge",
+    "era": "contemporary",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Bedouin textile knowledge uses ground looms, natural fibers, rhythmic geometric patterning, and mentorship to carry desert experience into durable cloth.",
+    "strengths": [
+      "material patience",
+      "pattern memory",
+      "resourceful design under constraints"
+    ],
+    "shadows": [
+      "can guard expertise too closely",
+      "may equate a familiar pattern with the only acceptable one"
+    ],
+    "contradiction": "A maker devoted to continuity must decide which changes keep a tradition alive rather than erase it.",
+    "visualMotifs": [
+      "ground loom stretched close to the earth",
+      "red and orange geometric bands",
+      "bundles of spun fibers",
+      "repeated diamond and stripe patterns"
+    ],
+    "voicePatterns": [
+      "teaches through repeated hand motions",
+      "compares decisions to warp and weft",
+      "notices small variations without shaming learners"
+    ],
+    "storyEngines": [
+      "a weather-damaged textile must be reconstructed from memory",
+      "a new apprentice proposes a controversial pattern",
+      "two households need a shared design for a journey"
+    ],
+    "evolutionTriggers": [
+      "documents a technique for wider teaching",
+      "welcomes an apprentice's practical adaptation",
+      "accepts that a repaired cloth can be more meaningful than a flawless one"
+    ],
+    "tags": [
+      "Bedouin",
+      "Al Sadu",
+      "Kuwait",
+      "Saudi Arabia",
+      "Qatar",
+      "weaving",
+      "women-artisans",
+      "geometry",
+      "desert-craft"
+    ]
+  },
+  // Research: https://www.cambridge.org/core/journals/hegel-bulletin/article/hegel-and-the-hatata-zara-yaqob-africa-in-the-philosophy-of-history-and-the-history-of-philosophy/84406A55A4A91EA580F022985A3862CB
+  // Character traits, flaws and plot hooks are fictional extrapolations, not biographical claims.
+  {
+    "id": "ethiopian-hatata-inquiry",
+    "name": "Ethiopian Ḥatäta Philosophical Inquiry",
+    "era": "early-modern",
+    "domain": "philosophy",
+    "sourceType": "tradition",
+    "essence": "The Ethiopian Ḥatäta text attributed to Zera Yacob explores conscience, reason, religious disagreement, and the moral duty to examine inherited claims; its authorship remains debated.",
+    "strengths": [
+      "independent ethical reflection",
+      "reasoned tolerance",
+      "patient scrutiny of authority"
+    ],
+    "shadows": [
+      "can become isolated in perpetual questioning",
+      "may overestimate the power of argument to heal wounds"
+    ],
+    "contradiction": "A thinker distrusts imposed certainty yet longs for a principle strong enough to unite people in conflict.",
+    "visualMotifs": [
+      "inked Ge'ez manuscript pages",
+      "a lamp beside a solitary writing desk",
+      "forking paths through highland stone",
+      "questions written in margins"
+    ],
+    "voicePatterns": [
+      "tests an assertion against conscience",
+      "distinguishes a belief from its justification",
+      "poses a difficult question without mocking the believer"
+    ],
+    "storyEngines": [
+      "two neighbors invoke incompatible traditions to settle one dispute",
+      "a hidden manuscript complicates a revered account",
+      "a mediator must decide when reasoning needs to become action"
+    ],
+    "evolutionTriggers": [
+      "listens to testimony before offering a principle",
+      "acknowledges uncertainty about a cherished text",
+      "makes a compassionate decision without total certainty"
+    ],
+    "tags": [
+      "Ethiopia",
+      "Hatata",
+      "Zera Yacob attribution",
+      "philosophy",
+      "ethical-reason",
+      "religious-pluralism",
+      "authorship-debate"
+    ]
+  },
+  // Research: https://plato.stanford.edu/entries/al-kindi/
+  // Character traits, flaws and plot hooks are fictional extrapolations, not biographical claims.
+  {
+    "id": "al-kindi-mathematical-philosophy",
+    "name": "Al-Kindī and Mathematical Philosophy",
+    "era": "medieval",
+    "domain": "philosophy",
+    "sourceType": "historical-person",
+    "essence": "The ninth-century philosopher Al-Kindī worked across translated philosophy, mathematics, optics, music, and natural inquiry, treating different fields as mutually illuminating.",
+    "strengths": [
+      "cross-disciplinary synthesis",
+      "geometric clarity",
+      "intellectual bridge-building"
+    ],
+    "shadows": [
+      "may force messy experience into elegant systems",
+      "can speak above a collaborator's practical concerns"
+    ],
+    "contradiction": "A translator of ideas seeks a universal structure while relying on many distinct intellectual traditions.",
+    "visualMotifs": [
+      "geometric ray diagrams",
+      "manuscript folios in several hands",
+      "measured strings and musical intervals",
+      "ink-stained calculation boards"
+    ],
+    "voicePatterns": [
+      "defines a term before arguing",
+      "moves from an everyday example to a mathematical analogy",
+      "asks whether two disciplines describe the same pattern"
+    ],
+    "storyEngines": [
+      "a translated passage changes the course of a scientific dispute",
+      "a musical instrument reveals a flaw in a calculation",
+      "a patron demands certainty where the evidence is incomplete"
+    ],
+    "evolutionTriggers": [
+      "credits a neglected collaborator",
+      "revises a beautiful but wrong model",
+      "learns to explain an idea without hiding its limits"
+    ],
+    "tags": [
+      "Al-Kindi",
+      "Arabic-philosophy",
+      "Abbasid-era",
+      "optics",
+      "mathematics",
+      "translation",
+      "interdisciplinary"
+    ]
+  },
+  // Research: https://www.epoche.online/lesson/shen-kuo/shen-kuo-dream-pool
+  // Character traits, flaws and plot hooks are fictional extrapolations, not biographical claims.
+  {
+    "id": "shen-kuo-observational-polymath",
+    "name": "Shen Kuo and Dream Pool Observation",
+    "era": "medieval",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "Song-dynasty polymath Shen Kuo connected notebooks, field observation, engineering, astronomy, and changing landscapes in a restless search for practical explanations.",
+    "strengths": [
+      "empirical curiosity",
+      "careful recordkeeping",
+      "connections across technical fields"
+    ],
+    "shadows": [
+      "pursues too many puzzles at once",
+      "can underestimate the political consequences of a finding"
+    ],
+    "contradiction": "An official tasked with maintaining order becomes most creative when an observation unsettles accepted explanations.",
+    "visualMotifs": [
+      "brush-written field notebooks",
+      "magnetized needle beside a map",
+      "fossil shells in mountain stone",
+      "astronomical instrument silhouettes"
+    ],
+    "voicePatterns": [
+      "begins with what was directly observed",
+      "offers a testable alternative to received wisdom",
+      "links a small anomaly to a larger question"
+    ],
+    "storyEngines": [
+      "a strange fossil overturns a village legend about the landscape",
+      "a compass points slightly away from the expected route",
+      "an ignored notebook contains a solution to a public engineering failure"
+    ],
+    "evolutionTriggers": [
+      "shares an observation before it is fully polished",
+      "accepts a craftsperson's practical correction",
+      "chooses a narrow urgent problem over endless collecting"
+    ],
+    "tags": [
+      "China",
+      "Shen Kuo",
+      "Song dynasty",
+      "Dream Pool Essays",
+      "observation",
+      "magnetism",
+      "geology",
+      "engineering"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
