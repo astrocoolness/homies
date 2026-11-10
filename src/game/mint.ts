@@ -110,6 +110,60 @@ function imagePrompt(facts: MintFacts) {
   return `One cute ${age}, full body, standing, centered. Chunky rounded limbs, big head, soft matte plastic, gentle studio light. Outfit hints at this life: ${facts.days}. Personality: ${facts.descriptors.join(", ")}. Plain warm cream background, no scenery, no text, no watermark, no extra people.`;
 }
 
+function parseDataUrl(dataUrl: string): { mime: string; data: string } | null {
+  const match = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
+  if (!match) return null;
+  return { mime: match[1], data: match[2] };
+}
+
+async function drawPortraitGemini(key: string, facts: MintFacts, imageDataUrl: string): Promise<{ ok: true; portrait: string } | { ok: false; error: string }> {
+  const parsed = parseDataUrl(imageDataUrl);
+  if (!parsed) return { ok: false, error: "Invalid photo data." };
+  try {
+    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": key,
+      },
+      signal: AbortSignal.timeout(70_000),
+      body: JSON.stringify({
+        model: "gemini-nano-banana-2.1",
+        input: [
+          { type: "text", text: imagePrompt(facts) },
+          { type: "image", mime_type: parsed.mime, data: parsed.data },
+        ],
+        response_format: { type: "image" },
+      }),
+    });
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      console.error("drawPortraitGemini failed", res.status, detail.slice(0, 500));
+      return { ok: false, error: classifyError(res.status, detail) };
+    }
+    const body = (await res.json()) as {
+      steps?: { type?: string; content?: { type?: string; data?: string; mime_type?: string }[] }[];
+      output_image?: { data?: string; mime_type?: string };
+    };
+    for (const step of body.steps ?? []) {
+      for (const block of step.content ?? []) {
+        if (block.type === "image" && block.data) {
+          const mime = block.mime_type || "image/png";
+          return { ok: true, portrait: `data:${mime};base64,${block.data}` };
+        }
+      }
+    }
+    if (body.output_image?.data) {
+      const mime = body.output_image.mime_type || "image/png";
+      return { ok: true, portrait: `data:${mime};base64,${body.output_image.data}` };
+    }
+    return { ok: false, error: "The portrait didn't come through. Try the photo again." };
+  } catch (err) {
+    console.error("drawPortraitGemini", err instanceof Error ? err.message : "failed");
+    return { ok: false, error: "The image service took too long. Try again." };
+  }
+}
+
 async function drawPortraitKeyed(apiKey: string, facts: MintFacts, imageDataUrl: string): Promise<{ ok: true; portrait: string } | { ok: false; error: string }> {
   const isOr = apiKey.startsWith("sk-or-");
   const endpoint = isOr ? "https://openrouter.ai/api/v1/images" : "https://api.x.ai/v1/images/edits";
@@ -239,11 +293,18 @@ export const mintHomie = createServerFn({ method: "POST" })
     if (facts.home.length < 2 || facts.days.length < 2 || facts.habit.length < 2) {
       return { ok: false, error: "Tell me where they live, how they spend the day, and one habit." };
     }
+    const geminiKey = process.env.GEMINI_API_KEY;
     const xaiKey = process.env.XAI_API_KEY;
-    if (!xaiKey) return { ok: false, error: "Portrait generation isn't available right now." };
+    if (!geminiKey && !xaiKey) return { ok: false, error: "Portrait generation isn't available right now." };
     try {
       const sheet = await writeSheet(xaiKey, facts);
-      const portraitResult = await drawPortraitKeyed(xaiKey, facts, data.imageDataUrl);
+      let portraitResult: { ok: true; portrait: string } | { ok: false; error: string } = { ok: false, error: "No image service available." };
+      if (geminiKey) {
+        portraitResult = await drawPortraitGemini(geminiKey, facts, data.imageDataUrl);
+      }
+      if (!portraitResult.ok && xaiKey) {
+        portraitResult = await drawPortraitKeyed(xaiKey, facts, data.imageDataUrl);
+      }
       if (!portraitResult.ok) return { ok: false, error: portraitResult.error };
       sheet.portrait = portraitResult.portrait;
       sheet.name = facts.name;
