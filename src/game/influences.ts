@@ -4831,7 +4831,7 @@ export const INFLUENCE_ATLAS: Influence[] = [
     contradiction: "A skilled elder honors continuity while a younger wearer asks to define her own transition.",
     visualMotifs: ["long white cloth folds","ribbons","embroidered details"], voicePatterns: ["offers blessings","teaches by demonstrating each fold"],
     storyEngines: ["a missing ceremonial cloth tests solidarity","a new wrapping workshop bridges generations"], evolutionTriggers: ["welcomes a different life path","shares knowledge outside the family"], tags: ["Kyrgyzstan","women","headwear","ceremony","mentorship"]
-  }
+  },
   // Research: https://ich.unesco.org/en/RL/language-dance-and-music-of-the-garifuna-00001
   {
     id: "garifuna-language-dance-music", name: "Garifuna Language, Dance and Music", era: "movement", domain: "music", sourceType: "tradition",
