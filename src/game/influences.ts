@@ -7172,6 +7172,409 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "engineering"
     ]
   },
+  // Research: https://ich.unesco.org/en/RL/music-of-the-imzad-of-the-tuareg-communities-00891
+  {
+    "id": "tuareg-imzad-music",
+    "name": "Tuareg Imzad Music and Poetic Accompaniment",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "A women-led bowed-string practice across Tuareg communities in Algeria, Mali and Niger links careful listening, poetic memory and music shaped by mood.",
+    "strengths": [
+      "attentive musical listening",
+      "patient oral apprenticeship",
+      "subtle emotional expression"
+    ],
+    "shadows": [
+      "a fictional apprentice may fear making mistakes in public",
+      "may rely on familiar forms when collaboration asks for change"
+    ],
+    "contradiction": "A performer can carry communal memory while needing room for a personal voice.",
+    "visualMotifs": [
+      "single-string bowed gourd instrument",
+      "small rosette sound holes",
+      "quiet evening gathering",
+      "arched wooden bow"
+    ],
+    "voicePatterns": [
+      "responds to stories with brief musical images",
+      "listens before choosing a few precise words",
+      "uses pauses to signal care"
+    ],
+    "storyEngines": [
+      "a young musician is asked to accompany a new poem",
+      "an old instrument needs repair before a community gathering",
+      "two apprentices hear different meanings in the same melody"
+    ],
+    "evolutionTriggers": [
+      "performs despite fear of imperfection",
+      "learns to share interpretive authority",
+      "mentors a younger listener without demanding imitation"
+    ],
+    "tags": [
+      "Tuareg",
+      "Algeria",
+      "Mali",
+      "Niger",
+      "imzad",
+      "bowed-string",
+      "women-musicians",
+      "oral-transmission",
+      "music"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/orteke-traditional-performing-art-in-kazakhstan-dance-puppet-and-music-01878
+  {
+    "id": "kazakh-orteke-puppet-performance",
+    "name": "Kazakh Orteke Music-and-Puppet Performance",
+    "era": "contemporary",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A dombyra player's finger movements animate a small wooden mountain-goat puppet, joining music, comic timing and skilled hand coordination.",
+    "strengths": [
+      "rhythmic dexterity",
+      "playful teaching",
+      "craft-and-performance coordination"
+    ],
+    "shadows": [
+      "a fictional virtuoso may prize cleverness over audience connection",
+      "may resist adapting a familiar routine"
+    ],
+    "contradiction": "The puppet seems independent precisely because the musician must master every hidden connection.",
+    "visualMotifs": [
+      "carved mountain-goat puppet",
+      "dombyra strings",
+      "miniature dance platform",
+      "fine control threads"
+    ],
+    "voicePatterns": [
+      "explains complicated mechanisms through jokes",
+      "uses lively question-and-answer rhythms",
+      "leaves space for a child's interpretation"
+    ],
+    "storyEngines": [
+      "a broken control thread threatens a public performance",
+      "a child invents an unexpected new puppet step",
+      "two makers disagree over whether a puppet should be repaired or replaced"
+    ],
+    "evolutionTriggers": [
+      "welcomes an apprentice's innovation",
+      "learns to perform with fewer tricks and more feeling",
+      "shares the craft rather than guarding status"
+    ],
+    "tags": [
+      "Kazakhstan",
+      "Orteke",
+      "dombyra",
+      "puppetry",
+      "music",
+      "woodcraft",
+      "rhythm",
+      "intergenerational"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/kimjang-making-and-sharing-kimchi-in-the-republic-of-korea-00881
+  {
+    "id": "korean-kimjang-collective-foodways",
+    "name": "Korean Kimjang Collective Foodways",
+    "era": "contemporary",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Seasonal collective preparation and sharing of kimchi connects fermentation know-how with household cooperation, food security and reciprocal care.",
+    "strengths": [
+      "seasonal planning",
+      "resource sharing",
+      "intergenerational practical teaching"
+    ],
+    "shadows": [
+      "a fictional organizer may become rigid about the 'right' method",
+      "can overlook quieter helpers while coordinating a large group"
+    ],
+    "contradiction": "A practice of collective generosity can still spark intimate disputes about recipes, ownership and change.",
+    "visualMotifs": [
+      "large earthenware fermentation vessels",
+      "neatly stacked cabbage leaves",
+      "shared preparation tables",
+      "winter pantry shelves"
+    ],
+    "voicePatterns": [
+      "counts supplies while checking on people",
+      "tells small memories through ingredients",
+      "offers direct practical encouragement"
+    ],
+    "storyEngines": [
+      "neighbors organize a shared pantry before an early winter",
+      "a newcomer introduces an unexpected ingredient",
+      "an heirloom recipe sparks a debate over who gets to change it"
+    ],
+    "evolutionTriggers": [
+      "makes space for regional variation",
+      "asks for help instead of carrying the whole task",
+      "shares credit with the quietest contributor"
+    ],
+    "tags": [
+      "Korea",
+      "kimjang",
+      "kimchi",
+      "fermentation",
+      "foodways",
+      "mutual-aid",
+      "seasonal-cycle",
+      "community"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/tais-traditional-textile-01688
+  {
+    "id": "timor-leste-tais-weaving",
+    "name": "Timor-Leste Tais Weaving Knowledge",
+    "era": "contemporary",
+    "domain": "visual-art",
+    "sourceType": "tradition",
+    "essence": "Handwoven cotton textiles carry locally varied color, motif and ceremonial meanings, sustained through skilled dyeing, weaving and teaching.",
+    "strengths": [
+      "patient textile design",
+      "material literacy",
+      "intergenerational stewardship"
+    ],
+    "shadows": [
+      "a fictional craftsperson may worry that change threatens meaning",
+      "may accept unsustainable commissions to protect income"
+    ],
+    "contradiction": "The cloth connects families while its maker must negotiate who controls the design and its value.",
+    "visualMotifs": [
+      "handloom threads",
+      "plant-dyed cotton",
+      "striped woven panels",
+      "pattern notebooks"
+    ],
+    "voicePatterns": [
+      "describes relationships through warp and weft",
+      "asks where a color came from",
+      "gives patient stepwise instructions"
+    ],
+    "storyEngines": [
+      "a workshop must decide how to price its work fairly",
+      "a ceremonial textile is repaired for a new generation",
+      "an apprentice proposes a pattern with unfamiliar meaning"
+    ],
+    "evolutionTriggers": [
+      "sets fair terms for a commission",
+      "documents a technique with community consent",
+      "lets a new weaver add an original motif"
+    ],
+    "tags": [
+      "Timor-Leste",
+      "Tais",
+      "textiles",
+      "weaving",
+      "natural-dyes",
+      "craft-economy",
+      "heritage",
+      "apprenticeship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/wosana-ritual-and-associated-practices-02117
+  {
+    "id": "bakalanga-wosana-community-stewardship",
+    "name": "Bakalanga Wosana Community Stewardship",
+    "era": "contemporary",
+    "domain": "spirituality",
+    "sourceType": "tradition",
+    "essence": "A rain-related communal tradition among Bakalanga communities of Botswana and nearby Zimbabwe emphasizes collective roles, song, mentoring and safeguarding sacred knowledge.",
+    "strengths": [
+      "collective coordination",
+      "respect for knowledge boundaries",
+      "long-term cultural stewardship"
+    ],
+    "shadows": [
+      "a fictional organizer may confuse stewardship with control",
+      "may struggle to involve younger volunteers"
+    ],
+    "contradiction": "Public celebration can support continuity even when some knowledge must remain private.",
+    "visualMotifs": [
+      "gathering beneath a changing sky",
+      "community meeting circles",
+      "rain clouds over fields",
+      "carefully tended cultural spaces"
+    ],
+    "voicePatterns": [
+      "asks who has consent to share a story",
+      "uses inclusive invitations rather than commands",
+      "distinguishes public knowledge from protected knowledge"
+    ],
+    "storyEngines": [
+      "a community plans a public heritage exhibition without exposing sacred details",
+      "elders and youth negotiate an accessible teaching event",
+      "an organizer must respond to an out-of-context commercial portrayal"
+    ],
+    "evolutionTriggers": [
+      "obtains community consent before documenting",
+      "builds trust across generations",
+      "learns to say no to exploitative requests"
+    ],
+    "tags": [
+      "Botswana",
+      "Zimbabwe",
+      "Bakalanga",
+      "Wosana",
+      "community-stewardship",
+      "rain",
+      "safeguarding",
+      "consent",
+      "living-heritage"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/ngondo-worship-of-water-oracles-and-associated-cultural-traditions-among-the-sawa-02140
+  {
+    "id": "sawa-ngondo-water-community",
+    "name": "Sawa Ngondo Water and Community Traditions",
+    "era": "contemporary",
+    "domain": "myth-folklore",
+    "sourceType": "tradition",
+    "essence": "An annual Sawa gathering in Cameroon joins river-centered cultural identity, public festivities, intergenerational roles and communal deliberation; sacred components are not templates for imitation.",
+    "strengths": [
+      "public-event organization",
+      "intergenerational mediation",
+      "river stewardship"
+    ],
+    "shadows": [
+      "a fictional spokesperson may mistake visibility for consensus",
+      "can prioritize ceremony logistics over everyday needs"
+    ],
+    "contradiction": "A community speaks together through public celebration while protecting the distinct responsibilities of its members.",
+    "visualMotifs": [
+      "Wouri riverbank",
+      "festival canoes viewed from shore",
+      "community notice boards",
+      "craft fair canopies"
+    ],
+    "voicePatterns": [
+      "invites multiple viewpoints before summarizing",
+      "links plans to shared responsibility",
+      "uses calm public announcements"
+    ],
+    "storyEngines": [
+      "volunteers organize river cleanup alongside a festival",
+      "a community archivist seeks permission to record public performances",
+      "two neighborhoods negotiate shared responsibilities for a celebration"
+    ],
+    "evolutionTriggers": [
+      "includes a previously unheard neighbor",
+      "chooses ecological repair over prestige",
+      "respects a boundary around sacred knowledge"
+    ],
+    "tags": [
+      "Cameroon",
+      "Sawa",
+      "Ngondo",
+      "Wouri",
+      "river",
+      "community-festival",
+      "stewardship",
+      "cultural-consent"
+    ]
+  },
+  // Research: https://www.acs.org/education/whatischemistry/landmarks/alice-ball.html
+  {
+    "id": "alice-augusta-ball-chemistry",
+    "name": "Alice Augusta Ball and Applied Chemistry",
+    "era": "early-modern",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A pioneering early-twentieth-century chemist developed an injectable preparation from chaulmoogra oil that improved treatment for Hansen's disease; her scientific contribution was recognized fully only later.",
+    "strengths": [
+      "experimental precision",
+      "applied chemical ingenuity",
+      "focus on human benefit"
+    ],
+    "shadows": [
+      "a fictional scientist inspired by the theme may overwork in pursuit of proof",
+      "may neglect to document shared contributions"
+    ],
+    "contradiction": "A breakthrough can transform many lives even while its originator is denied timely recognition.",
+    "visualMotifs": [
+      "glass laboratory flasks",
+      "handwritten reaction notes",
+      "botanical oil samples",
+      "careful bench labels"
+    ],
+    "voicePatterns": [
+      "explains results in concrete steps",
+      "separates observed effects from hypotheses",
+      "asks whose work is missing from the record"
+    ],
+    "storyEngines": [
+      "a lab notebook reveals a forgotten contributor",
+      "a treatment prototype needs an ethical clinical partner",
+      "a young researcher challenges a flawed attribution"
+    ],
+    "evolutionTriggers": [
+      "establishes transparent credit practices",
+      "shares methods so others can verify them",
+      "asks how research reaches people who need it"
+    ],
+    "tags": [
+      "Alice Ball",
+      "Alice Augusta Ball",
+      "chemistry",
+      "Hawaii",
+      "Hansen's disease",
+      "research-credit",
+      "medical-history",
+      "early-20th-century"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/gesar-epic-tradition-00204
+  {
+    "id": "gesar-epic-storytelling-tradition",
+    "name": "Gesar Epic Oral Storytelling Tradition",
+    "era": "medieval",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "Tibetan, Mongolian and Tu epic narrators transmit a vast heroic cycle through locally varied episodes, alternating spoken and sung narration, gesture and memory.",
+    "strengths": [
+      "episodic narrative architecture",
+      "improvisational recall",
+      "community-centered teaching"
+    ],
+    "shadows": [
+      "a fictional storyteller may idealize heroic authority",
+      "may struggle to honor competing versions of a tale"
+    ],
+    "contradiction": "One shared epic can preserve continuity precisely because its tellers keep many versions alive.",
+    "visualMotifs": [
+      "bronze storyteller's mirror",
+      "strings of narrative beads",
+      "fiddle beside a storyteller",
+      "mountain gathering at dusk"
+    ],
+    "voicePatterns": [
+      "alternates intimate detail with sweeping scale",
+      "marks transitions through repeated narrative motifs",
+      "asks listeners which version they know"
+    ],
+    "storyEngines": [
+      "two narrators disagree about a hero's forgotten choice",
+      "a young performer discovers an overlooked minor character",
+      "a community archive preserves several contradictory tellings"
+    ],
+    "evolutionTriggers": [
+      "credits another lineage's telling",
+      "gives an overlooked character agency",
+      "chooses to preserve variation instead of enforcing a single canon"
+    ],
+    "tags": [
+      "Gesar",
+      "King Gesar",
+      "Tibetan",
+      "Mongolian",
+      "Tu",
+      "oral-epic",
+      "storytelling",
+      "narrative-variation",
+      "folklore"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
