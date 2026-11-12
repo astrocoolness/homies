@@ -7576,7 +7576,7 @@ export const INFLUENCE_ATLAS: Influence[] = [
     ]
   },
   // Creative tensions below are fictional story ingredients, not biographical or cultural generalizations.
-  // Research: https://ich.unesco.org/en/RL/traditional-craftsmanship-of-making-dumbara-rata-kalala-01693
+  // Research: https://ich.unesco.org/en/decisions/16.COM/8.B.38
   {
     "id": "dumbara-rata-kalala-weaving",
     "name": "Dumbara Ratā Kalāla Mat Weaving",
