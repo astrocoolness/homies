@@ -7575,6 +7575,367 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "folklore"
     ]
   },
+  // Creative tensions below are fictional story ingredients, not biographical or cultural generalizations.
+  // Research: https://ich.unesco.org/en/RL/traditional-craftsmanship-of-making-dumbara-rata-kalala-01693
+  {
+    "id": "dumbara-rata-kalala-weaving",
+    "name": "Dumbara Ratā Kalāla Mat Weaving",
+    "era": "contemporary",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Sri Lankan Kinnara artisans translate hana plant fibres, natural dyes and symbolic patterns into durable woven mats while sustaining inherited craft knowledge.",
+    "strengths": [
+      "patient material preparation",
+      "geometric composition",
+      "intergenerational teaching"
+    ],
+    "shadows": [
+      "may guard a pattern too tightly",
+      "can prioritize flawless repetition over a new apprentice's ideas"
+    ],
+    "contradiction": "A keeper of inherited designs must decide how much change a living tradition can welcome.",
+    "visualMotifs": [
+      "sun-dried hana fibres",
+      "handloom with patterned mat",
+      "earth-toned botanical dyes"
+    ],
+    "voicePatterns": [
+      "explains a difficult choice through warp and weft",
+      "notices small differences in texture before making judgments"
+    ],
+    "storyEngines": [
+      "a new commission demands a motif the workshop has never attempted",
+      "a young weaver asks who gets to own a family pattern"
+    ],
+    "evolutionTriggers": [
+      "invites an apprentice to invent a variation",
+      "shares credit for a collective design"
+    ],
+    "tags": [
+      "Sri-Lanka",
+      "Dumbara",
+      "Kinnara-artisans",
+      "weaving",
+      "hana-fibre",
+      "craft-transmission",
+      "pattern"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/ceebu-jn-the-culinary-art-of-senegal-01748
+  {
+    "id": "ceebu-jen-senegal-culinary-art",
+    "name": "Ceebu Jën Culinary Art of Senegal",
+    "era": "contemporary",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "A Saint-Louis-rooted Senegalese culinary practice brings fish, rice, vegetables and shared table etiquette into a language of hospitality and belonging.",
+    "strengths": [
+      "careful preparation",
+      "resourceful seasonal planning",
+      "welcoming hospitality"
+    ],
+    "shadows": [
+      "may treat a family recipe as an unbreakable rule",
+      "can exhaust themselves while hosting others"
+    ],
+    "contradiction": "A generous host who feeds everyone struggles to make room for another person's way of caring.",
+    "visualMotifs": [
+      "communal rice platter",
+      "market baskets of seasonal vegetables",
+      "sunlit coastal kitchen"
+    ],
+    "voicePatterns": [
+      "asks about guests before describing a menu",
+      "tells stories through ingredients and occasions"
+    ],
+    "storyEngines": [
+      "a storm disrupts the market before an important meal",
+      "two cooks must negotiate different regional preparations"
+    ],
+    "evolutionTriggers": [
+      "accepts a guest's thoughtful adaptation",
+      "learns to delegate the celebration"
+    ],
+    "tags": [
+      "Senegal",
+      "Saint-Louis",
+      "ceebu-jen",
+      "thieboudienne",
+      "culinary-heritage",
+      "hospitality",
+      "shared-meals"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/usl/mongol-biyelgee-mongolian-traditional-folk-dance-00311
+  {
+    "id": "mongol-biyelgee-folk-dance",
+    "name": "Mongol Biyelgee Folk Dance",
+    "era": "contemporary",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Mongolian dancers use precise hand, shoulder and seated movements in intimate spaces to express varied nomadic lifeways and community histories.",
+    "strengths": [
+      "expressive precision",
+      "adaptation to limited space",
+      "family-based mentorship"
+    ],
+    "shadows": [
+      "may mistake unfamiliar movement for disrespect",
+      "can hide stage fright behind strict technique"
+    ],
+    "contradiction": "A performer who can tell a vast landscape's story within a small ger fears stepping into a larger stage.",
+    "visualMotifs": [
+      "compact ger interior",
+      "embroidered sleeves in motion",
+      "hands tracing everyday work"
+    ],
+    "voicePatterns": [
+      "explains emotions as movement sequences",
+      "pauses to watch how others occupy space"
+    ],
+    "storyEngines": [
+      "an elder and a young dancer disagree over a public performance",
+      "a cramped gathering becomes an unexpected dance lesson"
+    ],
+    "evolutionTriggers": [
+      "learns from a different community's variation",
+      "finds confidence without abandoning intimate performance"
+    ],
+    "tags": [
+      "Mongolia",
+      "biyelgee",
+      "folk-dance",
+      "ger",
+      "embodied-memory",
+      "apprenticeship",
+      "performance"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/makishi-masquerade-00140
+  {
+    "id": "makishi-masquerade-zambia",
+    "name": "Makishi Masquerade of Zambia",
+    "era": "contemporary",
+    "domain": "myth-folklore",
+    "sourceType": "tradition",
+    "essence": "Public masked dance and dramatic performance among Luvale, Chokwe, Luchazi and Mbunda communities convey ancestral memory and communal transition within a wider ceremonial context.",
+    "strengths": [
+      "ensemble coordination",
+      "symbolic storytelling",
+      "community responsibility"
+    ],
+    "shadows": [
+      "may confuse the public spectacle with the whole tradition",
+      "can resist questions about who may interpret a performance"
+    ],
+    "contradiction": "A fictional festival organizer wants to share the beauty of a performance while protecting knowledge that is not theirs to reveal.",
+    "visualMotifs": [
+      "public dance circle",
+      "painted performance masks without replicating restricted designs",
+      "gathering at a village celebration"
+    ],
+    "voicePatterns": [
+      "uses careful language about community permissions",
+      "lets gesture carry meaning before explanation"
+    ],
+    "storyEngines": [
+      "a visitor requests access to a private ceremony and must be refused respectfully",
+      "a youth troupe plans a public celebration with elder guidance"
+    ],
+    "evolutionTriggers": [
+      "chooses consent over publicity",
+      "helps document only what custodians wish to share"
+    ],
+    "tags": [
+      "Zambia",
+      "makishi",
+      "public-masquerade",
+      "community-consent",
+      "ceremonial-performance",
+      "oral-heritage",
+      "mentorship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/al-azi-elegy-processional-march-and-poetry-00850
+  {
+    "id": "omani-al-azi-processional-poetry",
+    "name": "Omani Al ‘Azi Processional Poetry",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Northern Omani sung poetry brings a lead poet and responding chorus together through procession, movement, improvisation and communal remembrance.",
+    "strengths": [
+      "responsive leadership",
+      "oral memory",
+      "conflict mediation"
+    ],
+    "shadows": [
+      "can favor grand declarations over quiet listeners",
+      "may equate group unity with agreement"
+    ],
+    "contradiction": "A gifted leader can summon a chorus but must learn to hear the person who stays silent.",
+    "visualMotifs": [
+      "processional formation",
+      "poet and answering chorus",
+      "rhythmic steps at a gathering"
+    ],
+    "voicePatterns": [
+      "builds statements toward a collective response",
+      "weaves historical memory into present disagreements"
+    ],
+    "storyEngines": [
+      "a village dispute threatens a planned public celebration",
+      "an inexperienced poet must guide a chorus through an unexpected interruption"
+    ],
+    "evolutionTriggers": [
+      "makes room for dissent within celebration",
+      "invites a younger voice to lead"
+    ],
+    "tags": [
+      "Oman",
+      "al-azi",
+      "processional-poetry",
+      "chorus",
+      "oral-memory",
+      "improvisation",
+      "community-unity"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/tbourida-01483
+  {
+    "id": "moroccan-tbourida-equestrian-performance",
+    "name": "Moroccan Tbourida Equestrian Performance",
+    "era": "contemporary",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Moroccan Arab-Amazigh equestrian troupes combine coordinated riding, ceremonial attire and choreographed displays rooted in historical parade traditions.",
+    "strengths": [
+      "precise teamwork",
+      "animal care",
+      "calm under pressure"
+    ],
+    "shadows": [
+      "may prize perfect synchronization above individual needs",
+      "can become preoccupied with public acclaim"
+    ],
+    "contradiction": "A celebrated troupe captain must choose between a flawless display and the welfare of a tired horse.",
+    "visualMotifs": [
+      "ornamented saddles",
+      "riders aligned across an arena",
+      "dust rising beneath horses' hooves"
+    ],
+    "voicePatterns": [
+      "gives concise coordinated cues",
+      "talks about trust as something practiced rather than proclaimed"
+    ],
+    "storyEngines": [
+      "a horse refuses the expected formation before a major event",
+      "two generations disagree about what makes a performance honorable"
+    ],
+    "evolutionTriggers": [
+      "changes the routine to protect an animal",
+      "credits the stable team rather than the captain alone"
+    ],
+    "tags": [
+      "Morocco",
+      "tbourida",
+      "equestrian-arts",
+      "Arab-Amazigh",
+      "team-coordination",
+      "horse-welfare",
+      "ceremony"
+    ]
+  },
+  // Research: https://www.journals.uchicago.edu/doi/10.1086/348609
+  {
+    "id": "ibn-al-shatir-astronomy",
+    "name": "Ibn al-Shatir and Geometric Astronomy",
+    "era": "medieval",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A fourteenth-century Damascus astronomer whose mathematical reworking of planetary models inspires exact observation and the courage to revise elegant inherited systems.",
+    "strengths": [
+      "geometric reasoning",
+      "observational patience",
+      "constructive skepticism"
+    ],
+    "shadows": [
+      "a fictional admirer may overvalue a perfect model",
+      "can lose collaborators in technical detail"
+    ],
+    "contradiction": "An investigator trusts mathematics enough to challenge the mathematics they inherited.",
+    "visualMotifs": [
+      "interlocking celestial circles",
+      "astronomical manuscript margins",
+      "night-sky measurement sketches"
+    ],
+    "voicePatterns": [
+      "explains disagreements through testable diagrams",
+      "rephrases complex motions as simple geometric relationships"
+    ],
+    "storyEngines": [
+      "a trusted star chart fails during an urgent navigation task",
+      "a junior observer finds an error in a respected model"
+    ],
+    "evolutionTriggers": [
+      "publishes a correction openly",
+      "invites a rival to test the new model"
+    ],
+    "tags": [
+      "Damascus",
+      "ibn-al-shatir",
+      "ibn-ash-shatir",
+      "medieval-astronomy",
+      "planetary-models",
+      "geometry",
+      "observation"
+    ]
+  },
+  // Research: https://www.harvardmagazine.com/2010/01/pharmacologist-li-shizhen-biography
+  {
+    "id": "li-shizhen-materia-medica",
+    "name": "Li Shizhen and the Bencao Gangmu",
+    "era": "renaissance",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A Ming-era physician and compiler whose comparative study of names, substances and historical medical texts inspires meticulous classification and critical reading.",
+    "strengths": [
+      "cross-checking sources",
+      "taxonomic organization",
+      "persistence across long projects"
+    ],
+    "shadows": [
+      "a fictional scholar may collect more than they can verify",
+      "can confuse a complete catalogue with settled truth"
+    ],
+    "contradiction": "A cataloguer devoted to preserving inherited knowledge becomes most useful by questioning it.",
+    "visualMotifs": [
+      "annotated specimen pages",
+      "stacked woodblock volumes",
+      "plant sketches beside marginal corrections"
+    ],
+    "voicePatterns": [
+      "asks what different communities call the same thing",
+      "distinguishes an observation from a reported claim"
+    ],
+    "storyEngines": [
+      "two similar names conceal dangerously different specimens",
+      "a family must finish and publish an unfinished reference work"
+    ],
+    "evolutionTriggers": [
+      "marks uncertain claims instead of repeating them",
+      "recognizes editors and field informants as collaborators"
+    ],
+    "tags": [
+      "Ming-China",
+      "li-shizhen",
+      "bencao-gangmu",
+      "materia-medica",
+      "classification",
+      "history-of-medicine",
+      "source-criticism"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
