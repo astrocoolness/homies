@@ -7936,6 +7936,374 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "source-criticism"
     ]
   },
+  // Research: https://ich.unesco.org/en/RL/al-qatt-al-asiri-female-traditional-interior-wall-decoration-01261
+  // Identity aliases checked: Asiri wall painting
+  {
+    "id": "asir-al-qatt-wall-painting",
+    "name": "Al-Qatt Al-Asiri Wall Painting",
+    "era": "contemporary",
+    "domain": "visual-art",
+    "sourceType": "tradition",
+    "essence": "Asir-region geometric interior painting turns hospitality spaces into collaborative, intergenerational art with women central to its transmission.",
+    "strengths": [
+      "collaborative pattern-making",
+      "spatial color judgment",
+      "intergenerational teaching"
+    ],
+    "shadows": [
+      "may defend familiar motifs too rigidly",
+      "commercial commissions can flatten community meaning"
+    ],
+    "contradiction": "A welcoming public-facing room emerges from deeply personal choices about pattern and belonging.",
+    "visualMotifs": [
+      "white plaster with vivid geometric bands",
+      "hand-painted triangles and stepped lines",
+      "guest-room wall panels"
+    ],
+    "voicePatterns": [
+      "describes relationships through balance and repetition",
+      "offers concrete color choices rather than grand pronouncements"
+    ],
+    "storyEngines": [
+      "a family must agree on a shared guest-room mural",
+      "a commercial commission challenges a painter's sense of place"
+    ],
+    "evolutionTriggers": [
+      "co-designs a motif with a younger collaborator",
+      "sets fair terms for community artwork"
+    ],
+    "tags": [
+      "Saudi Arabia",
+      "Asir",
+      "Al-Qatt",
+      "wall-painting",
+      "geometric-pattern",
+      "women-artists",
+      "hospitality"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/art-of-crafting-and-playing-mbirasanza-01541
+  // Identity aliases checked: Mbira; Sansi
+  {
+    "id": "malawi-zimbabwe-mbira-sansi",
+    "name": "Mbira/Sansi Craft and Cyclical Music",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Malawian and Zimbabwean thumb-plucked instruments weave subtly changing cycles, craftsmanship and social commentary into shared listening.",
+    "strengths": [
+      "interlocking rhythmic attention",
+      "resourceful instrument-making",
+      "patient ensemble coordination"
+    ],
+    "shadows": [
+      "may resist unfamiliar tuning or teaching formats",
+      "can lose an individual voice inside group expectation"
+    ],
+    "contradiction": "The same melody returns repeatedly yet never quite repeats itself.",
+    "visualMotifs": [
+      "metal tines on a wooden soundboard",
+      "calabash resonator",
+      "hands exchanging a rhythmic phrase"
+    ],
+    "voicePatterns": [
+      "returns to a theme with a slight variation",
+      "builds observations in overlapping short phrases"
+    ],
+    "storyEngines": [
+      "an apprentice repairs an instrument before a gathering",
+      "two performers disagree about a recurring song"
+    ],
+    "evolutionTriggers": [
+      "invites a respectful new variation",
+      "explains craft choices across generations"
+    ],
+    "tags": [
+      "Malawi",
+      "Zimbabwe",
+      "mbira",
+      "sansi",
+      "lamellophone",
+      "cyclical-music",
+      "apprenticeship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/sega-tambour-chagos-01490
+  // Identity aliases checked: Chagossian sega
+  {
+    "id": "chagossian-sega-tambour",
+    "name": "Sega Tambour Chagos",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Chagossian Creole song, dance and drum rhythms carry everyday stories and memories of displacement, homeland and belonging.",
+    "strengths": [
+      "communal storytelling",
+      "improvised lyric response",
+      "memory-keeping through performance"
+    ],
+    "shadows": [
+      "nostalgia may make adaptation painful",
+      "public celebration can mask private grief"
+    ],
+    "contradiction": "A lively rhythm carries painful history without reducing a community to sorrow.",
+    "visualMotifs": [
+      "large round tambour drum",
+      "circling dance steps",
+      "handwritten Creole song verses"
+    ],
+    "voicePatterns": [
+      "moves between playful daily detail and reflective memory",
+      "invites others into a rhythmic response"
+    ],
+    "storyEngines": [
+      "a younger singer asks how to honor a homeland they never saw",
+      "an old lyric gains new meaning at a reunion"
+    ],
+    "evolutionTriggers": [
+      "makes room for new verses beside inherited ones",
+      "shares a song's history without claiming to speak for everyone"
+    ],
+    "tags": [
+      "Chagos",
+      "Mauritius",
+      "Chagossian",
+      "sega-tambour",
+      "Creole-song",
+      "diaspora",
+      "displacement-memory"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/traditional-knowledge-and-techniques-associated-with-pasto-varnish-mopa-mopa-of-putumayo-and-narino-01599
+  // Identity aliases checked: Barniz de Pasto
+  {
+    "id": "colombia-mopa-mopa-pasto-varnish",
+    "name": "Pasto Varnish Mopa-Mopa Craft",
+    "era": "contemporary",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "A Colombian craft chain connects forest harvesters, woodworkers and resin decorators through material knowledge and reciprocal livelihoods.",
+    "strengths": [
+      "material experimentation",
+      "cross-trade coordination",
+      "careful resource stewardship"
+    ],
+    "shadows": [
+      "specialization can obscure collaborators' contributions",
+      "scarce materials can foster guarded techniques"
+    ],
+    "contradiction": "An intricate finished object depends on people whose labor is easy to overlook.",
+    "visualMotifs": [
+      "translucent stretched resin sheets",
+      "decorated carved wood",
+      "forest buds and workshop tools"
+    ],
+    "voicePatterns": [
+      "explains an object by tracing its makers",
+      "asks where a material came from before judging its finish"
+    ],
+    "storyEngines": [
+      "a threatened harvest forces a redesigned commission",
+      "a young varnisher discovers an uncredited supplier"
+    ],
+    "evolutionTriggers": [
+      "negotiates shared credit across trades",
+      "develops sustainable sourcing with harvesters"
+    ],
+    "tags": [
+      "Colombia",
+      "Putumayo",
+      "Narino",
+      "Pasto-varnish",
+      "mopa-mopa",
+      "resin-decoration",
+      "forest-craft"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/lkhon-khol-wat-svay-andet-01374
+  // Identity aliases checked: Lkhon Khol
+  {
+    "id": "cambodia-lkhon-khol-wat-svay-andet",
+    "name": "Lkhon Khol Wat Svay Andet Masked Theatre",
+    "era": "contemporary",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "A Cambodian community's masked dance drama combines orchestral accompaniment, recitation and ritual responsibilities tied to local well-being.",
+    "strengths": [
+      "ensemble discipline",
+      "role-specific performance",
+      "community-centered teaching"
+    ],
+    "shadows": [
+      "rare specialist roles can become fragile when mentors depart",
+      "formal precision may discourage a novice's questions"
+    ],
+    "contradiction": "A performer becomes visible by disappearing behind a carefully learned mask.",
+    "visualMotifs": [
+      "carved character masks",
+      "ritual dance formations",
+      "orchestra beside a monastery courtyard"
+    ],
+    "voicePatterns": [
+      "speaks in measured cues and shared timing",
+      "distinguishes personal opinion from ritual purpose"
+    ],
+    "storyEngines": [
+      "a troupe races to pass on a role before a master retires",
+      "a newcomer learns why a performance belongs to its community"
+    ],
+    "evolutionTriggers": [
+      "documents a role with community consent",
+      "helps train successors"
+    ],
+    "tags": [
+      "Cambodia",
+      "Lkhon-Khol",
+      "Wat-Svay-Andet",
+      "masked-theatre",
+      "orchestral-recitation",
+      "ritual-performance",
+      "apprenticeship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/USL/traditional-ahlat-stonework-00655
+  // Identity aliases checked: Ahlat stone carving
+  {
+    "id": "turkiye-ahlat-volcanic-stonework",
+    "name": "Traditional Ahlat Volcanic Stonework",
+    "era": "contemporary",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Anatolian stoneworkers combine quarry knowledge, seasonal observation, carving and architecture to shape volcanic stone into enduring public objects.",
+    "strengths": [
+      "material patience",
+      "structural judgment",
+      "geometric and calligraphic ornament"
+    ],
+    "shadows": [
+      "attachment to one method may slow adaptation",
+      "monuments can eclipse everyday needs"
+    ],
+    "contradiction": "A craft meant to endure generations survives only if each generation changes how it learns.",
+    "visualMotifs": [
+      "dark volcanic stone blocks",
+      "carved calligraphic relief",
+      "stone dust beside a fountain"
+    ],
+    "voicePatterns": [
+      "thinks in layers, load and weather",
+      "uses practical demonstrations instead of lofty claims"
+    ],
+    "storyEngines": [
+      "a historic fountain must be restored without erasing later repairs",
+      "an apprentice challenges an unsafe quarry habit"
+    ],
+    "evolutionTriggers": [
+      "teaches conservation alongside carving",
+      "accepts safer tools without losing craft intent"
+    ],
+    "tags": [
+      "Turkiye",
+      "Ahlat",
+      "volcanic-stone",
+      "stonemasonry",
+      "carving",
+      "architecture",
+      "restoration"
+    ]
+  },
+  // Research: https://home.nps.gov/people/ynes-mexia.htm
+  // Identity aliases checked: Ynes Enriquetta Julietta Mexia
+  {
+    "id": "ynes-mexia-botanical-fieldwork",
+    "name": "Ynes Mexia and Late-Blooming Field Botany",
+    "era": "early-modern",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "A pioneering Mexican American botanist began serious field study later in life and made extensive plant collections while supporting conservation.",
+    "strengths": [
+      "field observation",
+      "reinvention in later life",
+      "persistent specimen documentation"
+    ],
+    "shadows": [
+      "fictional echo: collecting can crowd out reflection",
+      "fictional echo: self-reliance may become isolation"
+    ],
+    "contradiction": "A meticulous cataloger of diversity learns that no catalog replaces a living landscape.",
+    "visualMotifs": [
+      "pressed herbarium sheets",
+      "field notebooks with plant labels",
+      "weather-worn collecting satchel"
+    ],
+    "voicePatterns": [
+      "grounds claims in observation",
+      "asks who identified a plant and where it grows"
+    ],
+    "storyEngines": [
+      "a late-career student leads a dismissed expedition",
+      "a specimen record reveals a habitat at risk"
+    ],
+    "evolutionTriggers": [
+      "credits local field collaborators fully",
+      "chooses habitat protection over a specimen count"
+    ],
+    "tags": [
+      "Ynes-Mexia",
+      "Mexican-American",
+      "botany",
+      "herbarium",
+      "late-career",
+      "field-science",
+      "conservation"
+    ]
+  },
+  // Research: https://thereader.mitpress.mit.edu/the-brilliant-vision-of-rokeya-sakhawat-hossains-sultanas-dream/
+  // Identity aliases checked: Rokeya Sakhawat Hossain; Rokeya Sakhawat Hussain
+  {
+    "id": "begum-rokeya-utopian-education",
+    "name": "Begum Rokeya and Utopian Education",
+    "era": "early-modern",
+    "domain": "literature",
+    "sourceType": "historical-person",
+    "essence": "A Bengali writer and girls' education advocate used speculative social reversal and practical schooling to challenge limits on opportunity.",
+    "strengths": [
+      "visionary thought experiments",
+      "institution building",
+      "educational persistence"
+    ],
+    "shadows": [
+      "fictional echo: ideal futures may underplay immediate compromises",
+      "fictional echo: urgency can exhaust allies"
+    ],
+    "contradiction": "An imagined society transforms in a page while a real school needs patient daily work.",
+    "visualMotifs": [
+      "classroom notebooks",
+      "garden-like speculative cityscapes",
+      "letters beside a school register"
+    ],
+    "voicePatterns": [
+      "poses sharp counterfactual questions",
+      "pairs imaginative scenarios with practical next steps"
+    ],
+    "storyEngines": [
+      "a founder must persuade families while protecting pupils",
+      "a utopian manuscript sparks debate over achievable reform"
+    ],
+    "evolutionTriggers": [
+      "invites students to challenge the founder's vision",
+      "turns a proposal into inclusive classroom practice"
+    ],
+    "tags": [
+      "Bengal",
+      "Begum-Rokeya",
+      "Rokeya-Sakhawat-Hossain",
+      "Sultanas-Dream",
+      "utopian-fiction",
+      "girls-education",
+      "social-reform"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
