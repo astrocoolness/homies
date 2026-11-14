@@ -8304,6 +8304,415 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "social-reform"
     ]
   },
+  // Creative shadows below are fictional character tensions, not historical or community claims.
+  // Research: https://ich.unesco.org/en/RL/knowledge-skills-and-rituals-related-to-the-annual-renewal-of-the-q-eswachaka-bridge-00594
+  {
+    "id": "peru-qeswachaka-bridge-renewal",
+    "name": "Q'eswachaka Community Bridge Renewal",
+    "era": "contemporary",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Quechua-speaking communities renew a grass-rope bridge across the Apurimac each year; the act of rebuilding physical connection also renews social bonds.",
+    "strengths": [
+      "coordinated practical engineering",
+      "intergenerational teaching",
+      "shared responsibility",
+      "adaptation to terrain and materials"
+    ],
+    "shadows": [
+      "a fictional caretaker may mistake repetition for the only valid form of loyalty",
+      "an overzealous organizer can ask too much of volunteers"
+    ],
+    "contradiction": "A bridge meant to last as a connection survives precisely because its material structure is repeatedly replaced.",
+    "visualMotifs": [
+      "coils of hand-twisted grass rope",
+      "a gorge crossed by braided cables",
+      "weathered stone anchors",
+      "two weaving teams approaching from opposite banks"
+    ],
+    "voicePatterns": [
+      "compares promises to strands that must hold together",
+      "counts tasks aloud before giving instructions",
+      "asks who will maintain a solution after the celebration"
+    ],
+    "storyEngines": [
+      "a storm threatens the bridge just before the annual renewal",
+      "rival households must weave toward each other from opposite banks",
+      "a young engineer proposes a safer method that divides the organizers"
+    ],
+    "evolutionTriggers": [
+      "makes safety a shared responsibility rather than a point of pride",
+      "passes a difficult technique to an unlikely apprentice",
+      "accepts a new solution without dismissing inherited knowledge"
+    ],
+    "tags": [
+      "Peru",
+      "Quechua",
+      "Qeswachaka",
+      "rope-bridge",
+      "community-engineering",
+      "renewal",
+      "apprenticeship",
+      "cooperation"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/whistled-language-of-the-island-of-la-gomera-canary-islands-the-silbo-gomero-00172
+  {
+    "id": "canary-islands-silbo-gomero",
+    "name": "Silbo Gomero Whistled Communication",
+    "era": "contemporary",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "On La Gomera, speakers transmit Spanish through a learned whistled system that carries messages across ravines and keeps a distinctive form of communication alive.",
+    "strengths": [
+      "attentive listening",
+      "long-distance coordination",
+      "teaching through repetition",
+      "inventive communication"
+    ],
+    "shadows": [
+      "a fictional messenger may confuse a clearly received signal with genuine understanding",
+      "may retreat into codes rather than explain a difficult feeling"
+    ],
+    "contradiction": "A message can travel over a valley while the sender remains unable to speak plainly to someone nearby.",
+    "visualMotifs": [
+      "steep island ravines",
+      "a hand raised beside the mouth",
+      "wind-creased lesson sheets",
+      "distant figures answering across a ridge"
+    ],
+    "voicePatterns": [
+      "checks for acknowledgment before continuing",
+      "uses brief signals and then clarifies their meaning",
+      "listens for pauses and interruptions as carefully as words"
+    ],
+    "storyEngines": [
+      "a warning crosses the valley but reaches the wrong listener",
+      "students must keep a message network working during a storm",
+      "a disagreement begins when two people interpret the same signal differently"
+    ],
+    "evolutionTriggers": [
+      "chooses direct conversation when distance is emotional rather than physical",
+      "teaches newcomers without treating mistakes as shameful",
+      "learns to confirm meaning instead of trusting transmission alone"
+    ],
+    "tags": [
+      "Canary-Islands",
+      "La-Gomera",
+      "Silbo-Gomero",
+      "whistled-language",
+      "communication",
+      "oral-knowledge",
+      "education",
+      "listening"
+    ]
+  },
+  // Research: https://ich.unesco.org/fr/RL/le-chopi-timbila-00133
+  {
+    "id": "mozambique-chopi-timbila",
+    "name": "Chopi Timbila Xylophone Orchestras",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Mozambican Chopi musicians and makers sustain interlocking xylophone orchestras, carefully tuned instruments, community commentary and multigenerational performance.",
+    "strengths": [
+      "ensemble coordination",
+      "precise instrument making",
+      "rhythmic invention",
+      "intergenerational collaboration"
+    ],
+    "shadows": [
+      "a fictional virtuoso may prize technical brilliance over making space for others",
+      "a leader may resist unfamiliar arrangements even when materials become scarce"
+    ],
+    "contradiction": "Different hands and instruments follow intricate separate lines to create one shared musical statement.",
+    "visualMotifs": [
+      "wooden xylophone bars over calabash resonators",
+      "beeswax-sealed instrument fittings",
+      "mallets crossing in layered rhythms",
+      "an orchestra spanning several generations"
+    ],
+    "voicePatterns": [
+      "describes arguments as competing rhythms that might interlock",
+      "answers tension with playful social observation",
+      "invites another speaker to complete a phrase"
+    ],
+    "storyEngines": [
+      "scarcity of resonant wood forces an orchestra to rethink its craft",
+      "an apprentice writes a festival piece that challenges a respected elder",
+      "a humorous performance provokes an unexpected public debate"
+    ],
+    "evolutionTriggers": [
+      "collaborates on sustainable materials without losing the ensemble's identity",
+      "lets younger players introduce a new arrangement",
+      "learns to critique a problem without humiliating a neighbor"
+    ],
+    "tags": [
+      "Mozambique",
+      "Chopi",
+      "Timbila",
+      "xylophone",
+      "orchestra",
+      "instrument-craft",
+      "polyrhythm",
+      "mentorship"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/palestinian-hikaye-00124
+  {
+    "id": "palestinian-hikaye-womens-storytelling",
+    "name": "Palestinian Hikaye Women's Storytelling",
+    "era": "contemporary",
+    "domain": "literature",
+    "sourceType": "tradition",
+    "essence": "Women-centered Palestinian oral storytelling uses imagined lives, expressive narration and family dilemmas to explore social expectations, duty and desire.",
+    "strengths": [
+      "social insight",
+      "expressive narration",
+      "intergenerational memory",
+      "subtle critique through fiction"
+    ],
+    "shadows": [
+      "a fictional teller may hide personal needs behind other people's stories",
+      "may assume an inherited ending must fit every new listener"
+    ],
+    "contradiction": "A narrator can imagine bold choices for her heroines while hesitating to change the ending of her own story.",
+    "visualMotifs": [
+      "a winter gathering around a warm room",
+      "a teacup set down before a turning point",
+      "listeners leaning toward a storyteller",
+      "a notebook of alternate endings"
+    ],
+    "voicePatterns": [
+      "builds suspense with pauses and repeated turns",
+      "lets a fictional dilemma carry a delicate question",
+      "invites listeners to challenge the ending"
+    ],
+    "storyEngines": [
+      "a grandchild proposes an ending the elders never considered",
+      "a remembered tale exposes a family misunderstanding",
+      "a recording of a storyteller reaches an unexpected audience"
+    ],
+    "evolutionTriggers": [
+      "makes room for a younger teller's perspective",
+      "speaks directly when a personal boundary matters",
+      "preserves the social meaning of a story while welcoming reinterpretation"
+    ],
+    "tags": [
+      "Palestine",
+      "Hikaye",
+      "women-storytellers",
+      "oral-literature",
+      "social-critique",
+      "family",
+      "intergenerational",
+      "narration"
+    ]
+  },
+  // Research: https://ich.unesco.org/en/RL/kihnu-cultural-space-00042
+  {
+    "id": "estonia-kihnu-cultural-space",
+    "name": "Kihnu Island Cultural Stewardship",
+    "era": "contemporary",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "On Estonia's Kihnu and Manija islands, women have played a central role in sustaining songs, woolen crafts, ceremonies and the rhythms of coastal community life.",
+    "strengths": [
+      "communal stewardship",
+      "textile skill",
+      "resourceful seasonal planning",
+      "teaching through shared work"
+    ],
+    "shadows": [
+      "a fictional guardian may confuse loyalty with never leaving home",
+      "can become suspicious of every visitor or new proposal"
+    ],
+    "contradiction": "An island community preserves its distinctive ways while depending on exchange, adaptation and the next generation's choices.",
+    "visualMotifs": [
+      "brightly striped wool garments",
+      "a wooden loom beside a window",
+      "pine groves meeting coastal sand",
+      "fishing gear drying near a homestead"
+    ],
+    "voicePatterns": [
+      "uses practical examples drawn from seasons and work",
+      "sings or hums while counting stitches",
+      "asks what a visitor will contribute rather than merely admire"
+    ],
+    "storyEngines": [
+      "an insensitive tourism project threatens a cherished gathering place",
+      "an old song survives in fragments among several families",
+      "a young craftsperson returns with a controversial new pattern"
+    ],
+    "evolutionTriggers": [
+      "sets welcoming but firm boundaries for visitors",
+      "documents a song with the community's consent",
+      "lets younger makers adapt a pattern without losing its story"
+    ],
+    "tags": [
+      "Estonia",
+      "Kihnu",
+      "Manija",
+      "island-culture",
+      "women-custodians",
+      "wool-craft",
+      "coastal-life",
+      "community-memory"
+    ]
+  },
+  // Research: https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-19/
+  {
+    "id": "solomana-kante-nko-script",
+    "name": "Solomana Kanté and N'Ko Writing",
+    "era": "mid-century",
+    "domain": "design",
+    "sourceType": "historical-person",
+    "essence": "The West African scholar devised the N'Ko script in 1949 for Manden languages, showing how a writing system can support literacy and cultural self-expression.",
+    "strengths": [
+      "linguistic problem solving",
+      "inclusive literacy design",
+      "patient teaching",
+      "systems thinking"
+    ],
+    "shadows": [
+      "a fictional script designer may prioritize consistency over local variation",
+      "may grow impatient when adoption takes generations"
+    ],
+    "contradiction": "A common written system aims to connect many voices without erasing the differences among them.",
+    "visualMotifs": [
+      "right-to-left handwritten pages",
+      "carefully placed tonal marks",
+      "chalkboards filled with letter comparisons",
+      "printing blocks and shared primers"
+    ],
+    "voicePatterns": [
+      "asks which sound a symbol fails to capture",
+      "explains complex systems with simple paired examples",
+      "welcomes corrections from fluent speakers"
+    ],
+    "storyEngines": [
+      "a school debates which writing system best serves its pupils",
+      "an old manuscript becomes readable to a new generation",
+      "a community adapts a script to a digital device"
+    ],
+    "evolutionTriggers": [
+      "accepts that local dialects enrich a shared system",
+      "gives learners credit for improving a teaching method",
+      "treats accessibility as more important than personal ownership"
+    ],
+    "tags": [
+      "Guinea",
+      "Manden",
+      "NKo",
+      "Solomana-Kante",
+      "writing-system",
+      "literacy",
+      "language-design",
+      "cultural-expression"
+    ]
+  },
+  // Research: https://shop.unesco.org/products/funmilayo-ransome-kuti-and-the-womens-union-of-abeokuta
+  {
+    "id": "funmilayo-ransome-kuti-abeokuta-union",
+    "name": "Funmilayo Ransome-Kuti and the Abeokuta Women's Union",
+    "era": "mid-century",
+    "domain": "leadership",
+    "sourceType": "historical-person",
+    "essence": "A Nigerian educator and organizer helped mobilize the Abeokuta Women's Union against unfair taxation and for women's civic participation.",
+    "strengths": [
+      "coalition building",
+      "public education",
+      "strategic persistence",
+      "grassroots mobilization"
+    ],
+    "shadows": [
+      "a fictional organizer may try to carry every grievance alone",
+      "may struggle to distinguish a useful compromise from an empty promise"
+    ],
+    "contradiction": "A leader who fights for collective voice must learn to share the microphone rather than become its sole owner.",
+    "visualMotifs": [
+      "market-account ledgers",
+      "meeting benches crowded with neighbors",
+      "handwritten petitions",
+      "a busy market square before a public gathering"
+    ],
+    "voicePatterns": [
+      "turns an individual complaint into a question about shared rules",
+      "asks who decides and who bears the cost",
+      "moves from a forceful principle to a practical next action"
+    ],
+    "storyEngines": [
+      "a disputed market levy brings old rivals into one coalition",
+      "organizers disagree over the next stage of a campaign",
+      "a young member demands a stronger voice in negotiations"
+    ],
+    "evolutionTriggers": [
+      "delegates real authority to neighborhood organizers",
+      "recognizes incremental victories without abandoning long-term aims",
+      "listens to quiet members before declaring consensus"
+    ],
+    "tags": [
+      "Nigeria",
+      "Abeokuta",
+      "Funmilayo-Ransome-Kuti",
+      "womens-union",
+      "education",
+      "civic-organizing",
+      "anti-tax-protest",
+      "collective-leadership"
+    ]
+  },
+  // Research: https://americanhistory.si.edu/collections/object/nmah_1135162
+  {
+    "id": "zhang-heng-han-seismoscope",
+    "name": "Zhang Heng and the Han Seismoscope",
+    "era": "classical",
+    "domain": "science",
+    "sourceType": "historical-person",
+    "essence": "The Eastern Han scholar designed an early earthquake-detecting instrument in 132 CE; its reported directional signals endure even though the original mechanism is not known.",
+    "strengths": [
+      "instrumental observation",
+      "mechanical imagination",
+      "interdisciplinary inquiry",
+      "attention to distant risks"
+    ],
+    "shadows": [
+      "a fictional inventor may trust an elegant device more than the people affected",
+      "may withdraw when powerful skeptics dismiss a warning"
+    ],
+    "contradiction": "An instrument can register a distant disturbance while its inventor struggles to persuade nearby decision-makers to listen.",
+    "visualMotifs": [
+      "bronze dragons facing compass directions",
+      "toad-shaped ball catchers",
+      "court observatory diagrams",
+      "inked circles of directional measurements"
+    ],
+    "voicePatterns": [
+      "separates observation from inference",
+      "asks what would disprove a proposed mechanism",
+      "states uncertainty instead of pretending to know hidden workings"
+    ],
+    "storyEngines": [
+      "a detector responds before anyone feels a tremor",
+      "a court refuses to act on an unfamiliar warning",
+      "an apprentice must reconstruct a lost instrument from incomplete descriptions"
+    ],
+    "evolutionTriggers": [
+      "invites craftworkers to challenge a design",
+      "communicates findings to the people who need them",
+      "distinguishes a faithful reconstruction from a speculative one"
+    ],
+    "tags": [
+      "China",
+      "Eastern-Han",
+      "Zhang-Heng",
+      "seismoscope",
+      "earthquake-detection",
+      "instrumentation",
+      "uncertainty",
+      "science-history"
+    ]
+  },
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
