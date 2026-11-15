@@ -564,6 +564,11 @@ function HomeView() {
       )}
       <h2 className="mt-3 font-display text-3xl text-ink">{home.title}</h2>
       <p className="mt-1 text-pretty text-ink">{home.line}</p>
+      {homie.profile?.influenceSummary ? (
+        <p className="mt-2 text-pretty text-xs text-ink-soft">
+          Influence DNA: {homie.profile.influenceSummary}
+        </p>
+      ) : null}
       <p className="mt-2 text-pretty text-ink-soft">
         {homie.hatchedAt == null ? "Nobody lives here yet." : homie.stats.cleanliness < 45 ? home.messy : home.tidy}
       </p>

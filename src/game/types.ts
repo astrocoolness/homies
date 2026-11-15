@@ -1,3 +1,4 @@
+import type { InfluenceGenome } from "./influence-genome";
 export const HOMIE_IDS = ["tony", "betty", "nori"] as const;
 export type BuiltinId = (typeof HOMIE_IDS)[number];
 export type HomieId = string;
@@ -46,6 +47,11 @@ export type NeedKey = "hunger" | "rest" | "cleanliness" | "fun" | "energy" | "af
 export type CustomProfile = {
   name: string;
   descriptors: string[];
+  /** Source references used to generate this original character. */
+  influenceIds?: string[];
+  influenceSummary?: string;
+  /** Event-responsive creative genome; optional for backwards-compatible saves. */
+  influenceGenome?: InfluenceGenome;
   homeTitle: string;
   homeLine: string;
   messy: string;
