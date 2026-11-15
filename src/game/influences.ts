@@ -8713,6 +8713,230 @@ export const INFLUENCE_ATLAS: Influence[] = [
       "science-history"
     ]
   },
+  // UNESCO heritage references: https://ich.unesco.org/en/RL/tchiloli-living-theatre-of-sao-tome-and-principe-in-the-quest-of-justice-02309
+  // https://ich.unesco.org/en/RL/ramlila-the-traditional-performance-of-the-ramayana-00110
+  // https://ich.unesco.org/en/Decisions/12.COM/11.b.8
+  // https://ich.unesco.org/en/RL/indonesian-kris-00112
+  // https://ich.unesco.org/en/RL/art-of-xoe-dance-of-the-tai-people-in-viet-nam-01575
+  {
+    "id": "tchiloli-sao-tome",
+    "name": "Tchiloli community justice theatre",
+    "era": "contemporary",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Public theatre turns a royal murder trial into an ensemble argument for accountability and equal justice.",
+    "strengths": [
+      "ensemble coordination",
+      "public moral inquiry",
+      "intergenerational teaching"
+    ],
+    "shadows": [
+      "spectacle may drown quieter testimony",
+      "roles may harden into inherited expectations"
+    ],
+    "contradiction": "A court performs hierarchy while its verdict insists that rank cannot excuse wrongdoing.",
+    "visualMotifs": [
+      "open-air trial circle",
+      "drums and flutes",
+      "ceremonial costumes",
+      "audience at the edge of the stage"
+    ],
+    "voicePatterns": [
+      "alternates formal accusation and communal response",
+      "lets interruptions expose hidden loyalties"
+    ],
+    "storyEngines": [
+      "a privileged heir faces a public hearing",
+      "an audience member changes the meaning of evidence"
+    ],
+    "evolutionTriggers": [
+      "invites a quiet witness into the story",
+      "accepts a verdict that costs personal status"
+    ],
+    "tags": [
+      "São-Tomé-and-Príncipe",
+      "tchiloli",
+      "community-theatre",
+      "justice",
+      "ensemble"
+    ]
+  },
+  {
+    "id": "ramlila-community-performance",
+    "name": "Ramlila community performance",
+    "era": "movement",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Multi-day community enactment joins narration, song and collective participation in a shared epic.",
+    "strengths": [
+      "collective storytelling",
+      "ritual continuity",
+      "patient rehearsal"
+    ],
+    "shadows": [
+      "reverence can resist new interpretations",
+      "large productions may overlook backstage labor"
+    ],
+    "contradiction": "A familiar story returns every year, but each participant brings a changed life to it.",
+    "visualMotifs": [
+      "festival stages",
+      "handmade masks",
+      "lantern-lit processions",
+      "painted backdrops"
+    ],
+    "voicePatterns": [
+      "choral response",
+      "recitation alternating with dialogue"
+    ],
+    "storyEngines": [
+      "a novice inherits a demanding role",
+      "a backstage worker must save a disrupted festival"
+    ],
+    "evolutionTriggers": [
+      "makes space for new participants",
+      "recognizes the community beyond the starring role"
+    ],
+    "tags": [
+      "India",
+      "Ramlila",
+      "Ramayana",
+      "festival",
+      "participatory-performance"
+    ]
+  },
+  {
+    "id": "zaouli-guro-performance",
+    "name": "Zaouli of the Guro communities",
+    "era": "contemporary",
+    "domain": "music",
+    "sourceType": "tradition",
+    "essence": "Mask carving, woven costume, song and rapid dance collaborate in a communal performance honouring beauty and social connection.",
+    "strengths": [
+      "rhythmic precision",
+      "collaborative craftsmanship",
+      "celebratory energy"
+    ],
+    "shadows": [
+      "virtuosity may eclipse the ensemble",
+      "competition can strain solidarity"
+    ],
+    "contradiction": "An apparently effortless performance depends on many craftspeople whose work stays out of view.",
+    "visualMotifs": [
+      "carved face mask",
+      "layered woven costume",
+      "animated footwork",
+      "musicians in a semicircle"
+    ],
+    "voicePatterns": [
+      "percussive phrasing",
+      "call-and-response with collaborators"
+    ],
+    "storyEngines": [
+      "a costume maker and dancer disagree about credit",
+      "a festival rivalry becomes an alliance"
+    ],
+    "evolutionTriggers": [
+      "credits the makers behind the spectacle",
+      "chooses community care over a prize"
+    ],
+    "tags": [
+      "Côte-d-Ivoire",
+      "Guro",
+      "Zaouli",
+      "mask-craft",
+      "dance",
+      "collaboration"
+    ]
+  },
+  {
+    "id": "indonesian-keris-craft",
+    "name": "Indonesian keris craft and heirloom",
+    "era": "medieval",
+    "domain": "design",
+    "sourceType": "tradition",
+    "essence": "Layered metalwork, asymmetrical form and inherited symbolism make an object a vessel of memory and responsibility.",
+    "strengths": [
+      "patient craftsmanship",
+      "material literacy",
+      "intergenerational stewardship"
+    ],
+    "shadows": [
+      "attachment to an heirloom can become possessiveness",
+      "status symbols may obscure practical care"
+    ],
+    "contradiction": "A treasured object outlives its maker, yet every generation must decide what its value means.",
+    "visualMotifs": [
+      "pattern-welded metal",
+      "asymmetrical blade silhouette",
+      "carved wooden sheath",
+      "workshop charcoal"
+    ],
+    "voicePatterns": [
+      "explains materials through history",
+      "asks who will inherit the object and why"
+    ],
+    "storyEngines": [
+      "a family disputes the fate of an heirloom",
+      "an apprentice must repair without erasing history"
+    ],
+    "evolutionTriggers": [
+      "shares guarded craft knowledge responsibly",
+      "chooses preservation over prestige"
+    ],
+    "tags": [
+      "Indonesia",
+      "keris",
+      "kris",
+      "heirloom",
+      "metalcraft",
+      "material-history"
+    ]
+  },
+  {
+    "id": "tai-xoe-circle-dance",
+    "name": "Tai Xòe circle dance",
+    "era": "contemporary",
+    "domain": "film-performance",
+    "sourceType": "tradition",
+    "essence": "Collective movement and hospitality express mutual well-being through linked hands and shared rhythm.",
+    "strengths": [
+      "inclusion",
+      "rhythmic cooperation",
+      "communal welcome"
+    ],
+    "shadows": [
+      "group harmony can silence dissent",
+      "a confident leader may forget newcomers"
+    ],
+    "contradiction": "A circle promises belonging while its members must actively make room for the person outside it.",
+    "visualMotifs": [
+      "joined hands",
+      "scarves and fans",
+      "silver ornaments",
+      "village festival circle"
+    ],
+    "voicePatterns": [
+      "inviting repeated phrases",
+      "responds to others' tempo rather than commanding it"
+    ],
+    "storyEngines": [
+      "a stranger is invited into a hesitant circle",
+      "a broken celebration is repaired by collective effort"
+    ],
+    "evolutionTriggers": [
+      "adjusts pace for a beginner",
+      "welcomes disagreement without breaking solidarity"
+    ],
+    "tags": [
+      "Viet-Nam",
+      "Tai",
+      "Xoe",
+      "xòe",
+      "hospitality",
+      "circle-dance"
+    ]
+  },
+
 ];
 
 export const INFLUENCE_BY_ID = Object.fromEntries(
