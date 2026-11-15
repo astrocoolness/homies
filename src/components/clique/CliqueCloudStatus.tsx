@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getCliqueCloudStatus } from "@/lib/clique/cloud-photo";
 import type { CliqueCloudStatus as Status } from "@/lib/clique/cloud-config";
 
-/** Live connection status for Clique's two free cloud backends. Booleans only — the server never sends config values or secrets. */
+/** Cloud credential configuration status, not a live connectivity check. Booleans only — the server never sends config values or secrets. */
 export function CliqueCloudStatus() {
   const [status, setStatus] = useState<Status | null>(null);
   const [failed, setFailed] = useState(false);
@@ -28,7 +28,7 @@ export function CliqueCloudStatus() {
       }`}
     >
       <span className={`h-1.5 w-1.5 rounded-full ${on ? "bg-emerald-400" : "bg-neutral-500"}`} />
-      {label}: {on ? "connected" : "not connected"}
+      {label}: {on ? "configured" : "not configured"}
     </span>
   );
 
@@ -37,14 +37,14 @@ export function CliqueCloudStatus() {
       {failed ? (
         <span className="text-xs text-neutral-400">Cloud status unavailable — sign-in may be required.</span>
       ) : status === null ? (
-        <span className="text-xs text-neutral-400">Checking cloud connections…</span>
+        <span className="text-xs text-neutral-400">Checking cloud configuration…</span>
       ) : (
         <>
           {chip("Supabase", status.supabase)}
           {chip("Cloudflare R2", status.r2)}
           {!status.supabase && !status.r2 && (
             <span className="text-xs text-neutral-400">
-              Photos stay on this device until a backend is connected.
+              Photos stay on this device until a backend is configured.
             </span>
           )}
         </>
