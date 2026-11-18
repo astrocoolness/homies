@@ -41,8 +41,12 @@ alter table public.clique_photos enable row level security;
 
 -- Storage bucket for Clique photos uploaded through Supabase (the homie
 -- cloud sync already uses 'homie-files'; Clique photos uploaded via the
--- Supabase fallback live there under clique/ — this bucket is for a
--- future dedicated-bucket migration and for Flyspace's original uploader).
+-- Supabase fallback currently live there under clique/. This reserved
+-- dedicated bucket MUST default to private for future owner-authorized
+-- profile photo reads; a public bucket bypasses signed URL protection.
+-- IMPORTANT: ON CONFLICT does not change an existing public bucket. Inspect
+-- and privately migrate any existing objects under an approved change plan;
+-- do not flip a live shared bucket or run this migration from a chat.
 insert into storage.buckets (id, name, public)
-values ('clique-photos', 'clique-photos', true)
+values ('clique-photos', 'clique-photos', false)
 on conflict (id) do nothing;
