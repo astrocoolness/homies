@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { chatModel, chatUrl } from "./provider";
 import type { CustomProfile, Stage } from "./types";
 import { STAGES } from "./types";
 import { DESCRIPTORS, cleanName, clip, sheetFromModel, templateSheet, type MintFacts } from "./sheet";
@@ -38,9 +39,8 @@ async function inventSheet(apiKey: string | undefined, neighbors: string[]): Pro
   if (!apiKey) {
     return { facts: fallbackFacts, sheet: templateSheet(fallbackFacts) };
   }
-  const isOr = apiKey.startsWith("sk-or-");
-  const url = isOr ? "https://openrouter.ai/api/v1/chat/completions" : "https://api.x.ai/v1/chat/completions";
-  const model = isOr ? "x-ai/grok-4" : "grok-4.5";
+  const url = chatUrl(apiKey);
+  const model = chatModel(apiKey);
   try {
     const res = await fetch(url, {
       method: "POST",
