@@ -6,7 +6,8 @@ import {
   type CliqueCloudStatus,
   type UploadCliquePhotoResult,
 } from "./cloud-config";
-import { sniffPhotoType, PHOTO_MAX_BYTES, type PhotoType } from "./photo-upload";
+import { type PhotoType } from "./photo-upload";
+import { decodePhotoDataUrl } from "./photo-data-url";
 import { signR2Put } from "./r2-sign";
 
 /**
@@ -29,18 +30,6 @@ import { signR2Put } from "./r2-sign";
 export function cliqueCloudStatus(): CliqueCloudStatus {
   const cfg = cliqueCloudConfig(process.env);
   return { supabase: cfg.supabase, supabaseDb: cfg.supabaseDb, r2: cfg.r2 };
-}
-
-export const MAX_PHOTO_DATA_URL = 1_900_000;
-
-function decodeDataUrl(dataUrl: string): { bytes: Buffer; declared: string } | null {
-  const match = /^data:(image\/[a-z]+);base64,([A-Za-z0-9+/=]+)$/.exec(dataUrl);
-  if (!match) return null;
-  try {
-    return { bytes: Buffer.from(match[2], "base64"), declared: match[1] };
-  } catch {
-    return null;
-  }
 }
 
 function extOf(type: PhotoType): "jpg" | "png" | "webp" {
@@ -110,27 +99,16 @@ export async function uploadCliquePhotoForUser(
     return { ok: false, error: "Sign in with a real account before uploading photos to the cloud." };
   }
   if (input.slot !== "profile") return { ok: false, error: "Unknown photo slot" };
-  if (!input.dataUrl.startsWith("data:image/") || input.dataUrl.length > MAX_PHOTO_DATA_URL) {
-    return { ok: false, error: "Photo is too large for cloud upload" };
-  }
-  const decoded = decodeDataUrl(input.dataUrl);
-  if (!decoded) return { ok: false, error: "That photo couldn't be read." };
-  if (decoded.bytes.length === 0 || decoded.bytes.length > PHOTO_MAX_BYTES) {
-    return { ok: false, error: "Photo must be between 1 byte and 10 MB." };
-  }
-  // Content must be a real image and must agree with its declared type.
-  const sniffed = sniffPhotoType(new Uint8Array(decoded.bytes));
-  if (!sniffed || sniffed !== decoded.declared) {
-    return { ok: false, error: "That file's contents don't match its type." };
-  }
+  const decoded = decodePhotoDataUrl(input.dataUrl);
+  if (!decoded.ok) return { ok: false, error: decoded.error };
 
   const cfg = cliqueCloudConfig(process.env);
   if (cfg.r2) {
-    const url = await putToR2(userId, input.slot, sniffed, decoded.bytes);
+    const url = await putToR2(userId, input.slot, decoded.type, decoded.bytes);
     if (url) return { ok: true, backend: "r2", url };
   }
   if (cfg.supabase) {
-    const url = await putToSupabase(userId, input.slot, sniffed, decoded.bytes);
+    const url = await putToSupabase(userId, input.slot, decoded.type, decoded.bytes);
     if (url) return { ok: true, backend: "supabase", url };
   }
   return {
