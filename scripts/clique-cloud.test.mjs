@@ -18,7 +18,8 @@ test("server logic reads secrets only from process.env and rejects dev identitie
   assert.match(server, /process\.env\.SUPABASE_SERVICE_ROLE_KEY/);
   assert.match(server, /process\.env\.R2_SECRET_ACCESS_KEY/);
   assert.match(server, /userId === "dev-user"/);
-  assert.match(server, /sniffPhotoType/);
+  assert.match(server, /decodePhotoDataUrl/);
+  assert.doesNotMatch(server, /MAX_PHOTO_DATA_URL = 1_900_000/);
 });
 
 test("no secret env names appear in client components", () => {
